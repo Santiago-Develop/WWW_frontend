@@ -3,7 +3,7 @@ import { Input, Spin, Empty } from 'antd'
 import { getUsers } from '../../helpers/getUsers'
 import { ROLES } from '../../utils/enums'
 import { onSearch } from '../../helpers/onSearch'
-import CustomerCard from './components/CustomerCard'
+import UserCard from '../../components/UserCard'
 import '../../style.scss'
 import './style.scss'
 
@@ -55,7 +55,7 @@ const CustomersView = () => {
           </div>
           <div className='field'>
             <div className='d-flex align-items-center justify-content-center'>
-              <span className='info_text text-white'>Cumpleaños</span>
+              <span className='info_text text-white'>Número de documento</span>
             </div>
           </div>
         </div>
@@ -72,7 +72,7 @@ const CustomersView = () => {
           ) : (
             data.map(({ id, name, urlImg, phone, email, state, role, birthDate }) => {
               return (
-                <CustomerCard
+                <UserCard
                   key={id}
                   name={name}
                   urlImg={urlImg}

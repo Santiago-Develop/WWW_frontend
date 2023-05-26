@@ -4,10 +4,11 @@ import { ROLES } from '../../utils/enums'
 import { onSearch } from '../../helpers/onSearch'
 import { getUsers } from '../../helpers/getUsers'
 import { UserModal } from '../../components/UserModal/UserModal'
-import BarberCard from './components/BarberCard/index'
 import '../../style.scss'
 import './style.scss'
 import { handleSetState } from '../../helpers/handleSetState'
+import UserCard from '../../components/UserCard'
+
 /* Component used to display each of the barber */
 
 const BarbersView = () => {
@@ -77,17 +78,7 @@ const BarbersView = () => {
             </div>
             <div className='field'>
               <div className='d-flex align-items-center justify-content-center'>
-                <span className='info_text text-white'>Cumpleaños</span>
-              </div>
-            </div>
-            <div className='field'>
-              <div className='d-flex align-items-center justify-content-center'>
-                <span className='info_text text-white'>Estado</span>
-              </div>
-            </div>
-            <div style={{ width: '110px' }}>
-              <div className='d-flex align-items-center justify-content-center'>
-                <span className='info_text text-white'>Acciones</span>
+                <span className='info_text text-white'>Número de documento</span>
               </div>
             </div>
           </div>
@@ -102,17 +93,15 @@ const BarbersView = () => {
             ) : (
               data.map(({ id, name, urlImg, phone, email, state, birthDate }) => {
                 return (
-                  <BarberCard
+                  <UserCard
                     key={id}
-                    id={id}
                     name={name}
                     urlImg={urlImg}
                     email={email}
                     phone={phone}
                     state={state}
+                    role={role}
                     birthDate={birthDate}
-                    setData={setData}
-                    setLoading={setLoading}
                   />
                 )
               })

@@ -4,7 +4,7 @@ import './style.scss'
 
 /* Component used to display customer information */
 
-export const CustomerCard = ({ name, urlImg, email, phone, birthDate }) => {
+export const UserCard = ({ name, urlImg, email, phone, birthDate }) => {
   return (
     <>
       <div className='userCard'>
@@ -29,7 +29,7 @@ export const CustomerCard = ({ name, urlImg, email, phone, birthDate }) => {
   )
 }
 
-CustomerCard.propTypes = {
+UserCard.propTypes = {
   name: PropTypes.string.isRequired,
   urlImg: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
@@ -37,4 +37,4 @@ CustomerCard.propTypes = {
   birthDate: PropTypes.string.isRequired
 }
 
-export default CustomerCard
+export default UserCard
