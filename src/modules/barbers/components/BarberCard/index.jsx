@@ -1,6 +1,6 @@
 import { openNotificationWithIcon } from '../../../../helpers/openNotificationWithIcon'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
-import { ROLES, STATES } from '../../../../utils/enums'
+import { ROLES } from '../../../../utils/enums'
 import { getUsers } from '../../../../helpers/getUsers'
 import { headers } from '../../../../utils/headers'
 import { Popconfirm, Form } from 'antd'

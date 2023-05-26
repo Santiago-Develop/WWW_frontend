@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react'
-import { STATES } from '../../utils/enums'
 import { getUser } from '../../helpers/getUser'
 import moment from 'moment/moment'
 import './style.scss'
-import { getState } from '../../helpers/getState'
 import { getRole } from '../../helpers/getRole'
 
 export const UserProfile = () => {
@@ -42,12 +40,6 @@ export const UserProfile = () => {
             <span className='subfields'>{data.phone}</span>
             <span className='subfields'>{moment(data.birthDate).calendar()}</span>
             <span className='subfields'>{getRole(data.role)}</span>
-            <span
-              className={`state ${STATES[data.state] === 'ACTIVE' ? 'active' : 'inactive'}`}
-              style={{ fontWeight: '500' }}
-            >
-              {getState(data.state)}
-            </span>
           </div>
         </div>
       </div>

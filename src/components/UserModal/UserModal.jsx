@@ -19,8 +19,7 @@ import {
   Select
 } from 'antd'
 import { getUsers } from '../../helpers/getUsers'
-import { getState } from '../../helpers/getState'
-import { optionsSelectState } from '../../helpers/optionsSelectState'
+import { optionsSelectRole } from '../../helpers/optionsSelectRole'
 import { headers } from '../../utils/headers'
 import { newUserFields } from '../../utils/newUserFields'
 import axios from 'axios'

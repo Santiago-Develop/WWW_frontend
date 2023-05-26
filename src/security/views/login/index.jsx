@@ -1,16 +1,19 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { handleInputChange } from '../../../helpers/handleInputChange'
 import { openNotificationWithIcon } from '../../../helpers/openNotificationWithIcon'
 import { handleSetState } from '../../../helpers/handleSetState'
 import { newUserFields } from '../../../utils/newUserFields'
 import { resetForm } from '../../../helpers/resetForm'
 import { normFile, setUrlImgBase64 } from '../../../helpers/handleUpload'
-import { Modal, Form, Input, Button, Col, Row, Upload, DatePicker, Spin, message } from 'antd'
+import { Modal, Form, Input, Button, Col, Row, Upload, DatePicker, Spin, message, Select } from 'antd'
 import { UploadOutlined, LoadingOutlined, LockOutlined, UserOutlined } from '@ant-design/icons'
 import axios from 'axios'
 import PropTypes from 'prop-types'
-import icon from '../../../assets/images/icono.png'
 import './style.scss'
+import { getRole } from '../../../helpers/getRole'
+import { optionsSelectRole } from '../../../helpers/optionsSelectRole'
+import { getSelectInfo } from '../../../helpers/getSelectInfo'
+import { ROLES } from '../../../utils/enums'
 
 /* Component used to validate user input */
 
@@ -23,11 +26,16 @@ const LoginView = ({ setToken }) => {
   const [modelRegister, setModelRegister] = useState(false)
   const [newUser, setNewUser] = useState({
     name: '',
+    username: '',
     documentNumber: '',
     phone: '',
-    birthDate: '',
     urlImg: '',
     email: '',
+    role: ROLES.CUSTOMER,
+    documentType: '',
+    id_country: 1,
+    id_department: 30,
+    id_city: 30,
     password: '',
     password_confirm: ''
   })
@@ -36,11 +44,32 @@ const LoginView = ({ setToken }) => {
     password: ''
   })
 
+  const [countriesOptions, setCountriesOptions] = useState([])
+  const [departmentsOptions, setDepartmentsOptions] = useState([])
+  const [citiesOptions, setCitiesOptions] = useState([])
+
+  useEffect(() => {
+
+    getSelectInfo('api/country', setCountriesOptions)
+    getSelectInfo('api/department', setDepartmentsOptions)
+    getSelectInfo('api/city', setCitiesOptions)
+
+  }, [])
+
   /* Function to send the data entered by the user to know if they can enter or not */
   const handleLoginSubmit = async () => {
+
     try {
-      setUser(!user)
-      let response = await axios.post(`${API_URL}api/login`, loginUser)
+      // setUser(!user)
+
+      let formData = new FormData();
+      formData.append('username', loginUser.username);
+      formData.append('password', loginUser.password);
+
+      console.log("🚀 ~ file: index.jsx:49 ~ handleLoginSubmit ~ formData:", formData)
+
+
+      let response = await axios.post(`${API_URL}login/`, formData)
       let { data, token } = await response.data
 
       const id = data.id
@@ -73,39 +102,53 @@ const LoginView = ({ setToken }) => {
   }
 
   const handleRegisterSubmit = async () => {
-    let type = ''
-    let message = ''
-    let description = ''
 
-    if (newUser.password === newUser.password_confirm) {
-      type = 'success'
-      message = '¡Registro exitoso!'
-      description = `Bienvenido ${newUser.name}`
-
-      let user = Object.assign({}, newUser)
-      delete user.password_confirm
-
-      try {
-        await axios.post(`${API_URL}login`, user)
-        setRegisteredUser(true)
-        setTimeout(() => {
-          handleSetState(false, setModelRegister)
-          setRegisteredUser(false)
-          openNotificationWithIcon(type, message, description)
-        }, 1000)
-      } catch (error) {
-        let error_field = newUserFields[error.response.data.err.meta.target]
-        type = 'warning'
-        message = '¡Hubo un error!'
-        description = 'El ' + error_field + ' ingresado ya existe, inténtalo con uno diferente'
-        openNotificationWithIcon(type, message, description)
-      }
+    if (newUser.role === ROLES.CUSTOMER) {
+      newUser.documentType = "CC"
     } else {
-      type = 'warning'
-      message = '¡Las contraseñas no son iguales!'
-      description = 'Inténtalo de nuevo'
-      openNotificationWithIcon(type, message, description)
+      newUser.documentType = "NIT"
     }
+    
+    let newUserBK = Object.assign({}, newUser)
+    
+    delete newUserBK.password_confirm
+    console.log(newUserBK)
+
+
+
+    // let type = ''
+    // let message = ''
+    // let description = ''
+
+    // if (newUser.password === newUser.password_confirm) {
+    //   type = 'success'
+    //   message = '¡Registro exitoso!'
+    //   description = `Bienvenido ${newUser.name}`
+
+    //   let user = Object.assign({}, newUser)
+    //   delete user.password_confirm
+
+    //   try {
+    //     await axios.post(`${API_URL}login`, user)
+    //     setRegisteredUser(true)
+    //     setTimeout(() => {
+    //       handleSetState(false, setModelRegister)
+    //       setRegisteredUser(false)
+    //       openNotificationWithIcon(type, message, description)
+    //     }, 1000)
+    //   } catch (error) {
+    //     let error_field = newUserFields[error.response.data.err.meta.target]
+    //     type = 'warning'
+    //     message = '¡Hubo un error!'
+    //     description = 'El ' + error_field + ' ingresado ya existe, inténtalo con uno diferente'
+    //     openNotificationWithIcon(type, message, description)
+    //   }
+    // } else {
+    //   type = 'warning'
+    //   message = '¡Las contraseñas no son iguales!'
+    //   description = 'Inténtalo de nuevo'
+    //   openNotificationWithIcon(type, message, description)
+    // }
   }
 
   return (
@@ -167,7 +210,7 @@ const LoginView = ({ setToken }) => {
                           Ingresar
                         </Button>
                         O{' '}
-                        <a className='' onClick={() => handleSetState(true, setModelRegister)} style={{color: '#f6553f'}}>
+                        <a className='' onClick={() => handleSetState(true, setModelRegister)} style={{ color: '#f6553f' }}>
                           Registrarse
                         </a>
                       </Form.Item>
@@ -191,7 +234,7 @@ const LoginView = ({ setToken }) => {
       <Modal
         centered
         open={modelRegister}
-        title='Registrar cliente'
+        title='Registrar usuario'
         onCancel={() => handleSetState(false, setModelRegister)}
         width='50vw'
         footer={[]}
@@ -246,7 +289,7 @@ const LoginView = ({ setToken }) => {
                 </Form.Item>
                 <Form.Item
                   name='documentNumber'
-                  label='Número de cédula'
+                  label='Número de documento'
                   rules={[{ required: true, message: 'Este campo es obligatorio' }]}
                   className='d-flex flex-column'
                 >
@@ -258,8 +301,11 @@ const LoginView = ({ setToken }) => {
                       handleInputChange(newUser, setNewUser, null, null, null, event)
                     }
                     name='documentNumber'
+                    placeholder="NIT (Cliente) CC (Mensajero)"
+
                   />
                 </Form.Item>
+
                 <Form.Item
                   name='password'
                   label='Contraseña'
@@ -290,39 +336,6 @@ const LoginView = ({ setToken }) => {
                       handleInputChange(newUser, setNewUser, null, null, null, event)
                     }
                     name='password_confirm'
-                  />
-                </Form.Item>
-              </Col>
-              <Col span={12} className='m-3 col_r'>
-                <Form.Item
-                  name='phone'
-                  label='Número de celular'
-                  rules={[{ required: true, message: 'Este campo es obligatorio' }]}
-                  className='d-flex flex-column'
-                >
-                  <Input
-                    type='text'
-                    pattern='([0-9]{10})'
-                    title='Ingresa un número de celular válido'
-                    onChange={(event) =>
-                      handleInputChange(newUser, setNewUser, null, null, null, event)
-                    }
-                    name='phone'
-                  />
-                </Form.Item>
-
-                <Form.Item
-                  name='birthDate'
-                  label='Fecha de nacimiento'
-                  rules={[{ required: true, message: 'Este campo es obligatorio' }]}
-                  className='d-flex flex-column'
-                >
-                  <DatePicker
-                    onChange={(date, dateString) =>
-                      handleInputChange(newUser, setNewUser, 'birthDate', date, dateString)
-                    }
-                    name='birthDate'
-                    className='w-100'
                   />
                 </Form.Item>
                 <Form.Item
@@ -358,6 +371,118 @@ const LoginView = ({ setToken }) => {
                   >
                     <Button icon={<UploadOutlined />}>Subir imágen</Button>
                   </Upload>
+                </Form.Item>
+              </Col>
+              <Col span={12} className='m-3 col_r'>
+                <Form.Item
+                  name='username'
+                  label='Nombre de usuario'
+                  rules={[{ required: true, message: 'Este campo es obligatorio' }]}
+                  className='d-flex flex-column'
+                >
+                  <Input
+                    type='text'
+                    pattern='^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+${2,60}'
+                    title='Ingresa un nombre válido'
+                    onChange={(event) =>
+                      handleInputChange(newUser, setNewUser, null, null, null, event)
+                    }
+                    name='username'
+                  />
+                </Form.Item>
+                <Form.Item
+                  name='phone'
+                  label='Número de celular'
+                  rules={[{ required: true, message: 'Este campo es obligatorio' }]}
+                  className='d-flex flex-column'
+                >
+                  <Input
+                    type='text'
+                    pattern='([0-9]{10})'
+                    title='Ingresa un número de celular válido'
+                    onChange={(event) =>
+                      handleInputChange(newUser, setNewUser, null, null, null, event)
+                    }
+                    name='phone'
+                  />
+                </Form.Item>
+
+                <Form.Item
+                  name='role'
+                  label='Tipo de usuario'
+                  // rules={[{ required: true, message: 'Este campo es obligatorio' }]}
+                  className='d-flex flex-column'
+                >
+                  <Select
+                    defaultValue={getRole(newUser.role)}
+                    onChange={(value) => {
+                      handleInputChange(newUser, setUser, null, null, null, {
+                        target: {
+                          name: 'role',
+                          value
+                        }
+                      })
+                    }
+                    }
+                    options={optionsSelectRole}
+                    name='role'
+                  />
+                </Form.Item>
+
+                <Form.Item
+                  name='id_country'
+                  label='País'
+                  // rules={[{ required: true, message: 'Este campo es obligatorio' }]}
+                  className='d-flex flex-column'
+                  disabled={true}
+                >
+                  <Select
+                    defaultValue={"Colombia"}
+                    options={countriesOptions}
+                    name='id_country'
+                  />
+                </Form.Item>
+
+                <Form.Item
+                  name='rolid_departmente'
+                  label='Departamento'
+                  // rules={[{ required: true, message: 'Este campo es obligatorio' }]}
+                  className='d-flex flex-column'
+                >
+                  <Select
+                    defaultValue={'Valle del Cauca'}
+                    onChange={(value) =>
+                      handleInputChange(newUser, setUser, null, null, null, {
+                        target: {
+                          name: 'id_department',
+                          value
+                        }
+                      })
+                    }
+                    options={departmentsOptions}
+                    name='id_department'
+                  />
+                </Form.Item>
+
+                <Form.Item
+                  name='id_city'
+                  label='Ciudad'
+                  // rules={[{ required: true, message: 'Este campo es obligatorio' }]}
+                  className='d-flex flex-column'
+                >
+                  <Select
+                    defaultValue={'Cali'}
+                    onChange={(value) =>
+                      handleInputChange(newUser, setUser, null, null, null, {
+                        target: {
+                          name: 'id_city',
+                          value
+                        }
+                      })
+                    }
+                    options={citiesOptions}
+                    name='id_city'
+                  />
                 </Form.Item>
               </Col>
             </div>
