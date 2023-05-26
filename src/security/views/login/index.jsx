@@ -108,47 +108,40 @@ const LoginView = ({ setToken }) => {
     } else {
       newUser.documentType = "NIT"
     }
-    
-    let newUserBK = Object.assign({}, newUser)
-    
-    delete newUserBK.password_confirm
-    console.log(newUserBK)
 
+    let type = ''
+    let message = ''
+    let description = ''
 
+    if (newUser.password === newUser.password_confirm) {
+      type = 'success'
+      message = '¡Registro exitoso!'
+      description = `Bienvenido ${newUser.name}`
 
-    // let type = ''
-    // let message = ''
-    // let description = ''
+      let user = Object.assign({}, newUser)
+      delete user.password_confirm
 
-    // if (newUser.password === newUser.password_confirm) {
-    //   type = 'success'
-    //   message = '¡Registro exitoso!'
-    //   description = `Bienvenido ${newUser.name}`
-
-    //   let user = Object.assign({}, newUser)
-    //   delete user.password_confirm
-
-    //   try {
-    //     await axios.post(`${API_URL}login`, user)
-    //     setRegisteredUser(true)
-    //     setTimeout(() => {
-    //       handleSetState(false, setModelRegister)
-    //       setRegisteredUser(false)
-    //       openNotificationWithIcon(type, message, description)
-    //     }, 1000)
-    //   } catch (error) {
-    //     let error_field = newUserFields[error.response.data.err.meta.target]
-    //     type = 'warning'
-    //     message = '¡Hubo un error!'
-    //     description = 'El ' + error_field + ' ingresado ya existe, inténtalo con uno diferente'
-    //     openNotificationWithIcon(type, message, description)
-    //   }
-    // } else {
-    //   type = 'warning'
-    //   message = '¡Las contraseñas no son iguales!'
-    //   description = 'Inténtalo de nuevo'
-    //   openNotificationWithIcon(type, message, description)
-    // }
+      try {
+        await axios.post(`${API_URL}api/user`, user)
+        setRegisteredUser(true)
+        setTimeout(() => {
+          handleSetState(false, setModelRegister)
+          setRegisteredUser(false)
+          openNotificationWithIcon(type, message, description)
+        }, 1000)
+      } catch (error) {
+        let error_field = newUserFields[error.response.data.err.meta.target]
+        type = 'warning'
+        message = '¡Hubo un error!'
+        description = 'El ' + error_field + ' ingresado ya existe, inténtalo con uno diferente'
+        openNotificationWithIcon(type, message, description)
+      }
+    } else {
+      type = 'warning'
+      message = '¡Las contraseñas no son iguales!'
+      description = 'Inténtalo de nuevo'
+      openNotificationWithIcon(type, message, description)
+    }
   }
 
   return (

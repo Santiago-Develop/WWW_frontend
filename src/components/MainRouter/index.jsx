@@ -7,7 +7,9 @@ import ErrorView from '../../security/views/error'
 import LoginView from '../../security/views/login'
 import Sidebar from '../../components/sidebar'
 import CustomersView from '../../modules/customers'
-import BarbersView from '../../modules/barbers'
+import MessengersView from '../../modules/messengers'
+import { DashboardView } from '../../modules/dashboard'
+import { ServicesView } from '../../modules/services'
 
 const MainRouter = ({ location }) => {
   /* General states for receiving the token */
@@ -45,8 +47,9 @@ const MainRouter = ({ location }) => {
 
       {/* Main routes conditioned according to the role of the user */}
       <Routes>
-        <Route path='/main' element={role !== ROLES.ADMIN ? <ErrorView /> : <h1>Dashboard</h1>} />
-        <Route path='/staff' element={role == ROLES.BARBER ? <ErrorView /> : <BarbersView />} />
+        <Route path='/main' element={role !== ROLES.ADMIN ? <ErrorView /> : <DashboardView />} />
+        <Route path='/staff' element={role == ROLES.BARBER ? <ErrorView /> : <MessengersView />} />
+        <Route path='/services' element={role !== ROLES.ADMIN ? <ErrorView /> : <ServicesView />} />
         <Route path='/staff/:id' element={role == ROLES.BARBER ? <ErrorView /> : <UserProfile />} />
         <Route
           path='/customers'

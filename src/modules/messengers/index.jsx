@@ -45,10 +45,10 @@ const BarbersView = () => {
             style={{ margin: '10px 20px' }}
           >
             <h1 className='_title' style={{ marginBottom: '0 important' }}>
-              Barberos
+              Mensajeros
             </h1>
             <Button type='primary' onClick={() => handleSetState(true, setModelRegister)}>
-              Contratar barbero
+              Pedidos
             </Button>
             <Input
               placeholder='Buscar...'

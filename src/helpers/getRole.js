@@ -1,7 +1,7 @@
 export const getRole = (state) => {
   const roles_label = {
     ADMIN: 'Administrador',
-    MESSAGER: 'Mensajero',
+    MESSENGER: 'Mensajero',
     CUSTOMER: 'Cliente'
   }
 
