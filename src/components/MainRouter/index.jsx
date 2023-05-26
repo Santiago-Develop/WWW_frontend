@@ -30,8 +30,8 @@ const MainRouter = ({ location }) => {
     return <Navigate to='/main' />
   }
 
-  /* If the user's role is Barber, then we redirect him to his respective internal */
-  if (role == ROLES.BARBER && location.pathname === '/') {
+  /* If the user's role is MESSENGER, then we redirect him to his respective internal */
+  if (role == ROLES.MESSENGER && location.pathname === '/') {
     return <Navigate to={`/staff/${id}`} />
   }
 
@@ -48,9 +48,9 @@ const MainRouter = ({ location }) => {
       {/* Main routes conditioned according to the role of the user */}
       <Routes>
         <Route path='/main' element={role !== ROLES.ADMIN ? <ErrorView /> : <DashboardView />} />
-        <Route path='/staff' element={role == ROLES.BARBER ? <ErrorView /> : <MessengersView />} />
+        <Route path='/staff' element={role == ROLES.MESSENGER ? <ErrorView /> : <MessengersView />} />
         <Route path='/services' element={role !== ROLES.ADMIN ? <ErrorView /> : <ServicesView />} />
-        <Route path='/staff/:id' element={role == ROLES.BARBER ? <ErrorView /> : <UserProfile />} />
+        <Route path='/staff/:id' element={role == ROLES.MESSENGER ? <ErrorView /> : <UserProfile />} />
         <Route
           path='/customers'
           element={role == ROLES.CUSTOMER ? <ErrorView /> : <CustomersView />}
