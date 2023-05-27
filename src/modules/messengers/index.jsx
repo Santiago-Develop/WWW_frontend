@@ -15,7 +15,7 @@ const BarbersView = () => {
   /* General states */
   const [data, setData] = useState(false)
   const [loading, setLoading] = useState(false)
-  const type = 'barbers'
+  const type = 'messengers'
 
   const [formNewBarber] = Form.useForm()
   const [registeredUser, setRegisteredUser] = useState(false)

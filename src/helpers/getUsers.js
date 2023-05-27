@@ -9,11 +9,8 @@ export const getUsers = async (role, type, setData, setLoading) => {
   let data = []
   const requestOptions = {
     method: 'GET',
-    // headers: headers
   }
 
-  console.log("🚀 ~ file: getUsers.js:18 ~ getUsers ~ API_URL:", API_URL + 'api/user')
-  
   try {
     const res = await fetch(API_URL + 'api/user', requestOptions)
     let data = await res.json()
