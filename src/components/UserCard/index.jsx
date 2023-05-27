@@ -4,13 +4,23 @@ import './style.scss'
 
 /* Component used to display customer information */
 
-export const UserCard = ({ name, urlImg, email, phone, birthDate }) => {
+export const UserCard = (
+  {
+    username,
+    urlImg,
+    email,
+    phone,
+    documentType,
+    documentNumber,
+    country,
+    department,
+    city }) => {
   return (
     <>
       <div className='userCard'>
         <div className='d-flex align-items-center field'>
           <img src={'data:image/png;base64,' + urlImg} alt='avatar' className='userImg' />
-          <span className='info_text _name'>{name}</span>
+          <span className='info_text _name'>{username}</span>
         </div>
         <div className='field'>
           <div className='d-flex align-items-center justify-content-center'>
@@ -22,7 +32,16 @@ export const UserCard = ({ name, urlImg, email, phone, birthDate }) => {
         </div>
 
         <div className='field'>
-          <span className='info_text'>{moment(birthDate).calendar()}</span>
+          <span className='info_text'>{documentType} {documentNumber}</span>
+        </div>
+        <div className='field'>
+          <span className='info_text'>{country}</span>
+        </div>
+        <div className='field'>
+          <span className='info_text'>{department}</span>
+        </div>
+        <div className='field'>
+          <span className='info_text'>{city}</span>
         </div>
       </div>
     </>

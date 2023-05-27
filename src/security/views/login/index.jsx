@@ -33,9 +33,9 @@ const LoginView = ({ setToken }) => {
     email: '',
     role: ROLES.CUSTOMER,
     documentType: '',
-    id_country: 1,
-    id_department: 30,
-    id_city: 30,
+    country: 1,
+    department: 30,
+    city: 30,
     password: '',
     password_confirm: ''
   })
@@ -423,7 +423,7 @@ const LoginView = ({ setToken }) => {
                 </Form.Item>
 
                 <Form.Item
-                  name='id_country'
+                  name='country'
                   label='País'
                   // rules={[{ required: true, message: 'Este campo es obligatorio' }]}
                   className='d-flex flex-column'
@@ -432,12 +432,12 @@ const LoginView = ({ setToken }) => {
                   <Select
                     defaultValue={"Colombia"}
                     options={countriesOptions}
-                    name='id_country'
+                    name='country'
                   />
                 </Form.Item>
 
                 <Form.Item
-                  name='rolid_departmente'
+                  name='roldepartmente'
                   label='Departamento'
                   // rules={[{ required: true, message: 'Este campo es obligatorio' }]}
                   className='d-flex flex-column'
@@ -447,18 +447,18 @@ const LoginView = ({ setToken }) => {
                     onChange={(value) =>
                       handleInputChange(newUser, setUser, null, null, null, {
                         target: {
-                          name: 'id_department',
+                          name: 'department',
                           value
                         }
                       })
                     }
                     options={departmentsOptions}
-                    name='id_department'
+                    name='department'
                   />
                 </Form.Item>
 
                 <Form.Item
-                  name='id_city'
+                  name='city'
                   label='Ciudad'
                   // rules={[{ required: true, message: 'Este campo es obligatorio' }]}
                   className='d-flex flex-column'
@@ -468,13 +468,13 @@ const LoginView = ({ setToken }) => {
                     onChange={(value) =>
                       handleInputChange(newUser, setUser, null, null, null, {
                         target: {
-                          name: 'id_city',
+                          name: 'city',
                           value
                         }
                       })
                     }
                     options={citiesOptions}
-                    name='id_city'
+                    name='city'
                   />
                 </Form.Item>
               </Col>

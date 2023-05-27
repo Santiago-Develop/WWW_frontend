@@ -4,10 +4,10 @@ import { ROLES } from '../../utils/enums'
 import { onSearch } from '../../helpers/onSearch'
 import { getUsers } from '../../helpers/getUsers'
 import { UserModal } from '../../components/UserModal/UserModal'
-import '../../style.scss'
-import './style.scss'
 import { handleSetState } from '../../helpers/handleSetState'
 import UserCard from '../../components/UserCard'
+import '../../style.scss'
+import './style.scss'
 
 /* Component used to display each of the barber */
 
@@ -34,7 +34,7 @@ const BarbersView = () => {
 
   /* Functions to be executed when the page is rendered */
   useEffect(() => {
-    getUsers(ROLES.BARBER, type, setData, setLoading)
+    getUsers(ROLES.MESSENGER, type, setData, setLoading)
   }, [])
 
   return (
@@ -81,6 +81,21 @@ const BarbersView = () => {
                 <span className='info_text text-white'>Número de documento</span>
               </div>
             </div>
+            <div className='field'>
+              <div className='d-flex align-items-center justify-content-center'>
+                <span className='info_text text-white'>País</span>
+              </div>
+            </div>
+            <div className='field'>
+              <div className='d-flex align-items-center justify-content-center'>
+                <span className='info_text text-white'>Departamento</span>
+              </div>
+            </div>
+            <div className='field'>
+              <div className='d-flex align-items-center justify-content-center'>
+                <span className='info_text text-white'>Ciudad</span>
+              </div>
+            </div>
           </div>
 
           <div style={{ maxHeight: '77vh', overflowY: 'auto' }}>
@@ -91,17 +106,31 @@ const BarbersView = () => {
             ) : !!data && data.length < 1 ? (
               <Empty />
             ) : (
-              data.map(({ id, name, urlImg, phone, email, state, birthDate }) => {
+              data.map((
+                {
+                  id,
+                  username,
+                  urlImg,
+                  phone,
+                  email,
+                  documentType,
+                  documentNumber,
+                  country,
+                  department,
+                  city
+                }) => {
                 return (
                   <UserCard
                     key={id}
-                    name={name}
+                    username={username}
                     urlImg={urlImg}
                     email={email}
                     phone={phone}
-                    state={state}
-                    role={role}
-                    birthDate={birthDate}
+                    documentNumber={documentNumber}
+                    documentType={documentType}
+                    country={country}
+                    department={department}
+                    city={city}
                   />
                 )
               })

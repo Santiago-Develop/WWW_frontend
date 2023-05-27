@@ -55,7 +55,17 @@ const CustomersView = () => {
           </div>
           <div className='field'>
             <div className='d-flex align-items-center justify-content-center'>
-              <span className='info_text text-white'>Número de documento</span>
+              <span className='info_text text-white'>País</span>
+            </div>
+          </div>
+          <div className='field'>
+            <div className='d-flex align-items-center justify-content-center'>
+              <span className='info_text text-white'>Departamento</span>
+            </div>
+          </div>
+          <div className='field'>
+            <div className='d-flex align-items-center justify-content-center'>
+              <span className='info_text text-white'>Ciudad</span>
             </div>
           </div>
         </div>
@@ -70,17 +80,31 @@ const CustomersView = () => {
           ) : !!data && data.length < 1 ? (
             <Empty />
           ) : (
-            data.map(({ id, name, urlImg, phone, email, state, role, birthDate }) => {
+            data.map((
+              {
+                id,
+                username,
+                urlImg,
+                phone,
+                email,
+                documentType,
+                documentNumber,
+                country,
+                department,
+                city
+              }) => {
               return (
                 <UserCard
                   key={id}
-                  name={name}
+                  username={username}
                   urlImg={urlImg}
                   email={email}
                   phone={phone}
-                  state={state}
-                  role={role}
-                  birthDate={birthDate}
+                  documentNumber={documentNumber}
+                  documentType={documentType}
+                  country={country}
+                  department={department}
+                  city={city}
                 />
               )
             })

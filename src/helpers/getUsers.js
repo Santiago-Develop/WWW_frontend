@@ -9,13 +9,16 @@ export const getUsers = async (role, type, setData, setLoading) => {
   let data = []
   const requestOptions = {
     method: 'GET',
-    headers: headers
+    // headers: headers
   }
 
+  console.log("🚀 ~ file: getUsers.js:18 ~ getUsers ~ API_URL:", API_URL + 'api/user')
+  
   try {
-    const res = await fetch(API_URL + 'api/users', requestOptions)
+    const res = await fetch(API_URL + 'api/user', requestOptions)
     let data = await res.json()
-    data = data.data.filter((user) => user.role === role)
+    console.log("🚀 ~ file: getUsers.js:20 ~ getUsers ~ data:", data)
+    data = data.filter((user) => user.role === role)
     setLoading(true)
     setData(data)
     const { _id, _name, _role, _urlImg, _token } = backUpLocalStorage()
