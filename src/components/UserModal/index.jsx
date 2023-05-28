@@ -19,7 +19,6 @@ import {
   Select
 } from 'antd'
 import { getUsers } from '../../helpers/getUsers'
-import { optionsSelectRole } from '../../helpers/optionsSelectRole'
 import { headers } from '../../utils/headers'
 import { newUserFields } from '../../utils/newUserFields'
 import axios from 'axios'
@@ -335,7 +334,11 @@ export const UserModal = ({
         <div className='d-flex justify-content-center'>
           <Form.Item>
             {edit ? (
-              <Button htmlType='button' className='m-2' onClick={() => resetForm(form)}>
+              <Button
+                htmlType='button'
+                className='m-2'
+                onClick={() => resetForm(form)}
+                disabled={registeredUser ? true : false}>
                 Limpiar
               </Button>
             ) : (

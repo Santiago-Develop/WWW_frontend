@@ -3,13 +3,14 @@ import { Spin, Empty, Form, Input, Button } from 'antd'
 import { ROLES } from '../../utils/enums'
 import { onSearch } from '../../helpers/onSearch'
 import { getUsers } from '../../helpers/getUsers'
-import { UserModal } from '../../components/UserModal/UserModal'
+import { UserModal } from '../../components/UserModal'
 import { handleSetState } from '../../helpers/handleSetState'
-import OfficeCard from './components/OfficeCard/OfficeCard'
+import OfficeCard from './components/OfficeCard/index.jsx'
 import '../../style.scss'
 import './style.scss'
 import { backUpLocalStorage } from '../../helpers/backUpLocalStorage'
 import { setLocalStorage } from '../../helpers/setLocalStorage'
+import { OfficeModal } from './components/OfficeModal'
 
 /* Component used to display each of the barber */
 
@@ -20,7 +21,9 @@ const OfficesView = () => {
   const type = 'offices'
 
   const [formNewBarber] = Form.useForm()
+  const [formAddOffice] = Form.useForm()
   const [registeredUser, setRegisteredUser] = useState(false)
+  const [addOffice, setAddOffice] = useState(false)
   const [modelRegister, setModelRegister] = useState(false)
   const [newUser, setNewUser] = useState({
     name: '',
@@ -45,7 +48,6 @@ const OfficesView = () => {
     try {
       const res = await fetch(API_URL + 'api/office', requestOptions)
       let data = await res.json()
-      console.log("🚀 ~ file: index.jsx:46 ~ getOffices ~ data:", data)
       setLoading(true)
       setData(data)
       const { _id, _name, _role, _urlImg, _token } = backUpLocalStorage()
@@ -74,7 +76,10 @@ const OfficesView = () => {
               Sucursales
             </h1>
             <Button type='primary' onClick={() => handleSetState(true, setModelRegister)}>
-              Pedidos
+              Solicitar pedido
+            </Button>
+            <Button type='primary' onClick={() => handleSetState(true, setAddOffice)}>
+              Agregar sucursal
             </Button>
             <Input
               placeholder='Buscar...'
@@ -146,6 +151,18 @@ const OfficesView = () => {
         setRegisteredUser={setRegisteredUser}
         setData={setData}
         setLoading={setLoading}
+      />
+
+
+      {/* Modal to add offices */}
+
+      <OfficeModal
+        title='Agregar sucursal'
+        edit={false}
+        form={formAddOffice}
+        addOffice={addOffice}
+        setAddOffice={setAddOffice}
+        getOffices={getOffices}
       />
     </>
   )

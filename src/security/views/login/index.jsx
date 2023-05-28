@@ -77,7 +77,6 @@ const LoginView = ({ setToken }) => {
 
       let data = await response.json()
       data = JSON.parse(data)
-      console.log("🚀 ~ file: index.jsx:79 ~ handleLoginSubmit ~ data:", data)
 
       const id = data.id
       const name = data.name
@@ -96,8 +95,6 @@ const LoginView = ({ setToken }) => {
         setUser(!user)
       }, 1000)
     } catch (error) {
-      console.log("🚀 ~ file: index.jsx:95 ~ handleLoginSubmit ~ error:", error.message)
-      console.log("🚀 ~ file: index.jsx:95 ~ handleLoginSubmit ~ error:", typeof (error))
 
       const type = 'warning'
       const message = '¡Ocurrió algo inusual!'
@@ -474,7 +471,11 @@ const LoginView = ({ setToken }) => {
 
           <div className='d-flex justify-content-center'>
             <Form.Item>
-              <Button htmlType='button' className='m-2' onClick={() => resetForm(formCustomer)}>
+              <Button
+                htmlType='button'
+                className='m-2'
+                onClick={() => resetForm(formCustomer)}
+                disabled={registeredUser ? true : false}>
                 Limpiar
               </Button>
               <Button
