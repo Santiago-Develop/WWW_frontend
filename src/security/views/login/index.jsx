@@ -96,14 +96,12 @@ const LoginView = ({ setToken }) => {
         setUser(!user)
       }, 1000)
     } catch (error) {
-      console.log("🚀 ~ file: index.jsx:95 ~ handleLoginSubmit ~ error:", error)
+      console.log("🚀 ~ file: index.jsx:95 ~ handleLoginSubmit ~ error:", error.message)
+      console.log("🚀 ~ file: index.jsx:95 ~ handleLoginSubmit ~ error:", typeof (error))
 
       const type = 'warning'
       const message = '¡Ocurrió algo inusual!'
-      const description =
-        error.response.status === 401
-          ? 'Las credenciales ingresadas con incorrectas, ¡Inténtalo de nuevo!'
-          : error.message
+      const description = 'Las credenciales ingresadas con incorrectas, ¡Inténtalo de nuevo!'
       console.log(error)
       setUser(false)
       openNotificationWithIcon(type, message, description)

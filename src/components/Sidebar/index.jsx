@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { AdminLinks, CustomerLinks, BarberLinks } from '../Sidebar/Data/index'
+import { AdminLinks, CustomerLinks, MessengersLinks } from '../Sidebar/Data/index'
 import { useNavigate } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import userPhoto from '../../assets/images/UserPhoto.png'
@@ -115,9 +115,9 @@ const Sidebar = ({ setToken }) => {
               )
             })}
 
-          {BarberLinks &&
+          {MessengersLinks &&
             role === ROLES.BARBER &&
-            BarberLinks.map(({ text, to, svg }) => {
+            MessengersLinks.map(({ text, to, svg }) => {
               let classes = open ? 'linkOpen' : 'normal'
               let item_text = text ? text : ''
 

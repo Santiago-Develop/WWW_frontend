@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types'
-import moment from 'moment/moment'
 import './style.scss'
 
 /* Component used to display customer information */

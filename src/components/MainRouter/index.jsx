@@ -10,6 +10,7 @@ import CustomersView from '../../modules/customers'
 import MessengersView from '../../modules/messengers'
 import { DashboardView } from '../../modules/dashboard'
 import { ServicesView } from '../../modules/services'
+import OfficesView from '../../modules/offices'
 
 const MainRouter = ({ location }) => {
   /* General states for receiving the token */
@@ -37,7 +38,7 @@ const MainRouter = ({ location }) => {
 
   /* If the user's role is Customer, then we redirect him to his profile */
   if (role == ROLES.CUSTOMER && location.pathname === '/') {
-    return <Navigate to={`/profile`} />
+    return <Navigate to={`/staff`} />
   }
 
   return (
@@ -50,6 +51,7 @@ const MainRouter = ({ location }) => {
         <Route path='/main' element={role !== ROLES.ADMIN ? <ErrorView /> : <DashboardView />} />
         <Route path='/staff' element={role == ROLES.MESSENGER ? <ErrorView /> : <MessengersView />} />
         <Route path='/services' element={role !== ROLES.ADMIN ? <ErrorView /> : <ServicesView />} />
+        <Route path='/offices' element={role == ROLES.MESSENGER ? <ErrorView /> : <OfficesView />} />
         <Route path='/staff/:id' element={role == ROLES.MESSENGER ? <ErrorView /> : <UserProfile />} />
         <Route
           path='/customers'
