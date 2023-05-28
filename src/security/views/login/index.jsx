@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { handleInputChange } from '../../../helpers/handleInputChange'
 import { openNotificationWithIcon } from '../../../helpers/openNotificationWithIcon'
 import { handleSetState } from '../../../helpers/handleSetState'
-import { newUserFields } from '../../../utils/newUserFields'
 import { resetForm } from '../../../helpers/resetForm'
 import { normFile, setUrlImgBase64 } from '../../../helpers/handleUpload'
 import { Modal, Form, Input, Button, Col, Row, Upload, DatePicker, Spin, message, Select } from 'antd'
@@ -25,7 +24,6 @@ const LoginView = ({ setToken }) => {
   const [registeredUser, setRegisteredUser] = useState(false)
   const [modelRegister, setModelRegister] = useState(false)
   const [newUser, setNewUser] = useState({
-    name: '',
     username: '',
     documentNumber: '',
     phone: '',
@@ -37,7 +35,8 @@ const LoginView = ({ setToken }) => {
     department: 30,
     city: 30,
     password: '',
-    password_confirm: ''
+    password_confirm: '',
+    is_superuser: false
   })
   const [loginUser, setLoginUser] = useState({
     email: '',
@@ -126,24 +125,24 @@ const LoginView = ({ setToken }) => {
     if (newUser.password === newUser.password_confirm) {
       type = 'success'
       message = '¡Registro exitoso!'
-      description = `Bienvenido ${newUser.name}`
+      description = `Bienvenido ${newUser.username}`
 
       let user = Object.assign({}, newUser)
       delete user.password_confirm
 
       try {
-        await axios.post(`${API_URL}api/user`, user)
+        await axios.post(`${API_URL}register`, user)
         setRegisteredUser(true)
         setTimeout(() => {
           handleSetState(false, setModelRegister)
           setRegisteredUser(false)
           openNotificationWithIcon(type, message, description)
+          resetForm(formCustomer)
         }, 1000)
       } catch (error) {
-        let error_field = newUserFields[error.response.data.err.meta.target]
         type = 'warning'
         message = '¡Hubo un error!'
-        description = 'El ' + error_field + ' ingresado ya existe, inténtalo con uno diferente'
+        description = error.message
         openNotificationWithIcon(type, message, description)
       }
     } else {
@@ -259,8 +258,8 @@ const LoginView = ({ setToken }) => {
             <div className='d-flex justify-content-center form_r'>
               <Col span={12} className='m-3 col_r'>
                 <Form.Item
-                  name='name'
-                  label='Nombre completo'
+                  name='username'
+                  label='Nombre de usuario'
                   rules={[{ required: true, message: 'Este campo es obligatorio' }]}
                   className='d-flex flex-column'
                 >
@@ -271,7 +270,7 @@ const LoginView = ({ setToken }) => {
                     onChange={(event) =>
                       handleInputChange(newUser, setNewUser, null, null, null, event)
                     }
-                    name='name'
+                    name='username'
                   />
                 </Form.Item>
                 <Form.Item
@@ -377,22 +376,6 @@ const LoginView = ({ setToken }) => {
                 </Form.Item>
               </Col>
               <Col span={12} className='m-3 col_r'>
-                <Form.Item
-                  name='username'
-                  label='Nombre de usuario'
-                  rules={[{ required: true, message: 'Este campo es obligatorio' }]}
-                  className='d-flex flex-column'
-                >
-                  <Input
-                    type='text'
-                    pattern='^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+${2,60}'
-                    title='Ingresa un nombre válido'
-                    onChange={(event) =>
-                      handleInputChange(newUser, setNewUser, null, null, null, event)
-                    }
-                    name='username'
-                  />
-                </Form.Item>
                 <Form.Item
                   name='phone'
                   label='Número de celular'

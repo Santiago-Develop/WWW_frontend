@@ -26,7 +26,8 @@
   margin: 0 auto !important;
 }
 
-a.ant-upload-list-item-name {
+a.ant-upload-list-item-name,
+span.ant-upload-list-item-name {
   display: none;
 }
 
@@ -40,9 +41,23 @@ a.ant-upload-list-item-name {
 }
 
 .active {
-  background-image: linear-gradient(to left top, #48bb78, #41c18d, #3ec7a2, #43ccb4, #4fd1c5);
+  background-image: linear-gradient(
+    to left top,
+    #48bb78,
+    #41c18d,
+    #3ec7a2,
+    #43ccb4,
+    #4fd1c5
+  );
 }
 
 .inactive {
-  background-image: linear-gradient(to left top, #e53e3e, #ec504f, #f26160, #f77170, #fc8181);
+  background-image: linear-gradient(
+    to left top,
+    #e53e3e,
+    #ec504f,
+    #f26160,
+    #f77170,
+    #fc8181
+  );
 }
