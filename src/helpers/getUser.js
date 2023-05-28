@@ -9,7 +9,7 @@ export const getUser = async (id) => {
   }
 
   try {
-    const res = await fetch(API_URL + 'api/user/' + id, requestOptions)
+    const res = await fetch(API_URL + 'api/user/' + id +"/", requestOptions)
     let data = await res.json()
     delete data['updatedAt']
     delete data['createdAt']

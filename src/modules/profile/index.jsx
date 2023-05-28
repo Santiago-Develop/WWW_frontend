@@ -9,7 +9,6 @@ export const UserProfile = () => {
 
   const getUserData = async () => {
     const id = localStorage.getItem('id')
-    console.log("🚀 ~ file: index.jsx:12 ~ getUserData ~ id:", id)
     const data = await getUser(id)
     setData(data)
   }
@@ -36,7 +35,7 @@ export const UserProfile = () => {
               alt='My photo'
               className='imgProfile'
             />
-            <span className='name'>{data.name}</span>
+            <span className='name'>{data.username}</span>
             <span className='subfields'>{data.email}</span>
             <span className='subfields'>{data.phone}</span>
             <span className='subfields'>{moment(data.birthDate).calendar()}</span>

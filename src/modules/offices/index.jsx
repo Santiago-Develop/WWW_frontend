@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react'
 import { Spin, Empty, Form, Input, Button } from 'antd'
-import { ROLES } from '../../utils/enums'
 import { onSearch } from '../../helpers/onSearch'
-import { getUsers } from '../../helpers/getUsers'
 import { UserModal } from '../../components/UserModal'
 import { handleSetState } from '../../helpers/handleSetState'
-import OfficeCard from './components/OfficeCard/index.jsx'
-import '../../style.scss'
-import './style.scss'
 import { backUpLocalStorage } from '../../helpers/backUpLocalStorage'
 import { setLocalStorage } from '../../helpers/setLocalStorage'
 import { OfficeModal } from './components/OfficeModal'
+import { headers } from '../../utils/headers'
+import OfficeCard from './components/OfficeCard/index.jsx'
+import '../../style.scss'
+import './style.scss'
 
 /* Component used to display each of the barber */
 
 const OfficesView = () => {
+
   /* General states */
   const [data, setData] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -43,16 +43,23 @@ const OfficesView = () => {
 
     const requestOptions = {
       method: 'GET',
+      headers,
+      mode: "no-cors"
     }
 
+    const id = localStorage.getItem("id")
+
     try {
-      const res = await fetch(API_URL + 'api/office', requestOptions)
+      const res = await fetch(API_URL + 'api/office/' + id + "/", requestOptions)
+      console.log("🚀 ~ file: index.jsx:54 ~ getOffices ~ res:", res)
       let data = await res.json()
-      setLoading(true)
-      setData(data)
-      const { _id, _name, _role, _urlImg, _token } = backUpLocalStorage()
-      setLocalStorage(_id, _name, _role, _urlImg, _token)
-      localStorage.setItem(type, JSON.stringify(data))
+      console.log("🚀 ~ file: index.jsx:56 ~ getOffices ~ data:", data)
+      // console.log("🚀 ~ file: index.jsx:55 ~ getOffices ~ data:", data)
+      // setLoading(true)
+      // setData(data)
+      // const { _id, _name, _role, _urlImg, _token } = backUpLocalStorage()
+      // setLocalStorage(_id, _name, _role, _urlImg, _token)
+      // localStorage.setItem(type, JSON.stringify(data))
     } catch (error) {
       console.log('error: ', error)
     }
