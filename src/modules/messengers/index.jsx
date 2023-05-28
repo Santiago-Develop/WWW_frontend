@@ -11,7 +11,7 @@ import './style.scss'
 
 /* Component used to display each of the barber */
 
-const BarbersView = () => {
+const MessengersView = () => {
   /* General states */
   const [data, setData] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -139,7 +139,7 @@ const BarbersView = () => {
         </div>
       </div>
 
-      {/* Modal to create barbers */}
+      {/* Modal to create messengers */}
       <UserModal
         edit={true}
         title='Contratar barbero'
@@ -158,4 +158,4 @@ const BarbersView = () => {
   )
 }
 
-export default BarbersView
+export default MessengersView

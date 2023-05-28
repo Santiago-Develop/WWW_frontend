@@ -41,7 +41,7 @@ export const UserModal = ({
   setLoading
 }) => {
   const API_URL = import.meta.env.VITE_API_URL
-  const _type = 'barbers'
+  const _type = 'messengers'
   const dateFormat = 'YYYY-MM-DD'
 
   /* Function to create an user*/

@@ -8,6 +8,8 @@ import { handleSetState } from '../../helpers/handleSetState'
 import OfficeCard from './components/OfficeCard/OfficeCard'
 import '../../style.scss'
 import './style.scss'
+import { backUpLocalStorage } from '../../helpers/backUpLocalStorage'
+import { setLocalStorage } from '../../helpers/setLocalStorage'
 
 /* Component used to display each of the barber */
 
@@ -15,7 +17,7 @@ const OfficesView = () => {
   /* General states */
   const [data, setData] = useState(false)
   const [loading, setLoading] = useState(false)
-  const type = 'messengers'
+  const type = 'offices'
 
   const [formNewBarber] = Form.useForm()
   const [registeredUser, setRegisteredUser] = useState(false)
@@ -32,9 +34,32 @@ const OfficesView = () => {
     role: 'BARBER'
   })
 
+  const API_URL = import.meta.env.VITE_API_URL
+
+  const getOffices = async () => {
+
+    const requestOptions = {
+      method: 'GET',
+    }
+
+    try {
+      const res = await fetch(API_URL + 'api/office', requestOptions)
+      let data = await res.json()
+      console.log("🚀 ~ file: index.jsx:46 ~ getOffices ~ data:", data)
+      setLoading(true)
+      setData(data)
+      const { _id, _name, _role, _urlImg, _token } = backUpLocalStorage()
+      setLocalStorage(_id, _name, _role, _urlImg, _token)
+      localStorage.setItem(type, JSON.stringify(data))
+    } catch (error) {
+      console.log('error: ', error)
+    }
+  }
+
+
   /* Functions to be executed when the page is rendered */
   useEffect(() => {
-    getUsers(ROLES.MESSENGER, type, setData, setLoading)
+    getOffices()
   }, [])
 
   return (
@@ -89,16 +114,16 @@ const OfficesView = () => {
               data.map((
                 {
                   id,
-                  country,
-                  department,
-                  city
+                  name,
+                  address,
+                  phone
                 }) => {
                 return (
                   <OfficeCard
                     key={id}
-                    country={country}
-                    department={department}
-                    city={city}
+                    name={name}
+                    address={address}
+                    phone={phone}
                   />
                 )
               })
@@ -107,7 +132,7 @@ const OfficesView = () => {
         </div>
       </div>
 
-      {/* Modal to create barbers */}
+      {/* Modal to create messengers */}
       <UserModal
         edit={true}
         title='Contratar barbero'

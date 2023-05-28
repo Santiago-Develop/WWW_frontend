@@ -4,21 +4,21 @@ import PropTypes from 'prop-types'
 
 export const OfficeCard = (
     {
-        country,
-        department,
-        city
+        name,
+        address,
+        phone
     }) => {
     return (
         <>
             <div className='userCard'>
                 <div className='field'>
-                    <span className='info_text'>{country}</span>
+                    <span className='info_text'>{name}</span>
                 </div>
                 <div className='field'>
-                    <span className='info_text'>{department}</span>
+                    <span className='info_text'>{address}</span>
                 </div>
                 <div className='field'>
-                    <span className='info_text'>{city}</span>
+                    <span className='info_text'>{phone}</span>
                 </div>
             </div>
         </>
@@ -27,10 +27,8 @@ export const OfficeCard = (
 
 OfficeCard.propTypes = {
     name: PropTypes.string.isRequired,
-    urlImg: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
+    address: PropTypes.string.isRequired,
     phone: PropTypes.string.isRequired,
-    birthDate: PropTypes.string.isRequired
 }
 
 export default OfficeCard
