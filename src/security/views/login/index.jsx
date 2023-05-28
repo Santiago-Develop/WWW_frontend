@@ -14,7 +14,7 @@ import { getRole } from '../../../helpers/getRole'
 import { optionsSelectRole } from '../../../helpers/optionsSelectRole'
 import { getSelectInfo } from '../../../helpers/getSelectInfo'
 import { ROLES } from '../../../utils/enums'
-
+import { headers } from '../../../utils/headers'
 /* Component used to validate user input */
 
 const LoginView = ({ setToken }) => {
@@ -40,7 +40,7 @@ const LoginView = ({ setToken }) => {
     password_confirm: ''
   })
   const [loginUser, setLoginUser] = useState({
-    username: '',
+    email: '',
     password: ''
   })
 
@@ -60,23 +60,31 @@ const LoginView = ({ setToken }) => {
   const handleLoginSubmit = async () => {
 
     try {
-      // setUser(!user)
+      setUser(!user)
 
-      let formData = new FormData();
-      formData.append('username', loginUser.username);
-      formData.append('password', loginUser.password);
+      const body = {
+        email: loginUser.email,
+        password: loginUser.password
+      }
 
-      console.log("🚀 ~ file: index.jsx:49 ~ handleLoginSubmit ~ formData:", formData)
+      const options = {
+        method: 'POST',
+        headers,
+        withCredentials: true,
+        body: JSON.stringify(body)
+      }
 
+      let response = await fetch(`${API_URL}login`, options)
 
-      let response = await axios.post(`${API_URL}login/`, formData)
-      let { data, token } = await response.data
+      let data = await response.json()
+      data = JSON.parse(data)
+      console.log("🚀 ~ file: index.jsx:79 ~ handleLoginSubmit ~ data:", data)
 
       const id = data.id
       const name = data.name
       const role = data.role
       const urlImg = data.urlImg
-
+      const token = "exists"
       /* Local storage variables */
       localStorage.setItem('id', id)
       localStorage.setItem('name', name)
@@ -89,6 +97,8 @@ const LoginView = ({ setToken }) => {
         setUser(!user)
       }, 1000)
     } catch (error) {
+      console.log("🚀 ~ file: index.jsx:95 ~ handleLoginSubmit ~ error:", error)
+
       const type = 'warning'
       const message = '¡Ocurrió algo inusual!'
       const description =
@@ -165,17 +175,17 @@ const LoginView = ({ setToken }) => {
                       onFinish={() => void handleLoginSubmit()}
                     >
                       <Form.Item
-                        name='username'
+                        name='email'
                         rules={[{ required: true, message: 'Ingresa tu correo!' }]}
                       >
                         <Input
                           prefix={<UserOutlined className='site-form-item-icon' />}
-                          placeholder='Usuario'
+                          placeholder='Correo'
                           onChange={(event) =>
                             handleInputChange(loginUser, setLoginUser, null, null, null, event)
                           }
-                          value={loginUser.username}
-                          name='username'
+                          value={loginUser.email}
+                          name='email'
                         />
                       </Form.Item>
                       <Form.Item
