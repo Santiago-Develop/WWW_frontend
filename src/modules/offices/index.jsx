@@ -106,6 +106,11 @@ const OfficesView = () => {
                 <span className='info_text text-white'>Teléfono</span>
               </div>
             </div>
+            <div className='field'>
+              <div className='d-flex align-items-center justify-content-center'>
+                <span className='info_text text-white'>Acciones</span>
+              </div>
+            </div>
           </div>
 
           <div style={{ maxHeight: '77vh', overflowY: 'auto' }}>
@@ -126,6 +131,7 @@ const OfficesView = () => {
                 return (
                   <OfficeCard
                     key={id}
+                    id={id}
                     name={name}
                     address={address}
                     phone={phone}
