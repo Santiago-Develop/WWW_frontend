@@ -8,7 +8,8 @@ export const UserProfile = () => {
   const [data, setData] = useState(false)
 
   const getUserData = async () => {
-    const id = window.location.pathname.split('/staff/')[1] || localStorage.getItem('id')
+    const id = localStorage.getItem('id')
+    console.log("🚀 ~ file: index.jsx:12 ~ getUserData ~ id:", id)
     const data = await getUser(id)
     setData(data)
   }
