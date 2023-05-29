@@ -1,6 +1,9 @@
 import PropTypes from 'prop-types'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import { Popconfirm } from 'antd'
+import { openNotificationWithIcon } from '../../../../helpers/openNotificationWithIcon'
+import { OfficeModal } from '../OfficeModal'
+import { getOffices } from '../../../../helpers/getOffices'
 
 /* Component used to display office information */
 export const OfficeCard = (
@@ -8,9 +11,43 @@ export const OfficeCard = (
         id,
         name,
         address,
-        phone
+        phone,
+        form,
+        updateOffice,
+        setUpdateOffice,
+        setLoading,
+        setData,
+        type
     }) => {
-        
+
+    /* Function to delete am office */
+    const API_URL = import.meta.env.VITE_API_URL
+
+    const onDeleteOffice = async (id) => {
+        const requestOptions = {
+            method: 'DELETE',
+        }
+
+        try {
+            const response = await fetch(API_URL + 'api/office/' + id + "/", requestOptions)
+            const { name } = await response.json()
+
+            if (response.status === 200) {
+                const _type = 'success'
+                const message = 'Eliminación exitoso!'
+                const description = `La sucursal ${name} ha sido eliminada`
+                openNotificationWithIcon(_type, message, description)
+                getOffices(setLoading, setData, type)
+            }
+        } catch (error) {
+            const type = 'warning'
+            const message = '¡Ocurrió algo inusual!'
+            const description = error.message
+
+            openNotificationWithIcon(type, message, description)
+        }
+    }
+
     return (
         <>
             <div className='userCard'>
@@ -27,12 +64,12 @@ export const OfficeCard = (
                     <EditOutlined
                         className='m-1'
                         style={{ color: '#01329a', cursor: 'pointer' }}
-                        // onClick={() => showModalUpdateBarber(id)}
+                        onClick={() => setUpdateOffice(true)}
                     />
                     <Popconfirm
-                        title='Despedir barbero'
-                        description='¿Quieres despedir a este barbero?'
-                        // onConfirm={async () => await onDeleteBarber(id)}
+                        title='Eliminar sucursal'
+                        description='¿Quieres eliminar esta sucursal?'
+                        onConfirm={async () => await onDeleteOffice(id)}
                         okText='Sí'
                         cancelText='No'
                     >
@@ -45,6 +82,15 @@ export const OfficeCard = (
                     </Popconfirm>
                 </div>
             </div>
+
+            <OfficeModal
+                title='Editar sucursal'
+                edit={false}
+                form={form}
+                addOffice={updateOffice}
+                setAddOffice={setUpdateOffice}
+                getOffices={getOffices}
+            />
         </>
     )
 }

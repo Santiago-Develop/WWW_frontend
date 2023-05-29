@@ -21,7 +21,8 @@ export const OfficeModal = (
         form,
         addOffice,
         setAddOffice,
-        getOffices
+        getOffices,
+        office_info
     }
 ) => {
 
@@ -33,6 +34,9 @@ export const OfficeModal = (
         phone: '',
         customer: parseInt(localStorage.getItem('id'))
     })
+
+    // setAddOffice(office_info)
+    
 
     const handleAddOffice = async () => {
         setLoading(true)
@@ -112,6 +116,8 @@ export const OfficeModal = (
                                 title='Ingresa un nombre válido'
                                 onChange={(event) => handleInputChange(newOffice, setNewOffice, null, null, null, event)}
                                 name='name'
+                                defaultValue={addOffice?.name}
+
                             />
                         </Form.Item>
                         <Form.Item
@@ -125,6 +131,8 @@ export const OfficeModal = (
                                 title='Ingresa un correo válido'
                                 onChange={(event) => handleInputChange(newOffice, setNewOffice, null, null, null, event)}
                                 name='address'
+                                defaultValue={addOffice?.address}
+
                             />
                         </Form.Item>
                         <Form.Item
@@ -139,6 +147,8 @@ export const OfficeModal = (
                                 title='Ingresa un número de celular válido'
                                 onChange={(event) => handleInputChange(newOffice, setNewOffice, null, null, null, event)}
                                 name='phone'
+                                defaultValue={addOffice?.phone}
+
                             />
                         </Form.Item>
                     </div>

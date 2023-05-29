@@ -10,6 +10,7 @@ import { headers } from '../../utils/headers'
 import OfficeCard from './components/OfficeCard/index.jsx'
 import '../../style.scss'
 import './style.scss'
+import { getOffices } from '../../helpers/getOffices'
 
 /* Component used to display each of the barber */
 
@@ -24,6 +25,7 @@ const OfficesView = () => {
   const [formAddOffice] = Form.useForm()
   const [registeredUser, setRegisteredUser] = useState(false)
   const [addOffice, setAddOffice] = useState(false)
+  const [updateOffice, setUpdateOffice] = useState(false)
   const [modelRegister, setModelRegister] = useState(false)
   const [newUser, setNewUser] = useState({
     name: '',
@@ -37,38 +39,10 @@ const OfficesView = () => {
     role: 'BARBER'
   })
 
-  const API_URL = import.meta.env.VITE_API_URL
-
-  const getOffices = async () => {
-
-    const requestOptions = {
-      method: 'GET',
-      headers,
-      mode: "no-cors"
-    }
-
-    const id = localStorage.getItem("id")
-
-    try {
-      const res = await fetch(API_URL + 'api/office/' + id + "/", requestOptions)
-      console.log("🚀 ~ file: index.jsx:54 ~ getOffices ~ res:", res)
-      let data = await res.json()
-      console.log("🚀 ~ file: index.jsx:56 ~ getOffices ~ data:", data)
-      // console.log("🚀 ~ file: index.jsx:55 ~ getOffices ~ data:", data)
-      // setLoading(true)
-      // setData(data)
-      // const { _id, _name, _role, _urlImg, _token } = backUpLocalStorage()
-      // setLocalStorage(_id, _name, _role, _urlImg, _token)
-      // localStorage.setItem(type, JSON.stringify(data))
-    } catch (error) {
-      console.log('error: ', error)
-    }
-  }
-
 
   /* Functions to be executed when the page is rendered */
   useEffect(() => {
-    getOffices()
+    getOffices(setLoading, setData, type)
   }, [])
 
   return (
@@ -142,6 +116,13 @@ const OfficesView = () => {
                     name={name}
                     address={address}
                     phone={phone}
+                    getOffices={getOffices}
+                    form={formAddOffice}
+                    updateOffice={updateOffice}
+                    setUpdateOffice={setUpdateOffice}
+                    setLoading={setLoading}
+                    setData={setData}
+                    type={type}
                   />
                 )
               })
