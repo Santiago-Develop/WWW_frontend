@@ -4,6 +4,7 @@ import { Popconfirm } from 'antd'
 import { openNotificationWithIcon } from '../../../../helpers/openNotificationWithIcon'
 import { OfficeModal } from '../OfficeModal'
 import { getOffices } from '../../../../helpers/getOffices'
+import { getOffice } from '../../../../helpers/getOffice'
 
 /* Component used to display office information */
 export const OfficeCard = (
@@ -48,6 +49,14 @@ export const OfficeCard = (
         }
     }
 
+    const showModalUpdateOffice = async (id) => {
+        localStorage.setItem('currentOffice', id)
+        const data = await getOffice(id)
+        console.log("🚀 ~ file: index.jsx:55 ~ showModalUpdateOffice ~ data:", data)
+        setUpdateOffice(data)
+        setLoading(true)
+    }
+
     return (
         <>
             <div className='userCard'>
@@ -64,7 +73,7 @@ export const OfficeCard = (
                     <EditOutlined
                         className='m-1'
                         style={{ color: '#01329a', cursor: 'pointer' }}
-                        onClick={() => setUpdateOffice(true)}
+                        onClick={() => showModalUpdateOffice(id)}
                     />
                     <Popconfirm
                         title='Eliminar sucursal'
