@@ -38,7 +38,7 @@ const MainRouter = ({ location }) => {
 
   /* If the user's role is Customer, then we redirect him to his profile */
   if (role == ROLES.CUSTOMER && location.pathname === '/') {
-    return <Navigate to={`/staff`} />
+    return <Navigate to={`/offices`} />
   }
 
   return (

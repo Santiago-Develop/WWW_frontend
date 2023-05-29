@@ -22,45 +22,38 @@ export const OfficeModal = (
         addOffice,
         setAddOffice,
         getOffices,
-        office_info
+        id = null
     }
 ) => {
 
     const API_URL = import.meta.env.VITE_API_URL
     const [loading, setLoading] = useState(false)
     const [newOffice, setNewOffice] = useState({
-        name: '',
-        address: '',
-        phone: '',
+        name: addOffice?.name,
+        address: addOffice?.address,
+        phone: addOffice?.phone,
         customer: parseInt(localStorage.getItem('id'))
     })
 
-    // setAddOffice(office_info)
-    
-
     const handleAddOffice = async () => {
         setLoading(true)
-
+        setNewOffice(addOffice)
         const requestOptions = {
             method: 'POST',
             headers,
             body: JSON.stringify(newOffice)
         }
+        console.log("🚀 ~ file: index.jsx:44 ~ handleAddOffice ~ newOffice:", newOffice)
+        console.log("🚀 ~ file: index.jsx:44 ~ handleAddOffice ~ addOffice:", addOffice)
 
         try {
-            const res = await fetch(API_URL + 'api/office', requestOptions)
+            if (edit) {
 
-            if (res.status === 400) {
-                const type = 'warning'
-                const message = '¡Escribe otro número!'
-                const description = 'La sucursal con este teléfono ya existe.'
-                openNotificationWithIcon(type, message, description)
-                setLoading(false)
+                const res = await fetch(API_URL + 'api/office/' + id + "/", requestOptions)
 
-            } else {
                 const type = 'success'
-                const message = 'Creación exitosa!'
-                const description = `Tienes una nueva surcursal: ${newOffice.name}`
+                const message = 'Actualización exitosa!'
+                const description = `La surcursal: ${addOffice.name} ha sido modificada`
                 setTimeout(() => {
                     openNotificationWithIcon(type, message, description)
                     setLoading(false)
@@ -68,8 +61,32 @@ export const OfficeModal = (
                     resetForm(form)
                     getOffices()
                 }, 1000)
+            } else {
 
+                const res = await fetch(API_URL + 'api/office', requestOptions)
+
+                if (res.status === 400) {
+                    const type = 'warning'
+                    const message = '¡Escribe otro número!'
+                    const description = 'La sucursal con este teléfono ya existe.'
+                    openNotificationWithIcon(type, message, description)
+                    setLoading(false)
+
+                } else {
+                    const type = 'success'
+                    const message = 'Creación exitosa!'
+                    const description = `Tienes una nueva surcursal: ${newOffice.name}`
+                    setTimeout(() => {
+                        openNotificationWithIcon(type, message, description)
+                        setLoading(false)
+                        setAddOffice(false)
+                        resetForm(form)
+                        getOffices()
+                    }, 1000)
+
+                }
             }
+
         } catch (error) {
             console.log('error: ', error)
             const type = 'warning'
@@ -107,7 +124,7 @@ export const OfficeModal = (
                         <Form.Item
                             name='name'
                             label='Nombre'
-                            rules={[{ required: true, message: 'Este campo es obligatorio' }]}
+                            rules={!edit ? [{ required: true, message: 'Este campo es obligatorio' }] : []}
                             className='d-flex flex-column'
                         >
                             <Input
@@ -116,14 +133,14 @@ export const OfficeModal = (
                                 title='Ingresa un nombre válido'
                                 onChange={(event) => handleInputChange(newOffice, setNewOffice, null, null, null, event)}
                                 name='name'
-                                defaultValue={addOffice?.name}
+                                defaultValue={addOffice.name}
 
                             />
                         </Form.Item>
                         <Form.Item
                             name='address'
                             label='Dirección'
-                            rules={[{ required: true, message: 'Este campo es obligatorio' }]}
+                            rules={!edit ? [{ required: true, message: 'Este campo es obligatorio' }] : []}
                             className='d-flex flex-column'
                         >
                             <Input
@@ -131,14 +148,14 @@ export const OfficeModal = (
                                 title='Ingresa un correo válido'
                                 onChange={(event) => handleInputChange(newOffice, setNewOffice, null, null, null, event)}
                                 name='address'
-                                defaultValue={addOffice?.address}
+                                defaultValue={addOffice.address}
 
                             />
                         </Form.Item>
                         <Form.Item
                             name='phone'
                             label='Teléfono'
-                            rules={[{ required: true, message: 'Este campo es obligatorio' }]}
+                            rules={!edit ? [{ required: true, message: 'Este campo es obligatorio' }] : []}
                             className='d-flex flex-column'
                         >
                             <Input
@@ -147,7 +164,7 @@ export const OfficeModal = (
                                 title='Ingresa un número de celular válido'
                                 onChange={(event) => handleInputChange(newOffice, setNewOffice, null, null, null, event)}
                                 name='phone'
-                                defaultValue={addOffice?.phone}
+                                defaultValue={addOffice.phone}
 
                             />
                         </Form.Item>

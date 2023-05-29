@@ -3,7 +3,6 @@ import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import { Popconfirm } from 'antd'
 import { openNotificationWithIcon } from '../../../../helpers/openNotificationWithIcon'
 import { OfficeModal } from '../OfficeModal'
-import { getOffices } from '../../../../helpers/getOffices'
 import { getOffice } from '../../../../helpers/getOffice'
 
 /* Component used to display office information */
@@ -16,9 +15,7 @@ export const OfficeCard = (
         form,
         updateOffice,
         setUpdateOffice,
-        setLoading,
-        setData,
-        type
+        getOffices
     }) => {
 
     /* Function to delete am office */
@@ -38,7 +35,7 @@ export const OfficeCard = (
                 const message = 'Eliminación exitoso!'
                 const description = `La sucursal ${name} ha sido eliminada`
                 openNotificationWithIcon(_type, message, description)
-                getOffices(setLoading, setData, type)
+                getOffices()
             }
         } catch (error) {
             const type = 'warning'
@@ -50,11 +47,8 @@ export const OfficeCard = (
     }
 
     const showModalUpdateOffice = async (id) => {
-        localStorage.setItem('currentOffice', id)
         const data = await getOffice(id)
-        console.log("🚀 ~ file: index.jsx:55 ~ showModalUpdateOffice ~ data:", data)
         setUpdateOffice(data)
-        setLoading(true)
     }
 
     return (
@@ -94,11 +88,12 @@ export const OfficeCard = (
 
             <OfficeModal
                 title='Editar sucursal'
-                edit={false}
+                edit={true}
                 form={form}
                 addOffice={updateOffice}
                 setAddOffice={setUpdateOffice}
                 getOffices={getOffices}
+                id={id}
             />
         </>
     )
