@@ -4,7 +4,19 @@ import { openNotificationWithIcon } from '../../../helpers/openNotificationWithI
 import { handleSetState } from '../../../helpers/handleSetState'
 import { resetForm } from '../../../helpers/resetForm'
 import { normFile, setUrlImgBase64 } from '../../../helpers/handleUpload'
-import { Modal, Form, Input, Button, Col, Row, Upload, DatePicker, Spin, message, Select } from 'antd'
+import {
+  Modal,
+  Form,
+  Input,
+  Button,
+  Col,
+  Row,
+  Upload,
+  DatePicker,
+  Spin,
+  message,
+  Select
+} from 'antd'
 import { UploadOutlined, LoadingOutlined, LockOutlined, UserOutlined } from '@ant-design/icons'
 import axios from 'axios'
 import PropTypes from 'prop-types'
@@ -48,16 +60,13 @@ const LoginView = ({ setToken }) => {
   const [citiesOptions, setCitiesOptions] = useState([])
 
   useEffect(() => {
-
     getSelectInfo('api/country', setCountriesOptions)
     getSelectInfo('api/department', setDepartmentsOptions)
     getSelectInfo('api/city', setCitiesOptions)
-
   }, [])
 
   /* Function to send the data entered by the user to know if they can enter or not */
   const handleLoginSubmit = async () => {
-
     try {
       setUser(!user)
 
@@ -77,13 +86,13 @@ const LoginView = ({ setToken }) => {
 
       let data = await response.json()
       data = JSON.parse(data)
-      console.log("🚀 ~ file: index.jsx:80 ~ handleLoginSubmit ~ data:", data)
+      console.log('🚀 ~ file: index.jsx:80 ~ handleLoginSubmit ~ data:', data)
 
       const id = data.id
       const name = data.name
       const role = data.role
       const urlImg = data.urlImg
-      const token = "exists"
+      const token = 'exists'
       /* Local storage variables */
       localStorage.setItem('id', id)
       localStorage.setItem('name', name)
@@ -96,7 +105,6 @@ const LoginView = ({ setToken }) => {
         setUser(!user)
       }, 1000)
     } catch (error) {
-
       const type = 'warning'
       const message = '¡Ocurrió algo inusual!'
       const description = 'Las credenciales ingresadas con incorrectas, ¡Inténtalo de nuevo!'
@@ -107,11 +115,10 @@ const LoginView = ({ setToken }) => {
   }
 
   const handleRegisterSubmit = async () => {
-
     if (newUser.role === ROLES.CUSTOMER) {
-      newUser.documentType = "CC"
+      newUser.documentType = 'CC'
     } else {
-      newUser.documentType = "NIT"
+      newUser.documentType = 'NIT'
     }
 
     let type = ''
@@ -208,7 +215,11 @@ const LoginView = ({ setToken }) => {
                           Ingresar
                         </Button>
                         O{' '}
-                        <a className='' onClick={() => handleSetState(true, setModelRegister)} style={{ color: '#f6553f' }}>
+                        <a
+                          className=''
+                          onClick={() => handleSetState(true, setModelRegister)}
+                          style={{ color: '#f6553f' }}
+                        >
                           Registrarse
                         </a>
                       </Form.Item>
@@ -299,8 +310,7 @@ const LoginView = ({ setToken }) => {
                       handleInputChange(newUser, setNewUser, null, null, null, event)
                     }
                     name='documentNumber'
-                    placeholder="NIT (Cliente) CC (Mensajero)"
-
+                    placeholder='NIT (Cliente) CC (Mensajero)'
                   />
                 </Form.Item>
 
@@ -404,8 +414,7 @@ const LoginView = ({ setToken }) => {
                           value
                         }
                       })
-                    }
-                    }
+                    }}
                     options={optionsSelectRole}
                     name='role'
                   />
@@ -418,11 +427,7 @@ const LoginView = ({ setToken }) => {
                   className='d-flex flex-column'
                   disabled={true}
                 >
-                  <Select
-                    defaultValue={"Colombia"}
-                    options={countriesOptions}
-                    name='country'
-                  />
+                  <Select defaultValue={'Colombia'} options={countriesOptions} name='country' />
                 </Form.Item>
 
                 <Form.Item
@@ -476,7 +481,8 @@ const LoginView = ({ setToken }) => {
                 htmlType='button'
                 className='m-2'
                 onClick={() => resetForm(formCustomer)}
-                disabled={registeredUser ? true : false}>
+                disabled={registeredUser ? true : false}
+              >
                 Limpiar
               </Button>
               <Button

@@ -7,7 +7,7 @@ const API_URL = import.meta.env.VITE_API_URL
 export const getUsers = async (role, type, setData, setLoading) => {
   let data = []
   const requestOptions = {
-    method: 'GET',
+    method: 'GET'
   }
 
   try {

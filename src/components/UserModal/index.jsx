@@ -338,7 +338,8 @@ export const UserModal = ({
                 htmlType='button'
                 className='m-2'
                 onClick={() => resetForm(form)}
-                disabled={registeredUser ? true : false}>
+                disabled={registeredUser ? true : false}
+              >
                 Limpiar
               </Button>
             ) : (

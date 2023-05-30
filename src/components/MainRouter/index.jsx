@@ -49,10 +49,19 @@ const MainRouter = ({ location }) => {
       {/* Main routes conditioned according to the role of the user */}
       <Routes>
         <Route path='/main' element={role !== ROLES.ADMIN ? <ErrorView /> : <DashboardView />} />
-        <Route path='/staff' element={role == ROLES.MESSENGER ? <ErrorView /> : <MessengersView />} />
+        <Route
+          path='/staff'
+          element={role == ROLES.MESSENGER ? <ErrorView /> : <MessengersView />}
+        />
         <Route path='/services' element={role !== ROLES.ADMIN ? <ErrorView /> : <ServicesView />} />
-        <Route path='/offices' element={role == ROLES.MESSENGER ? <ErrorView /> : <OfficesView />} />
-        <Route path='/staff/:id' element={role == ROLES.MESSENGER ? <ErrorView /> : <UserProfile />} />
+        <Route
+          path='/offices'
+          element={role == ROLES.MESSENGER ? <ErrorView /> : <OfficesView />}
+        />
+        <Route
+          path='/staff/:id'
+          element={role == ROLES.MESSENGER ? <ErrorView /> : <UserProfile />}
+        />
         <Route
           path='/customers'
           element={role == ROLES.CUSTOMER ? <ErrorView /> : <CustomersView />}

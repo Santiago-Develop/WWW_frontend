@@ -85,8 +85,8 @@ const CustomersView = () => {
           ) : !!data && data.length < 1 ? (
             <Empty className='m-3' />
           ) : (
-            data.map((
-              {
+            data.map(
+              ({
                 id,
                 username,
                 urlImg,
@@ -98,21 +98,22 @@ const CustomersView = () => {
                 department,
                 city
               }) => {
-              return (
-                <UserCard
-                  key={id}
-                  username={username}
-                  urlImg={urlImg}
-                  email={email}
-                  phone={phone}
-                  documentNumber={documentNumber}
-                  documentType={documentType}
-                  country={country}
-                  department={department}
-                  city={city}
-                />
-              )
-            })
+                return (
+                  <UserCard
+                    key={id}
+                    username={username}
+                    urlImg={urlImg}
+                    email={email}
+                    phone={phone}
+                    documentNumber={documentNumber}
+                    documentType={documentType}
+                    country={country}
+                    department={department}
+                    city={city}
+                  />
+                )
+              }
+            )
           )}
         </div>
       </div>
