@@ -1,21 +1,21 @@
-import { headers } from '../utils/headers'
+import { headers } from "../utils/headers";
 
-const API_URL = import.meta.env.VITE_API_URL
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const getUser = async (id) => {
   const requestOptions = {
-    method: 'GET',
-    headers: headers
-  }
+    method: "GET",
+    headers: headers,
+  };
 
   try {
-    const res = await fetch(API_URL + 'api/user/' + id + '/', requestOptions)
-    let data = await res.json()
-    delete data['updatedAt']
-    delete data['createdAt']
+    const res = await fetch(API_URL + "api/user/" + id + "/", requestOptions);
+    let data = await res.json();
+    delete data["updatedAt"];
+    delete data["createdAt"];
 
-    return data
+    return data;
   } catch (error) {
-    console.log('error: ', error)
+    console.log("error: ", error);
   }
-}
+};

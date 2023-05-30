@@ -45,10 +45,7 @@ const OfficesView = () => {
     const id = localStorage.getItem("id");
 
     try {
-      const res = await fetch(
-        API_URL + "api/user_offices/" + id + "/",
-        requestOptions
-      );
+      const res = await fetch(API_URL + "api/user_offices/" + id + "/", requestOptions);
       let data = await res.json();
       setLoading(true);
       setData(data);
@@ -82,10 +79,7 @@ const OfficesView = () => {
             >
               Solicitar pedido
             </Button>
-            <Button
-              type="primary"
-              onClick={() => handleSetState(true, setAddOffice)}
-            >
+            <Button type="primary" onClick={() => handleSetState(true, setAddOffice)}>
               Agregar sucursal
             </Button>
             <Input

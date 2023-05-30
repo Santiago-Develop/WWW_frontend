@@ -28,11 +28,7 @@ export const UserCard = ({
     <>
       <div className="userCard">
         <div className="d-flex align-items-center field">
-          <img
-            src={"data:image/png;base64," + urlImg}
-            alt="avatar"
-            className="userImg"
-          />
+          <img src={"data:image/png;base64," + urlImg} alt="avatar" className="userImg" />
           <span className="info_text _name">{username}</span>
         </div>
         <div className="field">

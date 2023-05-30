@@ -81,9 +81,7 @@ const MessengersView = () => {
             </div>
             <div className="field">
               <div className="d-flex align-items-center justify-content-center">
-                <span className="info_text text-white">
-                  Tipo y Número de documento
-                </span>
+                <span className="info_text text-white">Tipo y Número de documento</span>
               </div>
             </div>
             <div className="field">
@@ -94,9 +92,7 @@ const MessengersView = () => {
             {userRole === ROLES.ADMIN ? (
               <div className="field">
                 <div className="d-flex align-items-center justify-content-center">
-                  <span className="info_text text-white">
-                    Clientes asignados
-                  </span>
+                  <span className="info_text text-white">Clientes asignados</span>
                 </div>
               </div>
             ) : (
@@ -140,7 +136,7 @@ const MessengersView = () => {
                       userRole={userRole}
                     />
                   );
-                }
+                },
               )
             )}
           </div>
