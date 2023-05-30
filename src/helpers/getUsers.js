@@ -4,7 +4,14 @@ import { setLocalStorage } from "./setLocalStorage";
 const API_URL = import.meta.env.VITE_API_URL;
 
 /* Function to obtain the data of all users */
-export const getUsers = async (role, type, setData, setLoading) => {
+export const getUsers = async (
+  role,
+  type = null,
+  setData = null,
+  setLoading = null,
+  isSearch = true,
+) => {
+  console.log("🚀 ~ file: getUsers.js:8 ~ getUsers ~ role:", role);
   let data = [];
   const requestOptions = {
     method: "GET",
@@ -14,13 +21,15 @@ export const getUsers = async (role, type, setData, setLoading) => {
     const res = await fetch(API_URL + "api/user", requestOptions);
     let data = await res.json();
     data = data.filter((user) => user.role === role);
-    setLoading(true);
-    setData(data);
-    const { _id, _name, _role, _urlImg, _token } = backUpLocalStorage();
-    setLocalStorage(_id, _name, _role, _urlImg, _token);
-    localStorage.setItem(type, JSON.stringify(data));
+    if (isSearch) {
+      setData(data);
+      setLoading(true);
+      const { _id, _name, _role, _urlImg, _token } = backUpLocalStorage();
+      setLocalStorage(_id, _name, _role, _urlImg, _token);
+      localStorage.setItem(type, JSON.stringify(data));
+    }
+    return data;
   } catch (error) {
     console.log("error: ", error);
   }
-  return data;
 };

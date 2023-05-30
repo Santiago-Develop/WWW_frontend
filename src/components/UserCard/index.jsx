@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import "./style.scss";
 import { ROLES } from "../../utils/enums";
 import { Select, Space } from "antd";
+import { getUsers } from "../../helpers/getUsers";
+import { useEffect, useState } from "react";
 
 /* Component used to display customer information */
 
@@ -19,11 +21,23 @@ export const UserCard = ({
   userRole,
 }) => {
   const { Option } = Select;
+  const [messengers, setMessengers] = useState(false);
 
   const handleChange = (value = []) => {
     console.log(`selected ${value}`);
   };
 
+  const customerOptions = async () => {
+    const data = await getUsers(ROLES.CUSTOMER, null, null, null, false);
+    setMessengers(data);
+    console.log("🚀 ~ file: index.jsx:33 ~ customerOptions ~ messengers:", messengers);
+  };
+
+  useEffect(() => {
+    customerOptions();
+  }, []);
+
+  console.log("🚀 ~ file: index.jsx:33 ~ customerOptions ~ messengers:", messengers);
   return (
     <>
       <div className="userCard">
@@ -54,44 +68,26 @@ export const UserCard = ({
           <div className="field">
             <Select
               mode="multiple"
-              style={{ width: "100%" }}
-              placeholder="select one country"
-              defaultValue={["china"]}
+              style={{ width: "90%" }}
+              placeholder="Selecciona los clientes"
               onChange={handleChange}
               optionLabelProp="label"
             >
-              <Option value="china" label="China">
-                <Space>
-                  <span role="img" aria-label="China">
-                    🇨🇳
-                  </span>
-                  China (中国)
-                </Space>
-              </Option>
-              <Option value="usa" label="USA">
-                <Space>
-                  <span role="img" aria-label="USA">
-                    🇺🇸
-                  </span>
-                  USA (美国)
-                </Space>
-              </Option>
-              <Option value="japan" label="Japan">
-                <Space>
-                  <span role="img" aria-label="Japan">
-                    🇯🇵
-                  </span>
-                  Japan (日本)
-                </Space>
-              </Option>
-              <Option value="korea" label="Korea">
-                <Space>
-                  <span role="img" aria-label="Korea">
-                    🇰🇷
-                  </span>
-                  Korea (韩国)
-                </Space>
-              </Option>
+              {!!messengers && messengers.length >= 0
+                ? messengers.map((messenger) => {
+                    return (
+                      <>
+                        <Option value={messenger?.user_id} label={messenger?.username}>
+                          <Space>
+                            <span role="img" aria-label={messenger?.username}>
+                              {messenger?.username}
+                            </span>
+                          </Space>
+                        </Option>
+                      </>
+                    );
+                  })
+                : ""}
             </Select>
           </div>
         ) : (
