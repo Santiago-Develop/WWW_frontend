@@ -38,9 +38,7 @@ export const UserProfile = () => {
             <span className="name">{data.username}</span>
             <span className="subfields">{data.email}</span>
             <span className="subfields">{data.phone}</span>
-            <span className="subfields">
-              {moment(data.birthDate).calendar()}
-            </span>
+            <span className="subfields">{moment(data.birthDate).calendar()}</span>
             <span className="subfields">{getRole(data.role)}</span>
           </div>
         </div>

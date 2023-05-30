@@ -72,10 +72,7 @@ export const UserModal = ({
         let error_field = newUserFields[error.response.data.err.meta.target];
         type = "warning";
         message = "¡Hubo un error!";
-        description =
-          "El " +
-          error_field +
-          " ingresado ya existe, inténtalo con uno diferente";
+        description = "El " + error_field + " ingresado ya existe, inténtalo con uno diferente";
         openNotificationWithIcon(type, message, description);
       }
     } else {
@@ -113,10 +110,7 @@ export const UserModal = ({
         let error_field = newUserFields[error.err.meta.target];
         type = "warning";
         message = "¡Hubo un error!";
-        description =
-          "El " +
-          error_field +
-          " ingresado ya existe, inténtalo con uno diferente";
+        description = "El " + error_field + " ingresado ya existe, inténtalo con uno diferente";
         openNotificationWithIcon(type, message, description);
       } else {
         setRegisteredUser(true);
@@ -147,14 +141,11 @@ export const UserModal = ({
         name="crearCliente"
         className="crearCliente"
         id="crearCliente"
-        onFinish={() =>
-          edit ? void handleRegisterSubmit() : void handleUpdate()
-        }
+        onFinish={() => (edit ? void handleRegisterSubmit() : void handleUpdate())}
         onFinishFailed={() => {
           const type = "warning";
           const message = "¡No se pudo completar el registro!";
-          const description =
-            "Algunos campos obligatorios no están diligenciados";
+          const description = "Algunos campos obligatorios no están diligenciados";
           openNotificationWithIcon(type, message, description);
         }}
       >
@@ -164,20 +155,14 @@ export const UserModal = ({
               <Form.Item
                 name="name"
                 label="Nombre completo"
-                rules={
-                  edit
-                    ? [{ required: true, message: "Este campo es obligatorio" }]
-                    : []
-                }
+                rules={edit ? [{ required: true, message: "Este campo es obligatorio" }] : []}
                 className="d-flex flex-column"
               >
                 <Input
                   type="text"
                   pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+${2,60}"
                   title="Ingresa un nombre válido"
-                  onChange={(event) =>
-                    handleInputChange(newUser, setUser, null, null, null, event)
-                  }
+                  onChange={(event) => handleInputChange(newUser, setUser, null, null, null, event)}
                   name="name"
                   defaultValue={newUser?.name}
                 />
@@ -185,20 +170,14 @@ export const UserModal = ({
               <Form.Item
                 name="email"
                 label="Correo electrónico"
-                rules={
-                  edit
-                    ? [{ required: true, message: "Este campo es obligatorio" }]
-                    : []
-                }
+                rules={edit ? [{ required: true, message: "Este campo es obligatorio" }] : []}
                 className="d-flex flex-column"
               >
                 <Input
                   type="email"
                   pattern="^[^@]+@[^@]+\.[a-zA-Z]{2,}$"
                   title="Ingresa un correo válido"
-                  onChange={(event) =>
-                    handleInputChange(newUser, setUser, null, null, null, event)
-                  }
+                  onChange={(event) => handleInputChange(newUser, setUser, null, null, null, event)}
                   name="email"
                   defaultValue={newUser?.email}
                 />
@@ -206,20 +185,14 @@ export const UserModal = ({
               <Form.Item
                 name="documentNumber"
                 label="Número de cédula"
-                rules={
-                  edit
-                    ? [{ required: true, message: "Este campo es obligatorio" }]
-                    : []
-                }
+                rules={edit ? [{ required: true, message: "Este campo es obligatorio" }] : []}
                 className="d-flex flex-column"
               >
                 <Input
                   type="text"
                   pattern="^[0-9]{6,10}$"
                   title="Ingresa un número de cédula válido"
-                  onChange={(event) =>
-                    handleInputChange(newUser, setUser, null, null, null, event)
-                  }
+                  onChange={(event) => handleInputChange(newUser, setUser, null, null, null, event)}
                   name="documentNumber"
                   defaultValue={newUser?.documentNumber}
                 />
@@ -246,14 +219,7 @@ export const UserModal = ({
                       pattern="^(?=(?:.*\d){1})(?=(?:.*[A-Z]){1})(?=(?:.*[a-z]){1})(?=(?:.*[@$?¡\-_~`^{}¿\+*#]){1})\S{8,16}$"
                       title="La contraseña debe tener al entre 8 y 16 caracteres, al menos un dígito, al menos una mayúscula y al menos un caracter especial."
                       onChange={(event) =>
-                        handleInputChange(
-                          newUser,
-                          setUser,
-                          null,
-                          null,
-                          null,
-                          event
-                        )
+                        handleInputChange(newUser, setUser, null, null, null, event)
                       }
                       name="password"
                     />
@@ -278,14 +244,7 @@ export const UserModal = ({
                       pattern="^(?=(?:.*\d){1})(?=(?:.*[A-Z]){1})(?=(?:.*[a-z]){1})(?=(?:.*[@$?¡\-_~`^{}¿\+*#]){1})\S{8,16}$"
                       title="La contraseña debe tener al entre 8 y 16 caracteres, al menos un dígito, al menos una mayúscula y al menos un caracter especial."
                       onChange={(event) =>
-                        handleInputChange(
-                          newUser,
-                          setUser,
-                          null,
-                          null,
-                          null,
-                          event
-                        )
+                        handleInputChange(newUser, setUser, null, null, null, event)
                       }
                       name="password_confirm"
                     />
@@ -299,20 +258,14 @@ export const UserModal = ({
               <Form.Item
                 name="phone"
                 label="Número de celular"
-                rules={
-                  edit
-                    ? [{ required: true, message: "Este campo es obligatorio" }]
-                    : []
-                }
+                rules={edit ? [{ required: true, message: "Este campo es obligatorio" }] : []}
                 className="d-flex flex-column"
               >
                 <Input
                   type="text"
                   pattern="([0-9]{10})"
                   title="Ingresa un número de celular válido"
-                  onChange={(event) =>
-                    handleInputChange(newUser, setUser, null, null, null, event)
-                  }
+                  onChange={(event) => handleInputChange(newUser, setUser, null, null, null, event)}
                   name="phone"
                   defaultValue={newUser?.phone}
                   value={newUser?.phone}
@@ -322,29 +275,16 @@ export const UserModal = ({
               <Form.Item
                 name="birthDate"
                 label="Fecha de nacimiento"
-                rules={
-                  edit
-                    ? [{ required: true, message: "Este campo es obligatorio" }]
-                    : []
-                }
+                rules={edit ? [{ required: true, message: "Este campo es obligatorio" }] : []}
                 className="d-flex flex-column"
               >
                 <DatePicker
                   onChange={(date, dateString) =>
-                    handleInputChange(
-                      newUser,
-                      setUser,
-                      "birthDate",
-                      date,
-                      dateString
-                    )
+                    handleInputChange(newUser, setUser, "birthDate", date, dateString)
                   }
                   name="birthDate"
                   className="w-100"
-                  defaultValue={dayjs(
-                    newUser.birthDate?.split("T")[0],
-                    dateFormat
-                  )}
+                  defaultValue={dayjs(newUser.birthDate?.split("T")[0], dateFormat)}
                 />
               </Form.Item>
               <Form.Item
@@ -353,11 +293,7 @@ export const UserModal = ({
                 label="Imágen de perfil"
                 valuePropName="fileList"
                 getValueFromEvent={(event) => normFile(event)}
-                rules={
-                  edit
-                    ? [{ required: true, message: "Este campo es obligatorio" }]
-                    : []
-                }
+                rules={edit ? [{ required: true, message: "Este campo es obligatorio" }] : []}
                 className="d-flex text-center"
               >
                 <Upload
@@ -370,13 +306,9 @@ export const UserModal = ({
                       file.type === "image/png" ||
                       file.type === "image/svg+xml";
                     if (!notImage) {
-                      await message.error(
-                        `${file.name} no es un archivo válido`
-                      );
+                      await message.error(`${file.name} no es un archivo válido`);
                     } else {
-                      await message.success(
-                        `${file.name} añadido exitosamente`
-                      );
+                      await message.success(`${file.name} añadido exitosamente`);
                       setUrlImgBase64(file, newUser, setUser);
                     }
                     return notImage || Upload.LIST_IGNORE;
@@ -394,11 +326,7 @@ export const UserModal = ({
           {!edit ? (
             <Form.Item
               name="state"
-              rules={
-                edit
-                  ? [{ required: true, message: "Este campo es obligatorio" }]
-                  : []
-              }
+              rules={edit ? [{ required: true, message: "Este campo es obligatorio" }] : []}
               className="d-flex flex-column"
             >
               <Select

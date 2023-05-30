@@ -17,12 +17,7 @@ import {
   message,
   Select,
 } from "antd";
-import {
-  UploadOutlined,
-  LoadingOutlined,
-  LockOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { UploadOutlined, LoadingOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
 import axios from "axios";
 import PropTypes from "prop-types";
 import "./style.scss";
@@ -112,8 +107,7 @@ const LoginView = ({ setToken }) => {
     } catch (error) {
       const type = "warning";
       const message = "¡Ocurrió algo inusual!";
-      const description =
-        "Las credenciales ingresadas con incorrectas, ¡Inténtalo de nuevo!";
+      const description = "Las credenciales ingresadas con incorrectas, ¡Inténtalo de nuevo!";
       console.log(error);
       setUser(false);
       openNotificationWithIcon(type, message, description);
@@ -172,9 +166,7 @@ const LoginView = ({ setToken }) => {
                 <div className="card-body p-3">
                   <div className="d-flex justify-content-center align-items-center">
                     <div className="d-flex container-title p-3 m-2">
-                      <span className="fs-4 card-title fw-bold">
-                        Bienvenido
-                      </span>
+                      <span className="fs-4 card-title fw-bold">Bienvenido</span>
                     </div>
                   </div>
                   <div className="d-flex justify-content-center align-items-center m-3">
@@ -186,24 +178,13 @@ const LoginView = ({ setToken }) => {
                     >
                       <Form.Item
                         name="email"
-                        rules={[
-                          { required: true, message: "Ingresa tu correo!" },
-                        ]}
+                        rules={[{ required: true, message: "Ingresa tu correo!" }]}
                       >
                         <Input
-                          prefix={
-                            <UserOutlined className="site-form-item-icon" />
-                          }
+                          prefix={<UserOutlined className="site-form-item-icon" />}
                           placeholder="Correo"
                           onChange={(event) =>
-                            handleInputChange(
-                              loginUser,
-                              setLoginUser,
-                              null,
-                              null,
-                              null,
-                              event
-                            )
+                            handleInputChange(loginUser, setLoginUser, null, null, null, event)
                           }
                           value={loginUser.email}
                           name="email"
@@ -211,25 +192,14 @@ const LoginView = ({ setToken }) => {
                       </Form.Item>
                       <Form.Item
                         name="password"
-                        rules={[
-                          { required: true, message: "Ingresa tu contraseña!" },
-                        ]}
+                        rules={[{ required: true, message: "Ingresa tu contraseña!" }]}
                       >
                         <Input
-                          prefix={
-                            <LockOutlined className="site-form-item-icon" />
-                          }
+                          prefix={<LockOutlined className="site-form-item-icon" />}
                           type="password"
                           placeholder="Contraseña"
                           onChange={(event) =>
-                            handleInputChange(
-                              loginUser,
-                              setLoginUser,
-                              null,
-                              null,
-                              null,
-                              event
-                            )
+                            handleInputChange(loginUser, setLoginUser, null, null, null, event)
                           }
                           value={loginUser.password}
                           name="password"
@@ -254,11 +224,7 @@ const LoginView = ({ setToken }) => {
                         </a>
                       </Form.Item>
                       <div className={user ? "text-center mt-3" : "loading"}>
-                        <Spin
-                          indicator={
-                            <LoadingOutlined style={{ fontSize: 24 }} spin />
-                          }
-                        />
+                        <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
                       </div>
                     </Form>
                   </div>
@@ -291,8 +257,7 @@ const LoginView = ({ setToken }) => {
           onFinishFailed={() => {
             const type = "warning";
             const message = "¡No se pudo completar el registro!";
-            const description =
-              "Algunos campos obligatorios no están diligenciados";
+            const description = "Algunos campos obligatorios no están diligenciados";
             openNotificationWithIcon(type, message, description);
           }}
         >
@@ -302,9 +267,7 @@ const LoginView = ({ setToken }) => {
                 <Form.Item
                   name="username"
                   label="Nombre de usuario"
-                  rules={[
-                    { required: true, message: "Este campo es obligatorio" },
-                  ]}
+                  rules={[{ required: true, message: "Este campo es obligatorio" }]}
                   className="d-flex flex-column"
                 >
                   <Input
@@ -312,14 +275,7 @@ const LoginView = ({ setToken }) => {
                     pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+${2,60}"
                     title="Ingresa un nombre válido"
                     onChange={(event) =>
-                      handleInputChange(
-                        newUser,
-                        setNewUser,
-                        null,
-                        null,
-                        null,
-                        event
-                      )
+                      handleInputChange(newUser, setNewUser, null, null, null, event)
                     }
                     name="username"
                   />
@@ -327,9 +283,7 @@ const LoginView = ({ setToken }) => {
                 <Form.Item
                   name="email"
                   label="Correo electrónico"
-                  rules={[
-                    { required: true, message: "Este campo es obligatorio" },
-                  ]}
+                  rules={[{ required: true, message: "Este campo es obligatorio" }]}
                   className="d-flex flex-column"
                 >
                   <Input
@@ -337,14 +291,7 @@ const LoginView = ({ setToken }) => {
                     pattern="^[^@]+@[^@]+\.[a-zA-Z]{2,}$"
                     title="Ingresa un correo válido"
                     onChange={(event) =>
-                      handleInputChange(
-                        newUser,
-                        setNewUser,
-                        null,
-                        null,
-                        null,
-                        event
-                      )
+                      handleInputChange(newUser, setNewUser, null, null, null, event)
                     }
                     name="email"
                   />
@@ -352,9 +299,7 @@ const LoginView = ({ setToken }) => {
                 <Form.Item
                   name="documentNumber"
                   label="Número de documento"
-                  rules={[
-                    { required: true, message: "Este campo es obligatorio" },
-                  ]}
+                  rules={[{ required: true, message: "Este campo es obligatorio" }]}
                   className="d-flex flex-column"
                 >
                   <Input
@@ -362,14 +307,7 @@ const LoginView = ({ setToken }) => {
                     pattern="^[0-9]{6,10}$"
                     title="Ingresa un número de cédula válido"
                     onChange={(event) =>
-                      handleInputChange(
-                        newUser,
-                        setNewUser,
-                        null,
-                        null,
-                        null,
-                        event
-                      )
+                      handleInputChange(newUser, setNewUser, null, null, null, event)
                     }
                     name="documentNumber"
                     placeholder="NIT (Cliente) CC (Mensajero)"
@@ -379,9 +317,7 @@ const LoginView = ({ setToken }) => {
                 <Form.Item
                   name="password"
                   label="Contraseña"
-                  rules={[
-                    { required: true, message: "Este campo es obligatorio" },
-                  ]}
+                  rules={[{ required: true, message: "Este campo es obligatorio" }]}
                   className="d-flex flex-column"
                 >
                   <Input.Password
@@ -389,14 +325,7 @@ const LoginView = ({ setToken }) => {
                     pattern="^(?=(?:.*\d){1})(?=(?:.*[A-Z]){1})(?=(?:.*[a-z]){1})(?=(?:.*[@$?¡\-_~`^{}¿\+*#]){1})\S{8,16}$"
                     title="La contraseña debe tener al entre 8 y 16 caracteres, al menos un dígito, al menos una mayúscula y al menos un caracter especial."
                     onChange={(event) =>
-                      handleInputChange(
-                        newUser,
-                        setNewUser,
-                        null,
-                        null,
-                        null,
-                        event
-                      )
+                      handleInputChange(newUser, setNewUser, null, null, null, event)
                     }
                     name="password"
                   />
@@ -404,9 +333,7 @@ const LoginView = ({ setToken }) => {
                 <Form.Item
                   name="password_confirm"
                   label="Confirmar contraseña"
-                  rules={[
-                    { required: true, message: "Este campo es obligatorio" },
-                  ]}
+                  rules={[{ required: true, message: "Este campo es obligatorio" }]}
                   className="d-flex flex-column"
                 >
                   <Input.Password
@@ -414,14 +341,7 @@ const LoginView = ({ setToken }) => {
                     pattern="^(?=(?:.*\d){1})(?=(?:.*[A-Z]){1})(?=(?:.*[a-z]){1})(?=(?:.*[@$?¡\-_~`^{}¿\+*#]){1})\S{8,16}$"
                     title="La contraseña debe tener al entre 8 y 16 caracteres, al menos un dígito, al menos una mayúscula y al menos un caracter especial."
                     onChange={(event) =>
-                      handleInputChange(
-                        newUser,
-                        setNewUser,
-                        null,
-                        null,
-                        null,
-                        event
-                      )
+                      handleInputChange(newUser, setNewUser, null, null, null, event)
                     }
                     name="password_confirm"
                   />
@@ -432,9 +352,7 @@ const LoginView = ({ setToken }) => {
                   label="Imágen de perfil"
                   valuePropName="fileList"
                   getValueFromEvent={(event) => normFile(event)}
-                  rules={[
-                    { required: true, message: "Este campo es obligatorio" },
-                  ]}
+                  rules={[{ required: true, message: "Este campo es obligatorio" }]}
                   className="d-flex text-center"
                 >
                   <Upload
@@ -447,13 +365,9 @@ const LoginView = ({ setToken }) => {
                         file.type === "image/png" ||
                         file.type === "image/svg+xml";
                       if (!notImage) {
-                        await message.error(
-                          `${file.name} no es un archivo válido`
-                        );
+                        await message.error(`${file.name} no es un archivo válido`);
                       } else {
-                        await message.success(
-                          `${file.name} añadido exitosamente`
-                        );
+                        await message.success(`${file.name} añadido exitosamente`);
                         setUrlImgBase64(file, newUser, setNewUser);
                       }
                       return notImage || Upload.LIST_IGNORE;
@@ -471,9 +385,7 @@ const LoginView = ({ setToken }) => {
                 <Form.Item
                   name="phone"
                   label="Número de celular"
-                  rules={[
-                    { required: true, message: "Este campo es obligatorio" },
-                  ]}
+                  rules={[{ required: true, message: "Este campo es obligatorio" }]}
                   className="d-flex flex-column"
                 >
                   <Input
@@ -481,14 +393,7 @@ const LoginView = ({ setToken }) => {
                     pattern="([0-9]{10})"
                     title="Ingresa un número de celular válido"
                     onChange={(event) =>
-                      handleInputChange(
-                        newUser,
-                        setNewUser,
-                        null,
-                        null,
-                        null,
-                        event
-                      )
+                      handleInputChange(newUser, setNewUser, null, null, null, event)
                     }
                     name="phone"
                   />
@@ -522,11 +427,7 @@ const LoginView = ({ setToken }) => {
                   className="d-flex flex-column"
                   disabled={true}
                 >
-                  <Select
-                    defaultValue={"Colombia"}
-                    options={countriesOptions}
-                    name="country"
-                  />
+                  <Select defaultValue={"Colombia"} options={countriesOptions} name="country" />
                 </Form.Item>
 
                 <Form.Item
@@ -597,9 +498,7 @@ const LoginView = ({ setToken }) => {
           </div>
 
           <div className={registeredUser ? "text-center mt-3" : "loading"}>
-            <Spin
-              indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
-            />
+            <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
           </div>
         </Form>
       </Modal>
