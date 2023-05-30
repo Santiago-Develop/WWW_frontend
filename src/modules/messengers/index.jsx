@@ -104,7 +104,7 @@ const MessengersView = () => {
                 <div className='content' />
               </Spin>
             ) : !!data && data.length < 1 ? (
-              <Empty />
+              <Empty className='m-3' />
             ) : (
               data.map((
                 {

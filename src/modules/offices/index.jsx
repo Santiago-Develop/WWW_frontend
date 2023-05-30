@@ -15,7 +15,7 @@ import './style.scss'
 const OfficesView = () => {
 
   /* General states */
-  const [data, setData] = useState(false)
+  const [data, setData] = useState([])
   const [loading, setLoading] = useState(false)
   const type = 'offices'
 
@@ -23,7 +23,6 @@ const OfficesView = () => {
   const [formAddOffice] = Form.useForm()
   const [registeredUser, setRegisteredUser] = useState(false)
   const [addOffice, setAddOffice] = useState(false)
-  const [updateOffice, setUpdateOffice] = useState(false)
   const [modelRegister, setModelRegister] = useState(false)
   const [newUser, setNewUser] = useState({
     name: '',
@@ -119,7 +118,7 @@ const OfficesView = () => {
                 <div className='content' />
               </Spin>
             ) : !!data && data.length < 1 ? (
-              <Empty />
+              <Empty className='m-3' />
             ) : (
               data.map((
                 {
@@ -136,12 +135,6 @@ const OfficesView = () => {
                     address={address}
                     phone={phone}
                     getOffices={getOffices}
-                    form={formAddOffice}
-                    updateOffice={updateOffice}
-                    setUpdateOffice={setUpdateOffice}
-                    setLoading={setLoading}
-                    setData={setData}
-                    type={type}
                   />
                 )
               })

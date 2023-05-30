@@ -83,7 +83,7 @@ const CustomersView = () => {
               </Spin>
             </div>
           ) : !!data && data.length < 1 ? (
-            <Empty />
+            <Empty className='m-3' />
           ) : (
             data.map((
               {

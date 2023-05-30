@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
-import { Popconfirm } from 'antd'
+import { Form, Popconfirm } from 'antd'
 import { openNotificationWithIcon } from '../../../../helpers/openNotificationWithIcon'
 import { OfficeModal } from '../OfficeModal'
 import { getOffice } from '../../../../helpers/getOffice'
+import { useState } from 'react'
 
 /* Component used to display office information */
 export const OfficeCard = (
@@ -12,11 +13,12 @@ export const OfficeCard = (
         name,
         address,
         phone,
-        form,
-        updateOffice,
-        setUpdateOffice,
         getOffices
     }) => {
+
+    const [formAddOffice] = Form.useForm()
+    const [updateOffice, setUpdateOffice] = useState(false)
+
 
     /* Function to delete am office */
     const API_URL = import.meta.env.VITE_API_URL
@@ -47,6 +49,7 @@ export const OfficeCard = (
     }
 
     const showModalUpdateOffice = async (id) => {
+        localStorage.setItem("currentOffice", id)
         const data = await getOffice(id)
         setUpdateOffice(data)
     }
@@ -89,11 +92,10 @@ export const OfficeCard = (
             <OfficeModal
                 title='Editar sucursal'
                 edit={true}
-                form={form}
+                form={formAddOffice}
                 addOffice={updateOffice}
                 setAddOffice={setUpdateOffice}
                 getOffices={getOffices}
-                id={id}
             />
         </>
     )

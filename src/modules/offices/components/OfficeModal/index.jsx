@@ -22,18 +22,18 @@ export const OfficeModal = (
         addOffice,
         setAddOffice,
         getOffices,
-        id = null
     }
 ) => {
 
     const API_URL = import.meta.env.VITE_API_URL
     const [loading, setLoading] = useState(false)
     const [newOffice, setNewOffice] = useState({
-        name: addOffice?.name,
-        address: addOffice?.address,
-        phone: addOffice?.phone,
+        name: '',
+        address: '',
+        phone: '',
         customer: parseInt(localStorage.getItem('id'))
     })
+
 
     const handleAddOffice = async () => {
         setLoading(true)
@@ -43,13 +43,11 @@ export const OfficeModal = (
             headers,
             body: JSON.stringify(newOffice)
         }
-        console.log("🚀 ~ file: index.jsx:44 ~ handleAddOffice ~ newOffice:", newOffice)
-        console.log("🚀 ~ file: index.jsx:44 ~ handleAddOffice ~ addOffice:", addOffice)
 
         try {
             if (edit) {
-
-                const res = await fetch(API_URL + 'api/office/' + id + "/", requestOptions)
+                const id_ = localStorage.getItem("currentOffice")
+                await fetch(API_URL + 'api/office/' + id_ + "/", requestOptions)
 
                 const type = 'success'
                 const message = 'Actualización exitosa!'
@@ -133,7 +131,7 @@ export const OfficeModal = (
                                 title='Ingresa un nombre válido'
                                 onChange={(event) => handleInputChange(newOffice, setNewOffice, null, null, null, event)}
                                 name='name'
-                                defaultValue={addOffice.name}
+                                defaultValue={addOffice?.name}
 
                             />
                         </Form.Item>
@@ -148,7 +146,7 @@ export const OfficeModal = (
                                 title='Ingresa un correo válido'
                                 onChange={(event) => handleInputChange(newOffice, setNewOffice, null, null, null, event)}
                                 name='address'
-                                defaultValue={addOffice.address}
+                            defaultValue={addOffice?.address}
 
                             />
                         </Form.Item>
@@ -164,7 +162,7 @@ export const OfficeModal = (
                                 title='Ingresa un número de celular válido'
                                 onChange={(event) => handleInputChange(newOffice, setNewOffice, null, null, null, event)}
                                 name='phone'
-                                defaultValue={addOffice.phone}
+                            defaultValue={addOffice?.phone}
 
                             />
                         </Form.Item>
