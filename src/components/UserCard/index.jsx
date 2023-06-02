@@ -5,10 +5,11 @@ import { ROLES } from "../../utils/enums";
 import { Select, Space } from "antd";
 import { getUsers } from "../../helpers/getUsers";
 import { useEffect, useState } from "react";
-
+import { setMessengers } from "../../helpers/setMessengers";
 /* Component used to display customer information */
 
 export const UserCard = ({
+  id,
   username,
   urlImg,
   email,
@@ -23,8 +24,17 @@ export const UserCard = ({
   const { Option } = Select;
   const [messengers, setMessengers] = useState(false);
 
+
+
   const handleChange = (value = []) => {
-    console.log(`selected ${value}`);
+
+    const customers = value
+    console.log("🚀 ~ file: index.jsx:32 ~ handleChange ~ customers:", customers)
+    const messengerId = id
+    // setMessengers(customers, messengerId)
+
+    
+
   };
 
   const customerOptions = async () => {
@@ -75,18 +85,18 @@ export const UserCard = ({
             >
               {!!messengers && messengers.length >= 0
                 ? messengers.map((messenger) => {
-                    return (
-                      <>
-                        <Option value={messenger?.user_id} label={messenger?.username}>
-                          <Space>
-                            <span role="img" aria-label={messenger?.username}>
-                              {messenger?.username}
-                            </span>
-                          </Space>
-                        </Option>
-                      </>
-                    );
-                  })
+                  return (
+                    <>
+                      <Option value={messenger?.user_id} label={messenger?.username}>
+                        <Space>
+                          <span role="img" aria-label={messenger?.username}>
+                            {messenger?.username}
+                          </span>
+                        </Space>
+                      </Option>
+                    </>
+                  );
+                })
                 : ""}
             </Select>
           </div>

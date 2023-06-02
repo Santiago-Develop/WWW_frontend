@@ -110,7 +110,7 @@ const MessengersView = () => {
             ) : (
               data.map(
                 ({
-                  id,
+                  user_id,
                   username,
                   urlImg,
                   phone,
@@ -123,7 +123,8 @@ const MessengersView = () => {
                 }) => {
                   return (
                     <UserCard
-                      key={id}
+                      key={user_id}
+                      id={user_id}
                       username={username}
                       urlImg={urlImg}
                       email={email}
