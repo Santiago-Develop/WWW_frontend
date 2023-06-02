@@ -5,7 +5,8 @@ import { ROLES } from "../../utils/enums";
 import { Select, Space } from "antd";
 import { getUsers } from "../../helpers/getUsers";
 import { useEffect, useState } from "react";
-import { setMessengers } from "../../helpers/setMessengers";
+// import { setCustomers } from "../../helpers/setCustomers";
+import { getCustomers } from "../../helpers/getCustomers";
 /* Component used to display customer information */
 
 export const UserCard = ({
@@ -22,32 +23,44 @@ export const UserCard = ({
   userRole,
 }) => {
   const { Option } = Select;
-  const [messengers, setMessengers] = useState(false);
+  const [customers, setCustomers] = useState(false);
+  const [generalCustomers, setGeneralCustomers] = useState(false);
+  const API_URL = import.meta.env.VITE_API_URL;
 
 
+  const handleChange = async (customers = []) => {
 
-  const handleChange = (value = []) => {
+    const body = {
+      customers
+    }
 
-    const customers = value
-    console.log("🚀 ~ file: index.jsx:32 ~ handleChange ~ customers:", customers)
-    const messengerId = id
-    // setMessengers(customers, messengerId)
+    const requestOptions = {
+      method: "POST",
+      body: JSON.stringify(body)
+    };
 
-    
+    try {
+      const res = await fetch(API_URL + "api/user_messengers/" + id + "/", requestOptions);
+      await res.json();
+    } catch (error) {
+      console.log("error: ", error);
+    }
+
+
 
   };
 
   const customerOptions = async () => {
     const data = await getUsers(ROLES.CUSTOMER, null, null, null, false);
-    setMessengers(data);
-    console.log("🚀 ~ file: index.jsx:33 ~ customerOptions ~ messengers:", messengers);
+    setGeneralCustomers(data);
   };
 
   useEffect(() => {
     customerOptions();
+    getCustomers(id, setCustomers);
   }, []);
 
-  console.log("🚀 ~ file: index.jsx:33 ~ customerOptions ~ messengers:", messengers);
+
   return (
     <>
       <div className="userCard">
@@ -74,7 +87,7 @@ export const UserCard = ({
             {country}, {department}, {city}
           </span>
         </div>
-        {userRole === ROLES.ADMIN ? (
+        {userRole === ROLES.ADMIN && !!customers ? (
           <div className="field">
             <Select
               mode="multiple"
@@ -82,22 +95,23 @@ export const UserCard = ({
               placeholder="Selecciona los clientes"
               onChange={handleChange}
               optionLabelProp="label"
+              defaultValue={customers.map(c => c.user_id) || []}
             >
-              {!!messengers && messengers.length >= 0
-                ? messengers.map((messenger) => {
+              {!!generalCustomers && generalCustomers.length > 0
+                ? generalCustomers.map((generalCustomer) => {
                   return (
                     <>
-                      <Option value={messenger?.user_id} label={messenger?.username}>
+                      <Option value={generalCustomer?.user_id} label={generalCustomer?.username} chec>
                         <Space>
-                          <span role="img" aria-label={messenger?.username}>
-                            {messenger?.username}
+                          <span role="img" aria-label={generalCustomer?.username}>
+                            {generalCustomer?.username}
                           </span>
                         </Space>
                       </Option>
                     </>
                   );
                 })
-                : ""}
+                : ''}
             </Select>
           </div>
         ) : (
@@ -109,11 +123,11 @@ export const UserCard = ({
 };
 
 UserCard.propTypes = {
-  name: PropTypes.string.isRequired,
+  username: PropTypes.string.isRequired,
   urlImg: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   phone: PropTypes.string.isRequired,
-  birthDate: PropTypes.string.isRequired,
+  birthDate: PropTypes.string
 };
 
 export default UserCard;

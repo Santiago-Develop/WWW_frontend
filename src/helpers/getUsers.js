@@ -11,8 +11,6 @@ export const getUsers = async (
   setLoading = null,
   isSearch = true,
 ) => {
-  console.log("🚀 ~ file: getUsers.js:8 ~ getUsers ~ role:", role);
-  let data = [];
   const requestOptions = {
     method: "GET",
   };
