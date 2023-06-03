@@ -52,7 +52,7 @@ const MainRouter = ({ location }) => {
           path="/staff"
           element={role == ROLES.MESSENGER ? <ErrorView /> : <MessengersView />}
         />
-        <Route path="/services" element={role !== ROLES.ADMIN ? <ErrorView /> : <ServicesView />} />
+        <Route path="/services" element={<ServicesView />} />
         <Route
           path="/offices"
           element={role == ROLES.MESSENGER ? <ErrorView /> : <OfficesView />}
