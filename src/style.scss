@@ -44,24 +44,14 @@ span.ant-upload-list-item-name {
   color: white;
 }
 
+:where(.css-dev-only-do-not-override-w8mnev).ant-spin-nested-loading .ant-spin-container::after {
+  background: transparent !important;
+}
+
 .active {
-  background-image: linear-gradient(
-    to left top,
-    #48bb78,
-    #41c18d,
-    #3ec7a2,
-    #43ccb4,
-    #4fd1c5
-  );
+  background-image: linear-gradient(to left top, #48bb78, #41c18d, #3ec7a2, #43ccb4, #4fd1c5);
 }
 
 .inactive {
-  background-image: linear-gradient(
-    to left top,
-    #e53e3e,
-    #ec504f,
-    #f26160,
-    #f77170,
-    #fc8181
-  );
+  background-image: linear-gradient(to left top, #e53e3e, #ec504f, #f26160, #f77170, #fc8181);
 }

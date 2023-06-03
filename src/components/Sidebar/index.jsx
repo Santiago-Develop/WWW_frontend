@@ -116,7 +116,7 @@ const Sidebar = ({ setToken }) => {
             })}
 
           {MessengersLinks &&
-            role === ROLES.BARBER &&
+            role === ROLES.MESSENGER &&
             MessengersLinks.map(({ text, to, svg }) => {
               let classes = open ? "linkOpen" : "normal";
               let item_text = text ? text : "";

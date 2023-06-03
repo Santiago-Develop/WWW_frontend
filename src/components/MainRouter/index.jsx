@@ -19,7 +19,6 @@ const MainRouter = ({ location }) => {
 
   /* Global variables */
   let role = localStorage.getItem("role");
-  let id = localStorage.getItem("id");
 
   /* If we do not have a token, it means that the user cannot enter the software and we redirect him to the Login */
   if (!token && tokenLocal == undefined) {
@@ -33,7 +32,7 @@ const MainRouter = ({ location }) => {
 
   /* If the user's role is MESSENGER, then we redirect him to his respective internal */
   if (role == ROLES.MESSENGER && location.pathname === "/") {
-    return <Navigate to={`/staff/${id}`} />;
+    return <Navigate to={`/customers`} />;
   }
 
   /* If the user's role is Customer, then we redirect him to his profile */

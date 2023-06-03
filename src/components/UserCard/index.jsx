@@ -27,16 +27,14 @@ export const UserCard = ({
   const [generalCustomers, setGeneralCustomers] = useState(false);
   const API_URL = import.meta.env.VITE_API_URL;
 
-
   const handleChange = async (customers = []) => {
-
     const body = {
-      customers
-    }
+      customers,
+    };
 
     const requestOptions = {
       method: "POST",
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
     };
 
     try {
@@ -45,9 +43,6 @@ export const UserCard = ({
     } catch (error) {
       console.log("error: ", error);
     }
-
-
-
   };
 
   const customerOptions = async () => {
@@ -59,7 +54,6 @@ export const UserCard = ({
     customerOptions();
     getCustomers(id, setCustomers);
   }, []);
-
 
   return (
     <>
@@ -95,23 +89,27 @@ export const UserCard = ({
               placeholder="Selecciona los clientes"
               onChange={handleChange}
               optionLabelProp="label"
-              defaultValue={customers.map(c => c.user_id) || []}
+              defaultValue={customers.map((c) => c.user_id) || []}
             >
               {!!generalCustomers && generalCustomers.length > 0
                 ? generalCustomers.map((generalCustomer) => {
-                  return (
-                    <>
-                      <Option value={generalCustomer?.user_id} label={generalCustomer?.username} chec>
-                        <Space>
-                          <span role="img" aria-label={generalCustomer?.username}>
-                            {generalCustomer?.username}
-                          </span>
-                        </Space>
-                      </Option>
-                    </>
-                  );
-                })
-                : ''}
+                    return (
+                      <>
+                        <Option
+                          value={generalCustomer?.user_id}
+                          label={generalCustomer?.username}
+                          chec
+                        >
+                          <Space>
+                            <span role="img" aria-label={generalCustomer?.username}>
+                              {generalCustomer?.username}
+                            </span>
+                          </Space>
+                        </Option>
+                      </>
+                    );
+                  })
+                : ""}
             </Select>
           </div>
         ) : (
@@ -127,7 +125,7 @@ UserCard.propTypes = {
   urlImg: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   phone: PropTypes.string.isRequired,
-  birthDate: PropTypes.string
+  birthDate: PropTypes.string,
 };
 
 export default UserCard;

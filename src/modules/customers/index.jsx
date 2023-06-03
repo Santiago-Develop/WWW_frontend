@@ -6,6 +6,7 @@ import { onSearch } from "../../helpers/onSearch";
 import UserCard from "../../components/UserCard";
 import "../../style.scss";
 import "./style.scss";
+import { getBosses } from "../../helpers/getBosses";
 
 /* Component used to display each of the customer */
 
@@ -14,10 +15,14 @@ const CustomersView = () => {
   const [data, setData] = useState(false);
   const [loading, setLoading] = useState(false);
   const type = "customers";
+  const role = localStorage.getItem("role");
+  const id = localStorage.getItem("id");
 
   /* Functions to be executed when the page is rendered */
   useEffect(() => {
-    getUsers(ROLES.CUSTOMER, type, setData, setLoading);
+    role === ROLES.ADMIN
+      ? getUsers(ROLES.CUSTOMER, type, setData, setLoading)
+      : getBosses(id, setData, setLoading, type);
   }, []);
 
   return (
@@ -75,46 +80,48 @@ const CustomersView = () => {
           </div>
         </div>
 
+        {!data && !loading ? (
+          <Spin size="large" className="m-4" sty>
+            <div className="content" style={{ height: "50px" }} />
+          </Spin>
+        ) : !data || data.length < 1 ? (
+          <Empty className="m-3" />
+        ) : (
+          ""
+        )}
+
         <div style={{ maxHeight: "77vh", overflowY: "auto" }}>
-          {!data && !loading ? (
-            <div>
-              <Spin size="large" className="m-4">
-                <div className="content" />
-              </Spin>
-            </div>
-          ) : !!data && data.length < 1 ? (
-            <Empty className="m-3" />
-          ) : (
-            data.map(
-              ({
-                id,
-                username,
-                urlImg,
-                phone,
-                email,
-                documentType,
-                documentNumber,
-                country,
-                department,
-                city,
-              }) => {
-                return (
-                  <UserCard
-                    key={id}
-                    username={username}
-                    urlImg={urlImg}
-                    email={email}
-                    phone={phone}
-                    documentNumber={documentNumber}
-                    documentType={documentType}
-                    country={country}
-                    department={department}
-                    city={city}
-                  />
-                );
-              },
-            )
-          )}
+          {data
+            ? data.map(
+                ({
+                  id,
+                  username,
+                  urlImg,
+                  phone,
+                  email,
+                  documentType,
+                  documentNumber,
+                  country,
+                  department,
+                  city,
+                }) => {
+                  return (
+                    <UserCard
+                      key={id}
+                      username={username}
+                      urlImg={urlImg}
+                      email={email}
+                      phone={phone}
+                      documentNumber={documentNumber}
+                      documentType={documentType}
+                      country={country}
+                      department={department}
+                      city={city}
+                    />
+                  );
+                },
+              )
+            : ""}
         </div>
       </div>
     </div>

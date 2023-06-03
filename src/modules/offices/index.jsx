@@ -14,7 +14,7 @@ import "./style.scss";
 
 const OfficesView = () => {
   /* General states */
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(false);
   const [loading, setLoading] = useState(false);
   const type = "offices";
 
@@ -114,27 +114,31 @@ const OfficesView = () => {
             </div>
           </div>
 
+          {!data && !loading ? (
+            <Spin size="large" className="m-4" sty>
+              <div className="content" style={{ height: "50px" }} />
+            </Spin>
+          ) : !data || data.length < 1 ? (
+            <Empty className="m-3" />
+          ) : (
+            ""
+          )}
+
           <div style={{ maxHeight: "77vh", overflowY: "auto" }}>
-            {!data && !loading ? (
-              <Spin size="large" className="m-4">
-                <div className="content" />
-              </Spin>
-            ) : !!data && data.length < 1 ? (
-              <Empty className="m-3" />
-            ) : (
-              data.map(({ id, name, address, phone }) => {
-                return (
-                  <OfficeCard
-                    key={id}
-                    id={id}
-                    name={name}
-                    address={address}
-                    phone={phone}
-                    getOffices={getOffices}
-                  />
-                );
-              })
-            )}
+            {data
+              ? data.map(({ id, name, address, phone }) => {
+                  return (
+                    <OfficeCard
+                      key={id}
+                      id={id}
+                      name={name}
+                      address={address}
+                      phone={phone}
+                      getOffices={getOffices}
+                    />
+                  );
+                })
+              : ""}
           </div>
         </div>
       </div>
