@@ -91,7 +91,7 @@ const CustomersView = () => {
         )}
 
         <div style={{ maxHeight: "77vh", overflowY: "auto" }}>
-          {data
+          {!!data
             ? data.map(
                 ({
                   id,

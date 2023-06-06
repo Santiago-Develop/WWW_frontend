@@ -73,12 +73,6 @@ const OfficesView = () => {
             <h1 className="_title" style={{ marginBottom: "0 important" }}>
               Sucursales
             </h1>
-            <Button
-              type="primary"
-              // onClick={() => handleSetState(true, setModelRegister)}
-            >
-              Solicitar pedido
-            </Button>
             <Button type="primary" onClick={() => handleSetState(true, setAddOffice)}>
               Agregar sucursal
             </Button>
