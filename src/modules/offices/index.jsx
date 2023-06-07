@@ -9,6 +9,7 @@ import { OfficeModal } from "./components/OfficeModal";
 import OfficeCard from "./components/OfficeCard/index.jsx";
 import "../../style.scss";
 import "./style.scss";
+import { getOffices } from "../../helpers/getOffices";
 
 /* Component used to display each of the barber */
 
@@ -35,31 +36,9 @@ const OfficesView = () => {
   //   role: "MESSENGER",
   // });
 
-  const getOffices = async () => {
-    const API_URL = import.meta.env.VITE_API_URL;
-
-    const requestOptions = {
-      method: "GET",
-    };
-
-    const id = localStorage.getItem("id");
-
-    try {
-      const res = await fetch(API_URL + "api/user_offices/" + id + "/", requestOptions);
-      let data = await res.json();
-      setLoading(true);
-      setData(data);
-      const { _id, _name, _role, _urlImg, _token } = backUpLocalStorage();
-      setLocalStorage(_id, _name, _role, _urlImg, _token);
-      localStorage.setItem(type, JSON.stringify(data));
-    } catch (error) {
-      console.log("error: ", error);
-    }
-  };
-
   /* Functions to be executed when the page is rendered */
   useEffect(() => {
-    getOffices();
+    getOffices(type, setData, setLoading);
   }, []);
 
   return (
