@@ -7,6 +7,7 @@ import { getOffices } from '../../../helpers/getOffices';
 import TextArea from 'antd/es/input/TextArea';
 import { handleInputChange } from '../../../helpers/handleInputChange';
 import { headers } from '../../../utils/headers';
+import { resetForm } from '../../../helpers/resetForm';
 
 export const ServiceModal = ({ addService, setAddService }) => {
 
@@ -15,6 +16,8 @@ export const ServiceModal = ({ addService, setAddService }) => {
     const [loading, setLoading] = useState(false);
     const [offices, setOffices] = useState(false);
     const [officesOptions, setOfficeOptions] = useState(false);
+    const [sourceOffice, setSourceOffice] = useState(false);
+    const [destinationOffice, setDestinationOffice] = useState(false);
     const transportsOptions = [
         { value: 'CAR', label: 'Automóvil' },
         { value: 'MOTORCYCLE', label: 'Motocicleta' },
@@ -26,7 +29,7 @@ export const ServiceModal = ({ addService, setAddService }) => {
         description: "",
         customer: parseInt(localStorage.getItem("id")),
         source_office: "",
-        source_destination: ""
+        destination_office: ""
     });
 
     const handleChange = (value) => {
@@ -36,19 +39,21 @@ export const ServiceModal = ({ addService, setAddService }) => {
     const handleSelect = (value, type) => {
         console.log(`selected ${value}`);
         if (type === "transports") {
-            newService.transport = value
-            setNewService(newService)
+            newService.transport = value;
+            setNewService(newService);
         } else if (type === "source_office") {
-            newService.source_office = value
-        } else if (type === "source_destination") {
-            newService.source_destination = value
+            officesOptions.map(option => option.value === value ? option.disabled = true : option.disabled = false)
+            newService.source_office = value;
+        } else if (type === "destination_office") {
+            // officesOptions.map(option => option.value === value ? option.disabled = true : option.disabled = false)
+            newService.destination_office = value;
+
         }
 
     };
 
-    const handleAddOffice = async () => {
-
-        console.log("🚀 ~ file: ServiceModal.jsx:24 ~ ServiceModal ~ newService:", newService)
+    const handleAddService = async () => {
+        setLoading(true)
 
         const requestOptions = {
             method: "POST",
@@ -56,11 +61,32 @@ export const ServiceModal = ({ addService, setAddService }) => {
             headers
         };
 
+        let type = "";
+        let message = "";
+        let description = "";
+
         try {
             const res = await fetch(API_URL + "api/services/", requestOptions);
-            await res.json();
+            const { code } = await res.json();
+
+            type = "success";
+            message = "¡Solicitud exitosa!";
+            description = `Servicio ${code} creado correctamente`;
+            setTimeout(() => {
+                openNotificationWithIcon(type, message, description);
+                setLoading(false)
+                setAddService(false)
+                setLoading(false)
+                resetForm(form)
+
+            }, 2000);
         } catch (error) {
             console.log("error: ", error);
+            type = "warning";
+            message = "¡Hubo un error!";
+            description = error.message;
+            openNotificationWithIcon(type, message, description);
+            setLoading(false)
         }
     };
 
@@ -86,7 +112,7 @@ export const ServiceModal = ({ addService, setAddService }) => {
                     name="crearCliente"
                     className="crearCliente"
                     id="crearCliente"
-                    onFinish={handleAddOffice}
+                    onFinish={handleAddService}
                     onFinishFailed={() => {
                         const type = "warning";
                         const message = "¡No se pudo completar el registro!";
@@ -100,6 +126,8 @@ export const ServiceModal = ({ addService, setAddService }) => {
                                 name="description"
                                 label="Descripción"
                                 className="d-flex flex-column"
+                                rules={[{ required: true, message: "Este campo es obligatorio" }]}
+
                             >
                                 <TextArea
                                     showCount
@@ -118,6 +146,8 @@ export const ServiceModal = ({ addService, setAddService }) => {
                                 name="amount"
                                 label="Cantidad de paquetes"
                                 className="d-flex flex-column"
+                                rules={[{ required: true, message: "Este campo es obligatorio" }]}
+
                             >
                                 <Input
                                     type="number"
@@ -125,12 +155,15 @@ export const ServiceModal = ({ addService, setAddService }) => {
                                         handleInputChange(newService, setNewService, null, null, null, event)
                                     }
                                     name="amount"
+
                                 />
                             </Form.Item>
                             <Form.Item
                                 name="transport"
                                 label="Transporte"
                                 className="d-flex flex-column"
+                                // rules={[{ required: true, message: "Este campo es obligatorio" }]}
+
                             >
                                 <Select
                                     defaultValue="MOTORCYCLE"
@@ -142,21 +175,27 @@ export const ServiceModal = ({ addService, setAddService }) => {
                                 name="source_office"
                                 label="Surcursal de origen"
                                 className="d-flex flex-column"
+                                rules={[{ required: true, message: "Este campo es obligatorio" }]}
+
                             >
                                 <Select
                                     onChange={(value) => handleSelect(value, "source_office")}
                                     options={officesOptions}
+
                                 />
 
                             </Form.Item>
                             <Form.Item
-                                name="source_destination"
+                                name="destination_office"
                                 label="Surcursal de destino"
                                 className="d-flex flex-column"
+                                rules={[{ required: true, message: "Este campo es obligatorio" }]}
+
                             >
                                 <Select
-                                    onChange={(value) => handleSelect(value, "source_destination")}
+                                    onChange={(value) => handleSelect(value, "destination_office")}
                                     options={officesOptions}
+
                                 />
                             </Form.Item>
                         </div>
@@ -176,16 +215,15 @@ export const ServiceModal = ({ addService, setAddService }) => {
                             <Button
                                 type="primary"
                                 htmlType="submit"
-                                // disabled={loading ? true : false}
+                                disabled={loading ? true : false}
                                 className="btnCrearCliente m-2"
                             >
-                                {/* {edit ? "Actualizar" : "Crear"} */}
                                 Solicitar
                             </Button>
                         </Form.Item>
                     </div>
 
-                    <div /*className={loading ? "text-center mt-3" : "loading"}*/ style={{ display: 'none' }}>
+                    <div className={loading ? "text-center mt-3" : "loading"}>
                         <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
                     </div>
                 </Form>
