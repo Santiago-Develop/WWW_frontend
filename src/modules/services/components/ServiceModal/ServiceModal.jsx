@@ -1,13 +1,13 @@
-import { openNotificationWithIcon } from '../../../helpers/openNotificationWithIcon';
+import { openNotificationWithIcon } from '../../../../helpers/openNotificationWithIcon';
 import { LoadingOutlined } from "@ant-design/icons";
-import { handleSetState } from '../../../helpers/handleSetState';
+import { handleSetState } from '../../../../helpers/handleSetState';
 import { Button, Form, Input, Modal, Row, Select, Spin } from 'antd';
 import { useEffect, useState } from 'react';
-import { getOffices } from '../../../helpers/getOffices';
+import { getOffices } from '../../../../helpers/getOffices';
 import TextArea from 'antd/es/input/TextArea';
-import { handleInputChange } from '../../../helpers/handleInputChange';
-import { headers } from '../../../utils/headers';
-import { resetForm } from '../../../helpers/resetForm';
+import { handleInputChange } from '../../../../helpers/handleInputChange';
+import { headers } from '../../../../utils/headers';
+import { resetForm } from '../../../../helpers/resetForm';
 
 export const ServiceModal = ({ addService, setAddService }) => {
 
@@ -31,10 +31,6 @@ export const ServiceModal = ({ addService, setAddService }) => {
         source_office: "",
         destination_office: ""
     });
-
-    const handleChange = (value) => {
-        console.log(`selected ${value}`);
-    };
 
     const handleSelect = (value, type) => {
         console.log(`selected ${value}`);

@@ -1,10 +1,20 @@
-import { Button, Input } from "antd";
-import { ServiceModal } from "./components/ServiceModal";
-import { useState } from "react";
+import { Button, Empty, Input, Spin } from "antd";
+import { ServiceModal } from "./components/ServiceModal/ServiceModal";
+import { useEffect, useState } from "react";
 import { handleSetState } from "../../helpers/handleSetState";
+import { getServices } from "../../helpers/getServices";
+import { ServiceCard } from "./components/ServiceCard";
 
 export const ServicesView = () => {
   const [addService, setAddService] = useState(false)
+  const [data, setData] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const type = "services"
+
+  useEffect(() => {
+    getServices(type, setData, setLoading, true)
+  }, [])
+
 
   return (
     <div className="contenedor_main">
@@ -16,7 +26,7 @@ export const ServicesView = () => {
           <h1 className="_title">Mis servicios</h1>
           <Button
             type="primary"
-          onClick={() => handleSetState(true, setAddService)}
+            onClick={() => handleSetState(true, setAddService)}
           >
             Solicitar pedido
           </Button>
@@ -28,6 +38,58 @@ export const ServicesView = () => {
             }}
           />
         </div>
+      </div>
+
+      <div className="titles">
+        <div className="field">
+          <div className="d-flex align-items-center justify-content-center">
+            <span className="info_text text-white">Código</span>
+          </div>
+        </div>
+
+        <div className="field">
+          <div className="d-flex align-items-center justify-content-center">
+            <span className="info_text text-white">Cantidad de paquetes</span>
+          </div>
+        </div>
+        <div className="field">
+          <div className="d-flex align-items-center justify-content-center">
+            <span className="info_text text-white">Transporte</span>
+          </div>
+        </div>
+        <div className="field">
+          <div className="d-flex align-items-center justify-content-center">
+            <span className="info_text text-white">Trayecto</span>
+          </div>
+        </div>
+        <div className="field">
+          <div className="d-flex align-items-center justify-content-center">
+            <span className="info_text text-white">Estado</span>
+          </div>
+        </div>
+      </div>
+
+      {!data && !loading ? (
+        <Spin size="large" className="m-4" sty>
+          <div className="content" style={{ height: "50px" }} />
+        </Spin>
+      ) : !data || data.length < 1 ? (
+        <Empty className="m-3" />
+      ) : (
+        ""
+      )}
+
+      <div style={{ maxHeight: "77vh", overflowY: "auto" }}>
+        {data
+          ? data.map((data) => {
+            return (
+              <ServiceCard
+                key={data.id}
+                data={data}
+              />
+            );
+          })
+          : ""}
       </div>
 
       <ServiceModal

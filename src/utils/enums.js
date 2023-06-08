@@ -3,3 +3,9 @@ export const ROLES = Object.freeze({
   MESSENGER: "MESSENGER",
   CUSTOMER: "CUSTOMER",
 });
+
+export const TRANSPORTS = Object.freeze({
+  CAR: "Automóvil",
+  MOTORCYCLE: "Motocicleta",
+  TRUNCK: "Camión",
+});
