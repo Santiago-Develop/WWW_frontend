@@ -100,17 +100,19 @@ const OfficesView = () => {
           <div style={{ maxHeight: "77vh", overflowY: "auto" }}>
             {data
               ? data.map(({ id, name, address, phone }) => {
-                  return (
-                    <OfficeCard
-                      key={id}
-                      id={id}
-                      name={name}
-                      address={address}
-                      phone={phone}
-                      getOffices={getOffices}
-                    />
-                  );
-                })
+                return (
+                  <OfficeCard
+                    key={id}
+                    id={id}
+                    name={name}
+                    address={address}
+                    phone={phone}
+                    typeOffice={type}
+                    setDataOffice={setData}
+                    setLoadingOffice={setLoading}
+                  />
+                );
+              })
               : ""}
           </div>
         </div>
@@ -140,7 +142,9 @@ const OfficesView = () => {
         form={formAddOffice}
         addOffice={addOffice}
         setAddOffice={setAddOffice}
-        getOffices={getOffices}
+        typeOffice={type}
+        setDataOffice={setData}
+        setLoadingOffice={setLoading}
       />
     </>
   );

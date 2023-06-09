@@ -5,9 +5,10 @@ import { OfficeModal } from "../OfficeModal";
 import { getOffice } from "../../../../helpers/getOffice";
 import { useState } from "react";
 import PropTypes from "prop-types";
+import { getOffices } from "../../../../helpers/getOffices";
 
 /* Component used to display office information */
-export const OfficeCard = ({ id, name, address, phone, getOffices }) => {
+export const OfficeCard = ({ id, name, address, phone, typeOffice, setDataOffice, setLoadingOffice }) => {
   const [formAddOffice] = Form.useForm();
   const [updateOffice, setUpdateOffice] = useState(false);
 
@@ -28,7 +29,8 @@ export const OfficeCard = ({ id, name, address, phone, getOffices }) => {
         const message = "Eliminación exitoso!";
         const description = `La sucursal ${name} ha sido eliminada`;
         openNotificationWithIcon(_type, message, description);
-        getOffices();
+        await getOffices(typeOffice, setDataOffice, setLoadingOffice);
+
       }
     } catch (error) {
       const type = "warning";
@@ -86,7 +88,9 @@ export const OfficeCard = ({ id, name, address, phone, getOffices }) => {
         form={formAddOffice}
         addOffice={updateOffice}
         setAddOffice={setUpdateOffice}
-        getOffices={getOffices}
+        typeOffice={typeOffice}
+        setDataOffice={setDataOffice}
+        setLoadingOffice={setLoadingOffice}
       />
     </>
   );

@@ -95,6 +95,10 @@ export const ServicesView = () => {
       <ServiceModal
         addService={addService}
         setAddService={setAddService}
+        typeService={type}
+        setDataService={setData} 
+        setLoadingService={setLoading}
+
       />
     </div>
   );

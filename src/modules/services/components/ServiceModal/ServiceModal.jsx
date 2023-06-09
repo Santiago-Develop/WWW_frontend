@@ -8,8 +8,9 @@ import TextArea from 'antd/es/input/TextArea';
 import { handleInputChange } from '../../../../helpers/handleInputChange';
 import { headers } from '../../../../utils/headers';
 import { resetForm } from '../../../../helpers/resetForm';
+import { getServices } from '../../../../helpers/getServices';
 
-export const ServiceModal = ({ addService, setAddService }) => {
+export const ServiceModal = ({ addService, setAddService, typeService, setDataService, setLoadingService }) => {
 
     const API_URL = import.meta.env.VITE_API_URL;
     const [form] = Form.useForm();
@@ -28,8 +29,8 @@ export const ServiceModal = ({ addService, setAddService }) => {
         transport: "MOTORCYCLE",
         description: "",
         customer: parseInt(localStorage.getItem("id")),
-        source_office: "",
-        destination_office: ""
+        source_office: null,
+        destination_office: null
     });
 
     const handleSelect = (value, type) => {
@@ -68,14 +69,16 @@ export const ServiceModal = ({ addService, setAddService }) => {
             type = "success";
             message = "¡Solicitud exitosa!";
             description = `Servicio ${code} creado correctamente`;
+            await getServices(typeService, setDataService, setLoadingService, true)
+
             setTimeout(() => {
                 openNotificationWithIcon(type, message, description);
                 setLoading(false)
                 setAddService(false)
                 setLoading(false)
                 resetForm(form)
-
             }, 2000);
+
         } catch (error) {
             console.log("error: ", error);
             type = "warning";
@@ -158,7 +161,7 @@ export const ServiceModal = ({ addService, setAddService }) => {
                                 name="transport"
                                 label="Transporte"
                                 className="d-flex flex-column"
-                                // rules={[{ required: true, message: "Este campo es obligatorio" }]}
+                            // rules={[{ required: true, message: "Este campo es obligatorio" }]}
 
                             >
                                 <Select
@@ -191,7 +194,7 @@ export const ServiceModal = ({ addService, setAddService }) => {
                                 <Select
                                     onChange={(value) => handleSelect(value, "destination_office")}
                                     options={officesOptions}
-
+                                // disabled={!!newService.source_office ? false : true}
                                 />
                             </Form.Item>
                         </div>

@@ -7,8 +7,9 @@ import { handleInputChange } from "../../../../helpers/handleInputChange";
 import { resetForm } from "../../../../helpers/resetForm";
 import { headers } from "../../../../utils/headers";
 import PropTypes from "prop-types";
+import { getOffices } from "../../../../helpers/getOffices";
 
-export const OfficeModal = ({ title, edit, form, addOffice, setAddOffice, getOffices }) => {
+export const OfficeModal = ({ title, edit, form, addOffice, setAddOffice, typeOffice, setDataOffice, setLoadingOffice }) => {
   const API_URL = import.meta.env.VITE_API_URL;
   const [loading, setLoading] = useState(false);
   const [newOffice, setNewOffice] = useState({
@@ -30,17 +31,19 @@ export const OfficeModal = ({ title, edit, form, addOffice, setAddOffice, getOff
     try {
       if (edit) {
         const id_ = localStorage.getItem("currentOffice");
-        await fetch(API_URL + "api/office/" + id_ + "/", requestOptions);
+        const response = await fetch(API_URL + "api/office/" + id_ + "/", requestOptions);
+        const { data } = await response.json()
 
         const type = "success";
         const message = "Actualización exitosa!";
-        const description = `La surcursal: ${addOffice.name} ha sido modificada`;
+        const description = `La surcursal: ${data.name} ha sido modificada`;
+        await getOffices(typeOffice, setDataOffice, setLoadingOffice);
+
         setTimeout(() => {
           openNotificationWithIcon(type, message, description);
           setLoading(false);
           setAddOffice(false);
           resetForm(form);
-          getOffices();
         }, 1000);
       } else {
         const res = await fetch(API_URL + "api/office", requestOptions);
@@ -55,6 +58,8 @@ export const OfficeModal = ({ title, edit, form, addOffice, setAddOffice, getOff
           const type = "success";
           const message = "Creación exitosa!";
           const description = `Tienes una nueva surcursal: ${newOffice.name}`;
+          await getOffices(typeOffice, setDataOffice, setLoadingOffice);
+
           setTimeout(() => {
             openNotificationWithIcon(type, message, description);
             setLoading(false);
@@ -187,5 +192,7 @@ OfficeModal.propTypes = {
   form: PropTypes.object.isRequired,
   addOffice: PropTypes.object.isRequired,
   setAddOffice: PropTypes.func.isRequired,
-  getOffices: PropTypes.func.isRequired,
+  typeOffice: PropTypes.string.isRequired,
+  setDataOffice: PropTypes.func.isRequired,
+  setLoadingOffice: PropTypes.func.isRequired,
 };
