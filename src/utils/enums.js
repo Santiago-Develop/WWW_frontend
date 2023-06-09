@@ -7,5 +7,5 @@ export const ROLES = Object.freeze({
 export const TRANSPORTS = Object.freeze({
   CAR: "Automóvil",
   MOTORCYCLE: "Motocicleta",
-  TRUNCK: "Camión",
+  TRUCK: "Camión",
 });
