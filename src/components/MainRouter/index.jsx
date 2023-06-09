@@ -7,7 +7,7 @@ import { ServicesView } from "../../modules/services";
 import PropTypes from "prop-types";
 import ErrorView from "../../security/views/error";
 import LoginView from "../../security/views/login";
-import Sidebar from "../../components/sidebar";
+import Sidebar from "../../components/Sidebar";
 import CustomersView from "../../modules/customers";
 import MessengersView from "../../modules/messengers";
 import OfficesView from "../../modules/offices";
