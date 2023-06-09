@@ -2,14 +2,11 @@ import { useEffect, useState } from "react";
 import { Spin, Empty, Form, Input, Button } from "antd";
 import { onSearch } from "../../helpers/onSearch";
 import { handleSetState } from "../../helpers/handleSetState";
-import { backUpLocalStorage } from "../../helpers/backUpLocalStorage";
-import { setLocalStorage } from "../../helpers/setLocalStorage";
 import { OfficeModal } from "./components/OfficeModal";
-// import { UserModal } from "../../components/UserModal";
+import { getOffices } from "../../helpers/getOffices";
 import OfficeCard from "./components/OfficeCard/index.jsx";
 import "../../style.scss";
 import "./style.scss";
-import { getOffices } from "../../helpers/getOffices";
 
 /* Component used to display each of the barber */
 

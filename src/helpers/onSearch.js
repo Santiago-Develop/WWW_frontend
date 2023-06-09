@@ -1,9 +1,12 @@
+import { TRANSPORTS } from "../utils/enums";
+
 export const onSearch = (event, setData, type = "customers") => {
   let value = event.target.value;
   let data = JSON.parse(localStorage.getItem(type));
+  console.log("🚀 ~ file: onSearch.js:4 ~ onSearch ~ data:", data)
   let result = [];
 
-  if (type !== "offices") {
+  if (type == "customers" || type == "messengers") {
     result = data.filter(
       (user) =>
         user.username.toLowerCase().includes(value.toLowerCase()) ||
@@ -13,14 +16,24 @@ export const onSearch = (event, setData, type = "customers") => {
         user.documentNumber.toLowerCase().includes(value.toLowerCase()) ||
         user.country.toLowerCase().includes(value.toLowerCase()) ||
         user.department.toLowerCase().includes(value.toLowerCase()) ||
-        user.city.toLowerCase().includes(value.toLowerCase())
+        user.city.toLowerCase().includes(value.toLowerCase()),
     );
-  } else {
+  } else if (type == "services") {
     result = data.filter(
-      (user) =>
-        user.name.toLowerCase().includes(value.toLowerCase()) ||
-        user.address.toLowerCase().includes(value.toLowerCase()) ||
-        user.phone.toLowerCase().toString().includes(value.toLowerCase())
+      (service) =>
+        service?.code?.toLowerCase().includes(value.toLowerCase()) ||
+        service?.amount?.toString().toLowerCase().includes(value.toLowerCase()) ||
+        service?.source_office?.toLowerCase().includes(value.toLowerCase()) ||
+        service?.destination_office?.toLowerCase().includes(value.toLowerCase()) ||
+        service?.description?.toLowerCase().includes(value.toLowerCase()) ||
+        TRANSPORTS[service.transport].toLowerCase().includes(value.toLowerCase())
+    );
+  } else if(type == "offices") {
+    result = data.filter(
+      (office) =>
+        office.name.toLowerCase().includes(value.toLowerCase()) ||
+        office.address.toLowerCase().includes(value.toLowerCase()) ||
+        office.phone.toLowerCase().toString().includes(value.toLowerCase()),
     );
   }
 

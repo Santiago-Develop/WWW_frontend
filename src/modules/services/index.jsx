@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { handleSetState } from "../../helpers/handleSetState";
 import { getServices } from "../../helpers/getServices";
 import { ServiceCard } from "./components/ServiceCard";
+import { onSearch } from "../../helpers/onSearch";
 
 export const ServicesView = () => {
   const [addService, setAddService] = useState(false)
@@ -32,7 +33,7 @@ export const ServicesView = () => {
           </Button>
           <Input
             placeholder="Buscar..."
-            // onChange={(event) => onSearch(event, setData)}
+            onChange={(event) => onSearch(event, setData, type)}
             style={{
               width: 400,
             }}
@@ -96,7 +97,7 @@ export const ServicesView = () => {
         addService={addService}
         setAddService={setAddService}
         typeService={type}
-        setDataService={setData} 
+        setDataService={setData}
         setLoadingService={setLoading}
 
       />
