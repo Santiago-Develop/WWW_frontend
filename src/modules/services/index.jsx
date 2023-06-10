@@ -5,6 +5,7 @@ import { handleSetState } from "../../helpers/handleSetState";
 import { getServices } from "../../helpers/getServices";
 import { ServiceCard } from "./components/ServiceCard";
 import { onSearch } from "../../helpers/onSearch";
+import { getUpdates } from "../../helpers/getUpdates";
 
 export const ServicesView = () => {
   const [addService, setAddService] = useState(false)
@@ -14,6 +15,7 @@ export const ServicesView = () => {
 
   useEffect(() => {
     getServices(type, setData, setLoading, true)
+    getUpdates()
   }, [])
 
 
@@ -81,12 +83,12 @@ export const ServicesView = () => {
       )}
 
       <div style={{ maxHeight: "77vh", overflowY: "auto" }}>
-        {data
-          ? data.map((data) => {
+        {!!data
+          ? data.map((service) => {
             return (
               <ServiceCard
-                key={data.id}
-                data={data}
+                key={service.id}
+                data={service}
               />
             );
           })
