@@ -1,12 +1,17 @@
-import { STATES, TRANSPORTS } from "../../../../utils/enums"
-
+import { ROLES, STATES, TRANSPORTS } from "../../../../utils/enums"
+import './style.scss'
+import { Button } from "antd"
 export const ServiceCard = ({ data }) => {
+    const role = localStorage.getItem('role')
     console.log("🚀 ~ file: index.jsx:3 ~ ServiceCard ~ data:", data)
 
     return (
-        <div className="userCard">
+        <div className="serviceCard">
             <div className="field">
-                <span className="info_text" style={{ cursor: 'pointer', color: '#c9412c' }}>{data.code}</span>
+                <span className="info_text" style={{ cursor: 'pointer', color: '#c9412c' }}>
+
+                    {data.code}
+                </span>
             </div>
             <div className="field">
                 <span className="info_text">{data.amount} paquetes</span>
@@ -21,15 +26,24 @@ export const ServiceCard = ({ data }) => {
                     <b> {data.destination_office}</b>
                 </span>
             </div>
-            {/* <div className="field">
-                <span className="info_text">{STATES[data.updates[0].state]}</span>
-            </div> */}
-            <span
-                className={`state ${STATES[data.updates[0].state] === 'Requerido' ? 'active' : 'inactive'}`}
-                style={{ fontWeight: '500' }}
+            <div
+                className={
+                    `state ${STATES[data.updates[0].state] === 'Requerido' ? 'active' : 'inactive'}`
+                }
+                style={{ fontWeight: '500', width: '120px' }}
             >
                 {STATES[data.updates[0].state]}
-            </span>
+            </div>
+            {
+                role === ROLES.MESSENGER ?
+                    (
+                        <div className="field">
+                            <Button type="dashed" danger>Tomar pedido</Button>
+                        </div>
+                    )
+                    : ""
+            }
+
         </div>
     )
 }

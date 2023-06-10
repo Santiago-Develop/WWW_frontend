@@ -6,12 +6,14 @@ import { getServices } from "../../helpers/getServices";
 import { ServiceCard } from "./components/ServiceCard";
 import { onSearch } from "../../helpers/onSearch";
 import { getUpdates } from "../../helpers/getUpdates";
+import { ROLES } from "../../utils/enums";
 
 export const ServicesView = () => {
   const [addService, setAddService] = useState(false)
   const [data, setData] = useState(false)
   const [loading, setLoading] = useState(false)
   const type = "services"
+  const role = localStorage.getItem('role')
 
   useEffect(() => {
     getServices(type, setData, setLoading, true)
@@ -65,11 +67,22 @@ export const ServicesView = () => {
             <span className="info_text text-white">Trayecto</span>
           </div>
         </div>
-        <div className="field">
+        <div className="field" style={{ width: '120px' }}>
           <div className="d-flex align-items-center justify-content-center">
             <span className="info_text text-white">Estado</span>
           </div>
         </div>
+        {
+          role === ROLES.MESSENGER ?
+            (
+              <div className="field">
+                <div className="d-flex align-items-center justify-content-center">
+                  <span className="info_text text-white">Acciones</span>
+                </div>
+              </div>
+            )
+            : ""
+        }
       </div>
 
       {!data && !loading ? (
