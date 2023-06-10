@@ -37,9 +37,9 @@ export const OfficeModal = ({ title, edit, form, addOffice, setAddOffice, typeOf
         const type = "success";
         const message = "Actualización exitosa!";
         const description = `La surcursal: ${data.name} ha sido modificada`;
-        await getOffices(typeOffice, setDataOffice, setLoadingOffice);
 
-        setTimeout(() => {
+        setTimeout(async () => {
+          await getOffices(typeOffice, setDataOffice, setLoadingOffice);
           openNotificationWithIcon(type, message, description);
           setLoading(false);
           setAddOffice(false);
@@ -58,9 +58,9 @@ export const OfficeModal = ({ title, edit, form, addOffice, setAddOffice, typeOf
           const type = "success";
           const message = "Creación exitosa!";
           const description = `Tienes una nueva surcursal: ${newOffice.name}`;
-          await getOffices(typeOffice, setDataOffice, setLoadingOffice);
 
-          setTimeout(() => {
+          setTimeout(async () => {
+            await getOffices(typeOffice, setDataOffice, setLoadingOffice);
             openNotificationWithIcon(type, message, description);
             setLoading(false);
             setAddOffice(false);

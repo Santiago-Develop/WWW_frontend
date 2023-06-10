@@ -17,8 +17,7 @@ export const ServiceModal = ({ addService, setAddService, typeService, setDataSe
     const [loading, setLoading] = useState(false);
     const [offices, setOffices] = useState(false);
     const [officesOptions, setOfficeOptions] = useState(false);
-    const [sourceOffice, setSourceOffice] = useState(false);
-    const [destinationOffice, setDestinationOffice] = useState(false);
+    const id = parseInt(localStorage.getItem("id"))
     const transportsOptions = [
         { value: 'CAR', label: 'Automóvil' },
         { value: 'MOTORCYCLE', label: 'Motocicleta' },
@@ -28,7 +27,7 @@ export const ServiceModal = ({ addService, setAddService, typeService, setDataSe
         amount: "",
         transport: "MOTORCYCLE",
         description: "",
-        customer: parseInt(localStorage.getItem("id")),
+        customer: id,
         source_office: null,
         destination_office: null
     });
@@ -69,14 +68,16 @@ export const ServiceModal = ({ addService, setAddService, typeService, setDataSe
             type = "success";
             message = "¡Solicitud exitosa!";
             description = `Servicio ${code} creado correctamente`;
-            await getServices(typeService, setDataService, setLoadingService, true)
 
-            setTimeout(() => {
+            setTimeout(async () => {
+                await getServices(typeService, setDataService, setLoadingService, true)
                 openNotificationWithIcon(type, message, description);
                 setLoading(false)
                 setAddService(false)
                 setLoading(false)
                 resetForm(form)
+                officesOptions.map(option => option.disabled = false)
+
             }, 2000);
 
         } catch (error) {
