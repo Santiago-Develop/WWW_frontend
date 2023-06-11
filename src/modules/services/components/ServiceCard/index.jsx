@@ -1,16 +1,22 @@
 import { ROLES, STATES, TRANSPORTS } from "../../../../utils/enums"
-import { Button, Popconfirm, message } from "antd"
+import { Button, Popconfirm } from "antd"
 import './style.scss'
+import { ServiceInfoModal } from "../ServiceInfoModal"
+import { useState } from "react"
+import { handleSetState } from "../../../../helpers/handleSetState"
 
 export const ServiceCard = ({ data, moduleType, confirm = null, cancel = null }) => {
+    const [modalInfo, setModalInfo] = useState(false)
     const role = localStorage.getItem('role')
-
 
     return (
         <div className="serviceCard">
             <div className="field">
-                <span className="info_text" style={{ cursor: 'pointer', color: '#c9412c' }}>
-
+                <span
+                    className="info_text"
+                    style={{ cursor: 'pointer', color: '#c9412c' }}
+                    onClick={() => handleSetState(true, setModalInfo)}
+                >
                     {data.code}
                 </span>
             </div>
@@ -32,9 +38,9 @@ export const ServiceCard = ({ data, moduleType, confirm = null, cancel = null })
                     ? (
                         <div
                             className={
-                                `state ${STATES[data.updates[data.updates.length - 1].state] === 'Requerido' ? 'required' : 
-                                STATES[data.updates[data.updates.length - 1].state] === "Asignado" ? 'assigned' : 
-                                STATES[data.updates[data.updates.length - 1].state] === "Recogido" ? 'picked_up' : "delivered"}`
+                                `state ${STATES[data.updates[data.updates.length - 1].state] === 'Requerido' ? 'required' :
+                                    STATES[data.updates[data.updates.length - 1].state] === "Asignado" ? 'assigned' :
+                                        STATES[data.updates[data.updates.length - 1].state] === "Recogido" ? 'picked_up' : "delivered"}`
                             }
                             style={{ fontWeight: '500', width: '120px' }}
                         >
@@ -62,6 +68,13 @@ export const ServiceCard = ({ data, moduleType, confirm = null, cancel = null })
                     : ""
             }
 
-        </div >
+            <ServiceInfoModal
+                data={data}
+                modalInfo={modalInfo}
+                setModalInfo={setModalInfo}
+            />
+        </div>
+
+
     )
 }
