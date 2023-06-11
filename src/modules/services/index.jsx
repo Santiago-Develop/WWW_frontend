@@ -7,6 +7,7 @@ import { ServiceCard } from "./components/ServiceCard";
 import { onSearch } from "../../helpers/onSearch";
 import { getUpdates } from "../../helpers/getUpdates";
 import { ROLES } from "../../utils/enums";
+import "../../style.scss";
 
 export const ServicesView = () => {
   const [addService, setAddService] = useState(false)
@@ -28,12 +29,20 @@ export const ServicesView = () => {
           style={{ margin: "10px 20px" }}
         >
           <h1 className="_title">Mis servicios</h1>
-          <Button
-            type="primary"
-            onClick={() => handleSetState(true, setAddService)}
-          >
-            Solicitar pedido
-          </Button>
+          {
+            role == ROLES.CUSTOMER
+              ?
+              (
+                <Button
+                  type="primary"
+                  onClick={() => handleSetState(true, setAddService)}
+                >
+                  Solicitar pedido
+                </Button>
+              )
+              : ""
+          }
+
           <Input
             placeholder="Buscar..."
             onChange={(event) => onSearch(event, setData, type)}
@@ -42,70 +51,70 @@ export const ServicesView = () => {
             }}
           />
         </div>
-      </div>
 
-      <div className="titles">
-        <div className="field">
-          <div className="d-flex align-items-center justify-content-center">
-            <span className="info_text text-white">Código</span>
+        <div className="titles">
+          <div className="field">
+            <div className="d-flex align-items-center justify-content-center">
+              <span className="info_text text-white">Código</span>
+            </div>
           </div>
-        </div>
 
-        <div className="field">
-          <div className="d-flex align-items-center justify-content-center">
-            <span className="info_text text-white">Cantidad</span>
+          <div className="field">
+            <div className="d-flex align-items-center justify-content-center">
+              <span className="info_text text-white">Cantidad</span>
+            </div>
           </div>
-        </div>
-        <div className="field">
-          <div className="d-flex align-items-center justify-content-center">
-            <span className="info_text text-white">Transporte</span>
+          <div className="field">
+            <div className="d-flex align-items-center justify-content-center">
+              <span className="info_text text-white">Transporte</span>
+            </div>
           </div>
-        </div>
-        <div className="field">
-          <div className="d-flex align-items-center justify-content-center">
-            <span className="info_text text-white">Trayecto</span>
+          <div className="field">
+            <div className="d-flex align-items-center justify-content-center">
+              <span className="info_text text-white">Trayecto</span>
+            </div>
           </div>
-        </div>
-        <div className="field" style={{ width: '120px' }}>
-          <div className="d-flex align-items-center justify-content-center">
-            <span className="info_text text-white">Estado</span>
+          <div className="field" style={{ width: '120px' }}>
+            <div className="d-flex align-items-center justify-content-center">
+              <span className="info_text text-white">Estado</span>
+            </div>
           </div>
-        </div>
-        {
-          role === ROLES.MESSENGER ?
-            (
-              <div className="field">
-                <div className="d-flex align-items-center justify-content-center">
-                  <span className="info_text text-white">Acciones</span>
+          {
+            role === ROLES.MESSENGER && type == "available_services" ?
+              (
+                <div className="field">
+                  <div className="d-flex align-items-center justify-content-center">
+                    <span className="info_text text-white">Acciones</span>
+                  </div>
                 </div>
-              </div>
-            )
-            : ""
-        }
-      </div>
+              )
+              : ""
+          }
+        </div>
 
-      {!data && !loading ? (
-        <Spin size="large" className="m-4" sty>
-          <div className="content" style={{ height: "50px" }} />
-        </Spin>
-      ) : !data || data.length < 1 ? (
-        <Empty className="m-3" />
-      ) : (
-        ""
-      )}
+        {!data && !loading ? (
+          <Spin size="large" className="m-4" sty>
+            <div className="content" style={{ height: "50px" }} />
+          </Spin>
+        ) : !data || data.length < 1 ? (
+          <Empty className="m-3" />
+        ) : (
+          ""
+        )}
 
-      <div style={{ maxHeight: "77vh", overflowY: "auto" }}>
-        {!!data
-          ? data.map((service) => {
-            return (
-              <ServiceCard
-                key={service.id}
-                data={service}
-                moduleType={type}
-              />
-            );
-          })
-          : ""}
+        <div style={{ maxHeight: "77vh", overflowY: "auto" }}>
+          {!!data
+            ? data.map((service) => {
+              return (
+                <ServiceCard
+                  key={service.id}
+                  data={service}
+                  moduleType={type}
+                />
+              );
+            })
+            : ""}
+        </div>
       </div>
 
       <ServiceModal

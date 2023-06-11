@@ -19,10 +19,12 @@ export const getServices = async (type, setData, setLoading, isSearch = null, re
     let data = await res.json();
     console.log("🚀 ~ file: getServices.js:20 ~ getServices ~ data:", data);
 
-    if (role !== ROLES.ADMIN) {
+    if (role == ROLES.CUSTOMER) {
+      data = data.filter((service) => service.customer == id);
+    } else if (role !== ROLES.ADMIN) {
       data = required
-        ? data.filter((service) => service.updates[0].state == 1)
-        : data.filter((service) => service.updates[0].state !== 1);
+        ? data.filter((service) => service.updates[service.updates.length - 1].state == 1)
+        : data.filter((service) => service.updates[service.updates.length - 1].state !== 1);
     }
 
     if (isSearch) {
@@ -32,7 +34,6 @@ export const getServices = async (type, setData, setLoading, isSearch = null, re
       setLocalStorage(_id, _name, _role, _urlImg, _token);
       localStorage.setItem(type, JSON.stringify(data));
     }
-    // return data;
   } catch (error) {
     console.log("error: ", error);
   }

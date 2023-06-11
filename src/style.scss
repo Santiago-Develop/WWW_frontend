@@ -48,10 +48,18 @@ span.ant-upload-list-item-name {
   background: transparent !important;
 }
 
-.active {
+.required {
   background-image: linear-gradient(to left top, #48bb78, #41c18d, #3ec7a2, #43ccb4, #4fd1c5);
 }
 
-.inactive {
+.assigned {
+  background-image: linear-gradient(to left top, #0bb0d1, #0db3d4, #13bee0, #00d4ff, #00d4ff);
+}
+
+.delivered {
+  background-image: linear-gradient(to left top, #535758, #535758, #5f6566, #868c8d, #8a9294);
+}
+
+.picked_up {
   background-image: linear-gradient(to left top, #e53e3e, #ec504f, #f26160, #f77170, #fc8181);
 }

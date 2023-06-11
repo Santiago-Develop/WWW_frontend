@@ -43,7 +43,6 @@ export const ServiceModal = ({ addService, setAddService, typeService, setDataSe
         } else if (type === "destination_office") {
             // officesOptions.map(option => option.value === value ? option.disabled = true : option.disabled = false)
             newService.destination_office = value;
-
         }
 
     };

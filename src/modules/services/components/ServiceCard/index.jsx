@@ -32,23 +32,25 @@ export const ServiceCard = ({ data, moduleType, confirm = null, cancel = null })
                     ? (
                         <div
                             className={
-                                `state ${STATES[data.updates[0].state] === 'Requerido' ? 'active' : 'inactive'}`
+                                `state ${STATES[data.updates[data.updates.length - 1].state] === 'Requerido' ? 'required' : 
+                                STATES[data.updates[data.updates.length - 1].state] === "Asignado" ? 'assigned' : 
+                                STATES[data.updates[data.updates.length - 1].state] === "Recogido" ? 'picked_up' : "delivered"}`
                             }
                             style={{ fontWeight: '500', width: '120px' }}
                         >
-                            {STATES[data.updates[0].state]}
+                            {STATES[data.updates[data.updates.length - 1].state]}
                         </div>
                     ) : ''
             }
 
             {
-                role === ROLES.MESSENGER ?
+                role === ROLES.MESSENGER && moduleType == "available_services" ?
                     (
                         <div className="field">
                             <Popconfirm
                                 title={`Tomar pedido ${data.code}`}
                                 description="¿Estás seguro que quieres aceptar el pedido?"
-                                onConfirm={confirm}
+                                onConfirm={() => confirm(data.updates[data.updates.length - 1])}
                                 onCancel={cancel}
                                 okText="Sí"
                                 cancelText="Quizás luego"
