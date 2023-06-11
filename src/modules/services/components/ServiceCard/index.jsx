@@ -1,9 +1,10 @@
 import { ROLES, STATES, TRANSPORTS } from "../../../../utils/enums"
+import { Button, Popconfirm, message } from "antd"
 import './style.scss'
-import { Button } from "antd"
-export const ServiceCard = ({ data }) => {
+
+export const ServiceCard = ({ data, moduleType, confirm = null, cancel = null }) => {
     const role = localStorage.getItem('role')
-    console.log("🚀 ~ file: index.jsx:3 ~ ServiceCard ~ data:", data)
+
 
     return (
         <div className="serviceCard">
@@ -26,24 +27,39 @@ export const ServiceCard = ({ data }) => {
                     <b> {data.destination_office}</b>
                 </span>
             </div>
-            <div
-                className={
-                    `state ${STATES[data.updates[0].state] === 'Requerido' ? 'active' : 'inactive'}`
-                }
-                style={{ fontWeight: '500', width: '120px' }}
-            >
-                {STATES[data.updates[0].state]}
-            </div>
+            {
+                moduleType == "services"
+                    ? (
+                        <div
+                            className={
+                                `state ${STATES[data.updates[0].state] === 'Requerido' ? 'active' : 'inactive'}`
+                            }
+                            style={{ fontWeight: '500', width: '120px' }}
+                        >
+                            {STATES[data.updates[0].state]}
+                        </div>
+                    ) : ''
+            }
+
             {
                 role === ROLES.MESSENGER ?
                     (
                         <div className="field">
-                            <Button type="dashed" danger>Tomar pedido</Button>
+                            <Popconfirm
+                                title={`Tomar pedido ${data.code}`}
+                                description="¿Estás seguro que quieres aceptar el pedido?"
+                                onConfirm={confirm}
+                                onCancel={cancel}
+                                okText="Sí"
+                                cancelText="Quizás luego"
+                            >
+                                <Button type="primary" >Tomar pedido</Button>
+                            </Popconfirm>
                         </div>
                     )
                     : ""
             }
 
-        </div>
+        </div >
     )
 }

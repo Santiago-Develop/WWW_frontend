@@ -1,4 +1,4 @@
-import { Button, Empty, Input, Spin } from "antd";
+import { Button, Empty, Input, Spin, message } from "antd";
 import { ServiceModal } from "./components/ServiceModal/ServiceModal";
 import { useEffect, useState } from "react";
 import { handleSetState } from "../../helpers/handleSetState";
@@ -16,10 +16,9 @@ export const ServicesView = () => {
   const role = localStorage.getItem('role')
 
   useEffect(() => {
-    getServices(type, setData, setLoading, true)
+    getServices(type, setData, setLoading, true, false)
     getUpdates()
   }, [])
-
 
   return (
     <div className="contenedor_main">
@@ -102,6 +101,7 @@ export const ServicesView = () => {
               <ServiceCard
                 key={service.id}
                 data={service}
+                moduleType={type}
               />
             );
           })

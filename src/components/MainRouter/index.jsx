@@ -11,6 +11,7 @@ import Sidebar from "../../components/Sidebar";
 import CustomersView from "../../modules/customers";
 import MessengersView from "../../modules/messengers";
 import OfficesView from "../../modules/offices";
+import { AvailableServicesView } from "../../modules/services/available";
 
 const MainRouter = ({ location }) => {
   /* General states for receiving the token */
@@ -53,6 +54,7 @@ const MainRouter = ({ location }) => {
           element={role == ROLES.MESSENGER ? <ErrorView /> : <MessengersView />}
         />
         <Route path="/services" element={<ServicesView />} />
+        <Route path="/available_services" element={role == ROLES.MESSENGER ? <AvailableServicesView /> : <ErrorView />} />
         <Route
           path="/offices"
           element={role == ROLES.MESSENGER ? <ErrorView /> : <OfficesView />}
