@@ -4,7 +4,7 @@ export const createUpdate = async ({ service }, take = false, newState = null) =
   console.log("🚀 ~ file: createUpdate.js:3 ~ createUpdate ~ data:", service);
   const API_URL = import.meta.env.VITE_API_URL;
 
-  //   const current_date_time = ""
+  const id = parseInt(localStorage.getItem("id"));
   const description = "";
   const photo = "";
   const state = "";
@@ -12,12 +12,13 @@ export const createUpdate = async ({ service }, take = false, newState = null) =
   const body = {
     service,
     state: take ? 2 : newState,
+    messenger: id,
   };
 
   const requestOptions = {
     method: "POST",
     body: JSON.stringify(body),
-    headers
+    headers,
   };
   console.log("🚀 ~ file: createUpdate.js:13 ~ createUpdate ~ requestOptions:", requestOptions);
 

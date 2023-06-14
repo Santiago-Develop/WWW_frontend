@@ -20,7 +20,7 @@ export const getServices = async (type, setData, setLoading, isSearch = null, re
     console.log("🚀 ~ file: getServices.js:20 ~ getServices ~ data:", data);
 
     if (role == ROLES.CUSTOMER) {
-      data = data.filter((service) => service.customer == id);
+      data = data.filter((service) => service.customer.id == id);
     } else if (role !== ROLES.ADMIN) {
       data = required
         ? data.filter((service) => service.updates[service.updates.length - 1].state == 1)
