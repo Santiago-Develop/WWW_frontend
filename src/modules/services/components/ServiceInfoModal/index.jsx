@@ -21,6 +21,12 @@ export const ServiceInfoModal = ({ data, modalInfo, setModalInfo }) => {
         photo: ""
     })
     const [loading, setLoading] = useState(false)
+    const options = [
+        { value: 1, label: 'Requerido' },
+        { value: 2, label: 'Asignado' },
+        { value: 3, label: 'Recogido' },
+        { value: 4, label: 'Entregado' },
+    ]
     const id = parseInt(localStorage.getItem("id"))
 
     const handleAddUpdate = () => {
@@ -88,9 +94,8 @@ export const ServiceInfoModal = ({ data, modalInfo, setModalInfo }) => {
                 </span>
             </div>
             <hr />
-
             {
-                data.messenger.id === id && data.messenger.role === ROLES.MESSENGER
+                (data.messenger.id === id && data.messenger.role === ROLES.MESSENGER) && (data.updates[data.updates.length - 1].state !== 4)
                     ?
                     (<Form
                         form={form}
@@ -172,12 +177,14 @@ export const ServiceInfoModal = ({ data, modalInfo, setModalInfo }) => {
                                     defaultValue={data.updates[data.updates.length - 1].state}
                                     style={{ width: 120 }}
                                     // onChange={handleChange}
-                                    options={[
-                                        { value: 1, label: 'Requerido', disabled: true },
-                                        { value: 2, label: 'Asignado', disabled: true },
-                                        { value: 3, label: 'Recogido', disabled: false },
-                                        { value: 4, label: 'Entregado', disabled: false },
-                                    ]}
+                                    options={options.map(option => {
+                                        if (option.value <= data.updates[data.updates.length - 1].state) {
+                                            option.disabled = true
+                                        } else {
+                                            option.disabled = false
+                                        }
+                                        return option
+                                    })}
                                 />
                             </Form.Item>
 
