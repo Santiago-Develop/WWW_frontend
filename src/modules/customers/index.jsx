@@ -65,19 +65,10 @@ const CustomersView = () => {
           </div>
           <div className="field">
             <div className="d-flex align-items-center justify-content-center">
-              <span className="info_text text-white">País</span>
+              <span className="info_text text-white">Ubicación</span>
             </div>
           </div>
-          <div className="field">
-            <div className="d-flex align-items-center justify-content-center">
-              <span className="info_text text-white">Departamento</span>
-            </div>
-          </div>
-          <div className="field">
-            <div className="d-flex align-items-center justify-content-center">
-              <span className="info_text text-white">Ciudad</span>
-            </div>
-          </div>
+
         </div>
 
         {!data && !loading ? (
