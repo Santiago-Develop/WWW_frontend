@@ -94,6 +94,9 @@ export const ServiceInfoModal = ({ data, modalInfo, setModalInfo }) => {
                 </span>
             </div>
             <hr />
+            <div className='text-center'>
+                <span className='title'>Actualizaciones</span>
+            </div>
             {
                 (data.messenger.id === id && data.messenger.role === ROLES.MESSENGER) && (data.updates[data.updates.length - 1].state !== 4)
                     ?
@@ -214,10 +217,6 @@ export const ServiceInfoModal = ({ data, modalInfo, setModalInfo }) => {
 
 
             <div style={{ margin: '20px 0' }}>
-                <div className='text-center'>
-                    <span className='title'>Actualizaciones</span>
-                </div>
-
                 <div className='p-3'>
                     <TimelineUpdate
                         updates={data.updates}
