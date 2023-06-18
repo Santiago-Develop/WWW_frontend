@@ -1,7 +1,5 @@
-import { ROLES, STATES } from "../utils/enums";
+import { ROLES } from "../utils/enums";
 import { backUpLocalStorage } from "./backUpLocalStorage";
-import { getOffices } from "./getOffices";
-import { getUpdates } from "./getUpdates";
 import { setLocalStorage } from "./setLocalStorage";
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -17,10 +15,12 @@ export const getServices = async (type, setData, setLoading, isSearch = null, re
   try {
     const res = await fetch(API_URL + "api/services/", requestOptions);
     let data = await res.json();
-    console.log("🚀 ~ file: getServices.js:20 ~ getServices ~ data:", data);
+    // console.log("🚀 ~ file: getServices.js:20 ~ getServices ~ data:", data);
 
     if (role == ROLES.CUSTOMER) {
       data = data.filter((service) => service.customer.id == id);
+    } else if (role == ROLES.MESSENGER) {
+      data = data.filter((service) => service.messenger.id == id);
     } else if (role !== ROLES.ADMIN) {
       data = required
         ? data.filter((service) => service.updates[service.updates.length - 1].state == 1)

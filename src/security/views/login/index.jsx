@@ -45,7 +45,7 @@ const LoginView = ({ setToken }) => {
     documentType: "",
     country: 1,
     department: 30,
-    city: 30,
+    city: null,
     password: "",
     password_confirm: "",
     is_superuser: false,
@@ -58,11 +58,12 @@ const LoginView = ({ setToken }) => {
   const [countriesOptions, setCountriesOptions] = useState([]);
   const [departmentsOptions, setDepartmentsOptions] = useState([]);
   const [citiesOptions, setCitiesOptions] = useState([]);
+  const [citiesOptionsFull, setCitiesOptionsFull] = useState([]);
 
   useEffect(() => {
     getSelectInfo("api/country", setCountriesOptions);
     getSelectInfo("api/department", setDepartmentsOptions);
-    getSelectInfo("api/city", setCitiesOptions);
+    getSelectInfo("api/city", setCitiesOptionsFull);
   }, []);
 
   /* Function to send the data entered by the user to know if they can enter or not */
@@ -132,12 +133,14 @@ const LoginView = ({ setToken }) => {
       let user = Object.assign({}, newUser);
       delete user.password_confirm;
 
+      setRegisteredUser(true);
+
       try {
         await axios.post(`${API_URL}register`, user);
-        setRegisteredUser(true);
         setTimeout(() => {
           handleSetState(false, setModelRegister);
           setRegisteredUser(false);
+          setUser(false)
           openNotificationWithIcon(type, message, description);
           resetForm(formCustomer);
         }, 1000);
@@ -303,8 +306,8 @@ const LoginView = ({ setToken }) => {
                 >
                   <Input
                     type="text"
-                    pattern="^[0-9]{6,10}$"
-                    title="Ingresa un número de cédula válido"
+                    pattern={newUser.role === ROLES.MESSENGER ? "^[0-9]{6,10}$" : "^[0-9]{8}-[0-9]{1}$"}
+                    title={`Ingresa un número de cédula válido (${newUser.role === ROLES.MESSENGER ? "CC: número de cédula" : "NIT: 8 digítos - 1 dígito"})`}
                     onChange={(event) =>
                       handleInputChange(newUser, setNewUser, null, null, null, event)
                     }
@@ -406,14 +409,7 @@ const LoginView = ({ setToken }) => {
                 >
                   <Select
                     defaultValue={getRole(newUser.role)}
-                    onChange={(value) => {
-                      handleInputChange(newUser, setUser, null, null, null, {
-                        target: {
-                          name: "role",
-                          value,
-                        },
-                      });
-                    }}
+                    onChange={(value) => newUser.role = value}
                     options={optionsSelectRole}
                     name="role"
                   />
@@ -422,7 +418,6 @@ const LoginView = ({ setToken }) => {
                 <Form.Item
                   name="country"
                   label="País"
-                  // rules={[{ required: true, message: 'Este campo es obligatorio' }]}
                   className="d-flex flex-column"
                   disabled={true}
                 >
@@ -432,18 +427,16 @@ const LoginView = ({ setToken }) => {
                 <Form.Item
                   name="roldepartmente"
                   label="Departamento"
-                  // rules={[{ required: true, message: 'Este campo es obligatorio' }]}
                   className="d-flex flex-column"
+
                 >
                   <Select
                     defaultValue={"Valle del Cauca"}
-                    onChange={(value) =>
-                      handleInputChange(newUser, setUser, null, null, null, {
-                        target: {
-                          name: "department",
-                          value,
-                        },
-                      })
+                    onChange={(value) => {
+                      newUser.department = value
+                      const cities = citiesOptionsFull.filter(city => city.value == value)
+                      setCitiesOptions(cities)
+                    }
                     }
                     options={departmentsOptions}
                     name="department"
@@ -453,19 +446,11 @@ const LoginView = ({ setToken }) => {
                 <Form.Item
                   name="city"
                   label="Ciudad"
-                  // rules={[{ required: true, message: 'Este campo es obligatorio' }]}
                   className="d-flex flex-column"
+                  rules={[{ required: true, message: "Este campo es obligatorio" }]}
                 >
                   <Select
-                    defaultValue={"Cali"}
-                    onChange={(value) =>
-                      handleInputChange(newUser, setUser, null, null, null, {
-                        target: {
-                          name: "city",
-                          value,
-                        },
-                      })
-                    }
+                    onChange={(value) => newUser.city = value}
                     options={citiesOptions}
                     name="city"
                   />
