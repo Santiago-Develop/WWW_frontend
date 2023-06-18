@@ -1,18 +1,21 @@
 import { headers } from "../utils/headers";
 
-export const createUpdate = async ({ service }, take = false, newState = null) => {
-  console.log("🚀 ~ file: createUpdate.js:3 ~ createUpdate ~ data:", service);
+export const createUpdate = async (
+  { service, description = null, photo = null, state = null },
+  take = false,
+) => {
+
   const API_URL = import.meta.env.VITE_API_URL;
 
   const id = parseInt(localStorage.getItem("id"));
-  const description = "";
-  const photo = "";
-  const state = "";
+  const name = localStorage.getItem("name");
 
   const body = {
     service,
-    state: take ? 2 : newState,
+    state: take ? 2 : state,
+    description: take ? `El servicio fue tomado por: ${name}` : description,
     messenger: id,
+    photo,
   };
 
   const requestOptions = {
@@ -20,7 +23,6 @@ export const createUpdate = async ({ service }, take = false, newState = null) =
     body: JSON.stringify(body),
     headers,
   };
-  console.log("🚀 ~ file: createUpdate.js:13 ~ createUpdate ~ requestOptions:", requestOptions);
 
   try {
     await fetch(API_URL + "api/updates/", requestOptions);

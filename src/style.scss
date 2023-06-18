@@ -40,7 +40,9 @@ span.ant-upload-list-item-name {
   padding: 5px 15px;
   border-radius: 10px;
   width: 130px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: white;
 }
 

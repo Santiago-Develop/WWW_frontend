@@ -86,7 +86,6 @@ const LoginView = ({ setToken }) => {
 
       let data = await response.json();
       data = JSON.parse(data);
-      console.log("🚀 ~ file: index.jsx:80 ~ handleLoginSubmit ~ data:", data);
 
       const id = data.id;
       const name = data.name;

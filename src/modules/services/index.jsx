@@ -28,7 +28,13 @@ export const ServicesView = () => {
           className="d-flex justify-content-between align-items-center mb-3"
           style={{ margin: "10px 20px" }}
         >
-          <h1 className="_title">Mis servicios</h1>
+          <h1 className="_title">
+            {
+              role == ROLES.ADMIN
+                ? 'Servicios en general'
+                : 'Mis servicios'
+            }
+          </h1>
           {
             role == ROLES.CUSTOMER
               ?

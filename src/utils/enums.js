@@ -16,3 +16,10 @@ export const STATES = Object.freeze({
   3: "Recogido",
   4: "Entregado",
 });
+
+export const ICONS = Object.freeze({
+  1: "SmileOutlined",
+  2: "NotificationOutlined",
+  3: "ClockCircleOutlined",
+  4: "CheckCircleOutlined",
+});

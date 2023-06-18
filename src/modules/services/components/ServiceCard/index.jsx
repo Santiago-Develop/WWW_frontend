@@ -1,13 +1,24 @@
-import { ROLES, STATES, TRANSPORTS } from "../../../../utils/enums"
+import React, { useState } from "react"
+import { ICONS, ROLES, STATES, TRANSPORTS } from "../../../../utils/enums"
 import { Button, Popconfirm } from "antd"
-import './style.scss'
+import {
+    SmileOutlined,
+    ClockCircleOutlined,
+    CheckCircleOutlined,
+    NotificationOutlined,
+} from "@ant-design/icons";
 import { ServiceInfoModal } from "../ServiceInfoModal"
-import { useState } from "react"
 import { handleSetState } from "../../../../helpers/handleSetState"
+import './style.scss'
 
 export const ServiceCard = ({ data, moduleType, confirm = null, cancel = null }) => {
     const [modalInfo, setModalInfo] = useState(false)
     const role = localStorage.getItem('role')
+
+    const renderIcon = (iconName) => {
+        const IconComponent = React.createElement(eval(iconName));
+        return IconComponent;
+    };
 
     return (
         <div className="serviceCard">
@@ -44,7 +55,11 @@ export const ServiceCard = ({ data, moduleType, confirm = null, cancel = null })
                             }
                             style={{ fontWeight: '500', width: '120px' }}
                         >
-                            {STATES[data.updates[data.updates.length - 1].state]}
+                            {renderIcon(ICONS[data.updates[data.updates.length - 1].state])}
+                            <div style={{ padding: '0 5px' }}>
+                                {STATES[data.updates[data.updates.length - 1].state]}
+                            </div>
+
                         </div>
                     ) : ''
             }

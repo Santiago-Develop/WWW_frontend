@@ -9,16 +9,17 @@ import { UploadOutlined, LoadingOutlined } from "@ant-design/icons";
 import { useForm } from 'antd/es/form/Form'
 import { openNotificationWithIcon } from '../../../../helpers/openNotificationWithIcon'
 import { createUpdate } from '../../../../helpers/createUpdate'
-import './style.scss'
 import TextArea from 'antd/es/input/TextArea'
+import './style.scss'
 
 export const ServiceInfoModal = ({ data, modalInfo, setModalInfo }) => {
 
     const [form] = useForm()
     const [updates, setUpdates] = useState({
         service: data.id,
-        description: "",
-        photo: ""
+        description: null,
+        photo: null,
+        state: data.updates[data.updates.length - 1].state
     })
     const [loading, setLoading] = useState(false)
     const options = [
@@ -29,10 +30,18 @@ export const ServiceInfoModal = ({ data, modalInfo, setModalInfo }) => {
     ]
     const id = parseInt(localStorage.getItem("id"))
 
-    const handleAddUpdate = () => {
-        console.log("🚀 ~ file: index.jsx:20 ~ ServiceInfoModal ~ updates:", updates)
-        createUpdate(updates, false, updates.state)
+    const handleAddUpdate = async () => {
+        setLoading(true)
+        await createUpdate(updates, false, updates.state)
+        window.location.reload()
     }
+
+    const handleStateChange = (value) => {
+        console.log(`selected ${value}`);
+        updates.state = value
+    }
+
+
 
     return (
         <Modal
@@ -42,7 +51,7 @@ export const ServiceInfoModal = ({ data, modalInfo, setModalInfo }) => {
             width={
                 data.messenger.id === id && data.messenger.role === ROLES.MESSENGER
                     ? 800
-                    : 500
+                    : 600
             }
             footer={[]}
         >
@@ -62,7 +71,13 @@ export const ServiceInfoModal = ({ data, modalInfo, setModalInfo }) => {
                     </div>
                     <div className='infoService'>
                         <span className='text'>Mensajero: </span>
-                        <span>{!!data.messenger.name ? data.messenger.name : 'No existe información'}</span>
+                        <span>
+                            {
+                                !!data.messenger.name
+                                    ? data.messenger.name :
+                                    'No existe información'
+                            }
+                        </span>
                     </div>
                 </div>
 
@@ -97,6 +112,7 @@ export const ServiceInfoModal = ({ data, modalInfo, setModalInfo }) => {
             <div className='text-center'>
                 <span className='title'>Actualizaciones</span>
             </div>
+
             {
                 (data.messenger.id === id && data.messenger.role === ROLES.MESSENGER) && (data.updates[data.updates.length - 1].state !== 4)
                     ?
@@ -105,7 +121,7 @@ export const ServiceInfoModal = ({ data, modalInfo, setModalInfo }) => {
                         name="crearCliente"
                         className="crearCliente"
                         id="crearCliente"
-                        onFinish={() => handleAddUpdate()}
+                        onFinish={handleAddUpdate}
                         onFinishFailed={() => {
                             const type = "warning";
                             const message = "¡No se pudo completar el registro!";
@@ -179,7 +195,7 @@ export const ServiceInfoModal = ({ data, modalInfo, setModalInfo }) => {
                                 <Select
                                     defaultValue={data.updates[data.updates.length - 1].state}
                                     style={{ width: 120 }}
-                                    // onChange={handleChange}
+                                    onChange={handleStateChange}
                                     options={options.map(option => {
                                         if (option.value <= data.updates[data.updates.length - 1].state) {
                                             option.disabled = true

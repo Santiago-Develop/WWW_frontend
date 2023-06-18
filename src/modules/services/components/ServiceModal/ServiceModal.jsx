@@ -33,7 +33,6 @@ export const ServiceModal = ({ addService, setAddService, typeService, setDataSe
     });
 
     const handleSelect = (value, type) => {
-        console.log(`selected ${value}`);
         if (type === "transports") {
             newService.transport = value;
             setNewService(newService);
