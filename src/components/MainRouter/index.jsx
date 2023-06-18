@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ROLES } from "../../utils/enums";
 import { UserProfile } from "../../modules/profile/index";
-import { DashboardView } from "../../modules/dashboard";
+import { ReportView } from "../../modules/dashboard";
 import { ServicesView } from "../../modules/services";
 import PropTypes from "prop-types";
 import ErrorView from "../../security/views/error";
@@ -48,7 +48,7 @@ const MainRouter = ({ location }) => {
 
       {/* Main routes conditioned according to the role of the user */}
       <Routes>
-        <Route path="/main" element={role !== ROLES.ADMIN ? <ErrorView /> : <DashboardView />} />
+        <Route path="/main" element={role !== ROLES.ADMIN ? <ErrorView /> : <ReportView />} />
         <Route
           path="/staff"
           element={role == ROLES.MESSENGER ? <ErrorView /> : <MessengersView />}

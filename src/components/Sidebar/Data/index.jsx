@@ -3,7 +3,7 @@
 export const AdminLinks = [
   {
     to: "/main",
-    text: "Dashboard",
+    text: "Reportes",
     svg: (
       <svg
         width="20"
