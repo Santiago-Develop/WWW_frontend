@@ -5,7 +5,7 @@ export const ReportPdf = () => {
     return (
         <Document>
             <Page>
-                <Text>Contenido del reporte en formato PDF</Text>
+                <Text>Contenido del reporte en formato PDFdfasfs</Text>
             </Page>
         </Document>
     );
