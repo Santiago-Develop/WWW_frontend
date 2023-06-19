@@ -4,7 +4,14 @@ import { setLocalStorage } from "./setLocalStorage";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-export const getServices = async (type, setData, setLoading, isSearch = null, required = false) => {
+export const getServices = async (
+  type,
+  setData,
+  setLoading,
+  isSearch = null,
+  required = false,
+  isAvailable = false,
+) => {
   const requestOptions = {
     method: "GET",
   };
@@ -19,7 +26,7 @@ export const getServices = async (type, setData, setLoading, isSearch = null, re
 
     if (role == ROLES.CUSTOMER) {
       data = data.filter((service) => service.customer.id == id);
-    } else if (role == ROLES.MESSENGER) {
+    } else if (role == ROLES.MESSENGER && !isAvailable) {
       data = data.filter((service) => service.messenger.id == id);
     } else if (role !== ROLES.ADMIN) {
       data = required

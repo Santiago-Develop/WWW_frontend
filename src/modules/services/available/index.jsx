@@ -19,14 +19,14 @@ export const AvailableServicesView = () => {
     const role = localStorage.getItem('role')
 
     useEffect(() => {
-        getServices(type, setData, setLoading, true, true)
+        getServices(type, setData, setLoading, true, true, true)
         getUpdates()
     }, [])
 
     const confirm = async (data) => {
         createUpdate(data, true)
         message.success('¡Tomaste el pedido, muchas suerte viajero!');
-        await getServices(type, setData, setLoading, true, true)
+        await getServices(type, setData, setLoading, true, true, true)
 
     };
 
