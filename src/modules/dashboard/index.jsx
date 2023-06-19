@@ -14,7 +14,7 @@ export const ReportView = () => {
           </h1>
         </div>
 
-        <div className="container">
+        <div className="">
           <ReportForm />
         </div>
 

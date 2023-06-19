@@ -1,4 +1,4 @@
-import { Button, DatePicker, Empty, Form, Radio, Spin, Table } from "antd";
+import { Button, DatePicker, Empty, Form, Radio, Select, Spin, Table } from "antd";
 import { useState } from "react";
 import { openNotificationWithIcon } from "../../../../helpers/openNotificationWithIcon";
 import { resetForm } from "../../../../helpers/resetForm";
@@ -11,6 +11,7 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import './style.scss'
 import { getDataExcel } from "../../../../helpers/getDataExcel";
+import { getUsers } from "../../../../helpers/getUsers";
 
 const { RangePicker } = DatePicker;
 
@@ -18,11 +19,13 @@ export const ReportForm = () => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState(false);
+    const [loadingOptionsUser, setLoadingOptionsUser] = useState(false);
+    const [optionsUser, setOptionsUser] = useState(false);
     const [formReport, setFormReport] = useState({
         role: null,
         months: null,
-        user: 2
-    })
+        user: null
+    });
 
     const handleChangeRange = (date, dateString) => {
         setFormReport({
@@ -31,10 +34,33 @@ export const ReportForm = () => {
         })
     };
 
-    const handleChangeRole = (e) => {
+    const handleChangeRole = async (e) => {
+        setOptionsUser(false)
+        setLoadingOptionsUser(true);
+
         setFormReport({
             ...formReport,
             role: e.target.value
+        })
+        const data = await getUsers(e.target.value, null, null, null, false);
+        let options = []
+
+        data.forEach(user => {
+            options.push({
+                value: user.user_id,
+                label: user.username,
+            })
+        });
+
+        setOptionsUser(options)
+        setLoadingOptionsUser(false);
+
+    };
+
+    const handleChangeUser = (value) => {
+        setFormReport({
+            ...formReport,
+            user: value
         })
     };
 
@@ -87,12 +113,36 @@ export const ReportForm = () => {
                         <Radio value="MESSENGER"> Mensajero </Radio>
                     </Radio.Group>
                 </Form.Item>
+
+                <Form.Item
+                    label="Usuario"
+                    name="user"
+                    className="d-flex flex-column"
+                    rules={[{ required: true, message: "Este campo es obligatorio" }]}
+                >
+
+                    <Select
+                        style={{ width: "80%" }}
+                        disabled={!optionsUser ? true : false}
+                        loading={loadingOptionsUser ? true : false}
+                        placeholder="Selecciona al cliente/mensajero"
+                        onChange={handleChangeUser}
+                        optionLabelProp="label"
+                        options={!!optionsUser ? optionsUser : []}
+                    />
+
+                </Form.Item>
+
                 <Form.Item
                     label="Rango de meses"
                     name="months"
                     className="d-flex flex-column"
                     rules={[{ required: true, message: "Este campo es obligatorio" }]}>
-                    <RangePicker picker="month" onChange={handleChangeRange} />
+                    <RangePicker
+                        style={{ width: "80%" }}
+                        picker="month"
+                        placeholder={['Mes inicial', 'Mes final']}
+                        onChange={handleChangeRange} />
                 </Form.Item>
                 <Button
                     type="primary"
