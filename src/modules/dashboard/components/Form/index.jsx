@@ -123,7 +123,6 @@ export const ReportForm = () => {
 
                     <Select
                         style={{ width: "80%" }}
-                        disabled={!optionsUser ? true : false}
                         loading={loadingOptionsUser ? true : false}
                         placeholder="Selecciona al cliente/mensajero"
                         onChange={handleChangeUser}
