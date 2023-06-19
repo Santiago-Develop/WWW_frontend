@@ -10,6 +10,7 @@ import { ReportPdf } from "../pdf";
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import './style.scss'
+import { getDataExcel } from "../../../../helpers/getDataExcel";
 
 const { RangePicker } = DatePicker;
 
@@ -38,14 +39,33 @@ export const ReportForm = () => {
     };
 
     const handleReport = async () => {
+        setData(false)
         setLoading(true);
         await getReports(formReport, setData, setLoading)
     };
 
     const handleDownloadExcel = () => {
-        const worksheet = XLSX.utils.json_to_sheet(data);
+        const dataHeaders = getDataExcel(data)
+        const worksheet = XLSX.utils.json_to_sheet(dataHeaders);
         const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, 'Tabla de Datos');
+
+        // Definir el ancho de las columnas
+        const columnWidths = [{ wch: 15 }, { wch: 15 }, { wch: 15 }, { wch: 30 }, { wch: 15 }, { wch: 15 }, { wch: 15 }];
+        worksheet['!cols'] = columnWidths;
+
+        // Centrar el contenido de cada celda
+        const range = XLSX.utils.decode_range(worksheet['!ref']);
+        for (let R = range.s.r; R <= range.e.r; R++) {
+            for (let C = range.s.c; C <= range.e.c; C++) {
+                const cellAddress = XLSX.utils.encode_cell({ r: R, c: C });
+                const cell = worksheet[cellAddress];
+                if (cell && cell.t === 's') {
+                    cell.s = { alignment: { horizontal: 'center', vertical: 'center' } };
+                }
+            }
+        }
+
+        XLSX.utils.book_append_sheet(workbook, worksheet, `${formReport.months[0]}-${formReport.months[1]}`);
         const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
         const dataInfo = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
         saveAs(dataInfo, `Reporte-${ROLES_NAME[formReport.role]}-(${formReport.months[0]}-${formReport.months[1]}).xlsx`);

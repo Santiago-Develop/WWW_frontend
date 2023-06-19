@@ -18,7 +18,7 @@ export const ReportPdf = ({ data, headers }) => {
                         <Text style={{ width: '14.2%', fontWeight: 'bold' }}>Trayecto</Text>
                         <Text style={{ width: '14.2%', fontWeight: 'bold' }}>Cliente</Text>
                         <Text style={{ width: '14.2%', fontWeight: 'bold' }}>Mensajero</Text>
-                        <Text style={{ width: '14.2%', fontWeight: 'bold' }}>Estado actual</Text>
+                        <Text style={{ width: '14.2%', fontWeight: 'bold' }}>Estado</Text>
                     </View>
                     {data.map((item, index) => (
                         <View style={{ flexDirection: 'row', alignItems: 'center', padding: '5px' }} key={index}>
