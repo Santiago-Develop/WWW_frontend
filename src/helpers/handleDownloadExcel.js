@@ -4,8 +4,11 @@ import { saveAs } from "file-saver";
 import * as XLSX from "xlsx";
 
 export const handleDownloadExcel = (data, formReport) => {
-  const dataHeaders = getDataExcel(data);
+
+  const dataHeaders = getDataExcel([...data]);
+
   const worksheet = XLSX.utils.json_to_sheet(dataHeaders);
+
   const workbook = XLSX.utils.book_new();
 
   // Definir el ancho de las columnas
@@ -31,8 +34,7 @@ export const handleDownloadExcel = (data, formReport) => {
   });
   saveAs(
     dataInfo,
-    `Reporte-${formReport.role == ROLES.CUSTOMER ? data[0].customer : data[0].messenger}-(${
-      formReport.months[0]
+    `Reporte-${formReport.role == ROLES.CUSTOMER ? data[0].customer : data[0].messenger}-(${formReport.months[0]
     }-${formReport.months[1]}).xlsx`,
   );
 };

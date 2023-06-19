@@ -1,27 +1,19 @@
 import React from "react";
 
 export const getDataExcel = (data) => {
+
+  let dataReal = []
+  
   data.forEach((item) => {
-    item.Codigo = item.code;
-    delete item.code;
-
-    item.Cantidad = item.amount;
-    delete item.amount;
-
-    item.Transporte = item.transport;
-    delete item.transport;
-
-    item.Trayecto = item.journey;
-    delete item.journey;
-
-    item.Cliente = item.customer;
-    delete item.customer;
-
-    item.Mensajero = item.messenger;
-    delete item.messenger;
-
-    item.Estado = item.status;
-    delete item.status;
+    let itemReal = {}
+    itemReal.Codigo = item.code;
+    itemReal.Cantidad = item.amount;
+    itemReal.Transporte = item.transport;
+    itemReal.Trayecto = item.journey;
+    itemReal.Cliente = item.customer;
+    itemReal.Mensajero = item.messenger;
+    itemReal.Estado = item.status;
+    dataReal.push(itemReal)
   });
-  return data;
+  return dataReal;
 };
