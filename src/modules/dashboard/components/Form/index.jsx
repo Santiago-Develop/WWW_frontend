@@ -158,13 +158,13 @@ export const ReportForm = ({
                     )
                     : !!data && !openDrawer ?
                         (
-                            <div style={{ maxHeight: "77vh", overflowY: "auto", padding: '20px' }}>
+                            <div style={{ maxHeight: "77vh", overflowY: "auto", padding: '0px 20px 20px' }}>
 
                                 <div style={{ margin: '20px 0' }}>
-                                    <div className="d-flex justify-content-end" style={{ margin: '20px 0' }}>
+                                    <div className="d-flex justify-content-end" style={{ margin: '0 0 20px' }}>
                                         <PDFDownloadLink
-                                            document={<ReportPdf data={data} headers={formReport} />}
-                                            fileName={`Reporte-${ROLES_NAME[formReport.role]}-(${formReport.months[0]}-${formReport.months[1]}).pdf`}
+                                            document={<ReportPdf data={data} headers={formReport} isCustomer={formReport.role == ROLES.CUSTOMER} />}
+                                            fileName={`Reporte-${formReport.role == ROLES.CUSTOMER ? data[0].customer : data[0].messenger}-(${formReport.months[0]}-${formReport.months[1]}).pdf`}
                                         >
                                             <button className="_button_ pdf" style={{ marginRight: '20px' }}>
                                                 <FilePdfOutlined style={{ fontSize: '16px', color: 'white' }} />

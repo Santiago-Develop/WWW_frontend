@@ -1,9 +1,10 @@
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import { getDataExcel } from "./getDataExcel";
-import { ROLES_NAME } from "../utils/enums";
+import { ROLES } from "../utils/enums";
 
 export const handleDownloadExcel = (data, formReport) => {
+  const name = formReport.role == ROLES.CUSTOMER ? data[0].customer : data[0].messenger
   const dataHeaders = getDataExcel(data);
   const worksheet = XLSX.utils.json_to_sheet(dataHeaders);
   const workbook = XLSX.utils.book_new();
@@ -31,6 +32,6 @@ export const handleDownloadExcel = (data, formReport) => {
   });
   saveAs(
     dataInfo,
-    `Reporte-${ROLES_NAME[formReport.role]}-(${formReport.months[0]}-${formReport.months[1]}).xlsx`,
+    `Reporte-${name}-(${formReport.months[0]}-${formReport.months[1]}).xlsx`,
   );
 };

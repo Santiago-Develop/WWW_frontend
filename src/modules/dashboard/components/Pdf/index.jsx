@@ -1,6 +1,6 @@
 import { Document, Page, Text, View } from '@react-pdf/renderer';
 
-export const ReportPdf = ({ data, headers }) => {
+export const ReportPdf = ({ data, headers, isCustomer }) => {
     
     return (
         <Document>
@@ -8,7 +8,7 @@ export const ReportPdf = ({ data, headers }) => {
                 <View style={{ margin: '15px' }}>
 
                     <View style={{ textAlign: 'center', margin: '15px 0' }}>
-                        <Text style={{ fontWeight: 'bold' }}>Reporte de pedidos de {headers.role} entre {headers.months[0]} y {headers.months[0]}</Text>
+                        <Text style={{ fontWeight: 'bold' }}>Reporte de pedidos de {isCustomer ? data[0].customer : data[0].messenger} entre {headers.months[0]} y {headers.months[0]}</Text>
                     </View>
 
                     <View style={{ flexDirection: 'row', borderBottom: 1, alignItems: 'center', margin: '5px' }}>
