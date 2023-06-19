@@ -82,6 +82,7 @@ export const ReportForm = ({
                 open={openDrawer}
                 bodyStyle={{ paddingBottom: 80 }}
             >
+
                 <Form
                     form={form}
                     layout="horizontal"
@@ -94,6 +95,18 @@ export const ReportForm = ({
                         openNotificationWithIcon(type, message, description);
                     }}
                 >
+                    <Form.Item
+                        label="Rango"
+                        name="months"
+                        className="d-flex flex-column"
+                        rules={[{ required: true, message: "Este campo es obligatorio" }]}>
+                        <RangePicker
+                            style={{ width: "80%" }}
+                            picker="month"
+                            placeholder={['Mes inicial', 'Mes final']}
+                            onChange={handleChangeRange} />
+                    </Form.Item>
+
                     <Form.Item
                         label="Rol"
                         name="role"
@@ -124,18 +137,6 @@ export const ReportForm = ({
 
                     </Form.Item>
 
-                    <Form.Item
-                        label="Rango"
-                        name="months"
-                        className="d-flex flex-column"
-                        rules={[{ required: true, message: "Este campo es obligatorio" }]}>
-                        <RangePicker
-                            placement="bottomLeft"
-                            style={{ width: "80%" }}
-                            picker="month"
-                            placeholder={['Mes inicial', 'Mes final']}
-                            onChange={handleChangeRange} />
-                    </Form.Item>
                     <Button
                         type="primary"
                         htmlType="submit">
