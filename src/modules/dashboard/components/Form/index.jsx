@@ -53,20 +53,9 @@ export const ReportForm = () => {
         const columnWidths = [{ wch: 15 }, { wch: 15 }, { wch: 15 }, { wch: 30 }, { wch: 15 }, { wch: 15 }, { wch: 15 }];
         worksheet['!cols'] = columnWidths;
 
-        // Centrar el contenido de cada celda
-        const range = XLSX.utils.decode_range(worksheet['!ref']);
-        for (let R = range.s.r; R <= range.e.r; R++) {
-            for (let C = range.s.c; C <= range.e.c; C++) {
-                const cellAddress = XLSX.utils.encode_cell({ r: R, c: C });
-                const cell = worksheet[cellAddress];
-                if (cell && cell.t === 's') {
-                    cell.s = { alignment: { horizontal: 'center', vertical: 'center' } };
-                }
-            }
-        }
 
         XLSX.utils.book_append_sheet(workbook, worksheet, `${formReport.months[0]}-${formReport.months[1]}`);
-        const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+        const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' });
         const dataInfo = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
         saveAs(dataInfo, `Reporte-${ROLES_NAME[formReport.role]}-(${formReport.months[0]}-${formReport.months[1]}).xlsx`);
     }
