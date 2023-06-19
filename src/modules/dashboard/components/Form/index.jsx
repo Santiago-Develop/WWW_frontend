@@ -7,6 +7,8 @@ import { REPORT_COLUMNS, ROLES, ROLES_NAME } from "../../../../utils/enums";
 import { FilePdfOutlined, FileExcelOutlined } from '@ant-design/icons';
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { ReportPdf } from "../pdf";
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 import './style.scss'
 
 const { RangePicker } = DatePicker;
@@ -36,12 +38,18 @@ export const ReportForm = () => {
     };
 
     const handleReport = async () => {
-        console.log("🚀 ~ file: index.jsx:12 ~ ReportForm ~ formReport:", formReport)
         setLoading(true);
         await getReports(formReport, setData, setLoading)
-        console.log("🚀 ~ file: index.jsx:32 ~ handleReport ~ data:", data)
-        // resetForm(form)
     };
+
+    const handleDownloadExcel = () => {
+        const worksheet = XLSX.utils.json_to_sheet(data);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Tabla de Datos');
+        const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+        const dataInfo = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        saveAs(dataInfo, `Reporte-${ROLES_NAME[formReport.role]}-(${formReport.months[0]}-${formReport.months[1]}).xlsx`);
+    }
 
     return (
         <div>
@@ -109,11 +117,11 @@ export const ReportForm = () => {
                                             </button>
                                         </PDFDownloadLink>
 
-                                        <button className="_button_ excel">
+                                        <button className="_button_ excel" onClick={handleDownloadExcel}>
                                             <FileExcelOutlined style={{ fontSize: '16px', color: 'white' }} />
                                         </button>
                                     </div>
-                                    <Table dataSource={data} columns={REPORT_COLUMNS} pagination={{ pageSize: 10 }} scroll={{ y: 270 }}/>
+                                    <Table dataSource={data} columns={REPORT_COLUMNS} pagination={{ pageSize: 10 }} scroll={{ y: 270 }} />
                                 </div>
                             )
                             : ""
