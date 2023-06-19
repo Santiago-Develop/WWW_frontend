@@ -143,7 +143,7 @@ export const ReportForm = ({
                 </Form>
             </Drawer>
 
-            <div>
+            <div style={{ maxHeight: "77vh", overflowY: "auto", padding: '20px' }}>
                 {!data && loading
                     ? (
                         <Spin size="large" className="m-4" sty>
@@ -172,7 +172,7 @@ export const ReportForm = ({
                                             <FileExcelOutlined style={{ fontSize: '16px', color: 'white' }} />
                                         </button>
                                     </div>
-                                    <Table dataSource={data} columns={REPORT_COLUMNS} pagination={{ pageSize: 10 }} scroll={{ y: '63vh' }} />
+                                    <Table dataSource={data} columns={REPORT_COLUMNS} />
                                 </div>
                             )
                             : ""
