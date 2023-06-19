@@ -1,15 +1,18 @@
 import { Button, DatePicker, Drawer, Empty, Form, Radio, Select, Spin, Table } from "antd";
-import { useState } from "react";
 import { openNotificationWithIcon } from "../../../../helpers/openNotificationWithIcon";
-import { resetForm } from "../../../../helpers/resetForm";
-import { getReports } from "../../../../helpers/getReports";
-import { REPORT_COLUMNS, ROLES, ROLES_NAME } from "../../../../utils/enums";
 import { FilePdfOutlined, FileExcelOutlined } from '@ant-design/icons';
-import { PDFDownloadLink } from "@react-pdf/renderer";
-import { ReportPdf } from "../pdf";
+import { getDataExcel } from "../../../../helpers/getDataExcel";
+import { REPORT_COLUMNS, ROLES } from "../../../../utils/enums";
+import { getReports } from "../../../../helpers/getReports";
+import { resetForm } from "../../../../helpers/resetForm";
 import { getUsers } from "../../../../helpers/getUsers";
-import { handleDownloadExcel } from "../../../../helpers/handleDownloadExcel";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import { saveAs } from "file-saver";
+import { ReportPdf } from "../pdf";
+import { useState } from "react";
+import * as XLSX from "xlsx";
 import "./style.scss";
+import { handleDownloadExcel } from "../../../../helpers/handleDownloadExcel";
 
 const { RangePicker } = DatePicker;
 
@@ -72,6 +75,8 @@ export const ReportForm = ({
         setLoading(true);
         await getReports(formReport, setData, setLoading)
     };
+
+   
 
     return (
         <div>
