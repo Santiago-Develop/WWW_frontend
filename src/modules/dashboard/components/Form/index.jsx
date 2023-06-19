@@ -1,4 +1,4 @@
-import { Button, DatePicker, Empty, Form, Radio, Select, Spin, Table } from "antd";
+import { Button, DatePicker, Drawer, Empty, Form, Radio, Select, Spin, Table } from "antd";
 import { useState } from "react";
 import { openNotificationWithIcon } from "../../../../helpers/openNotificationWithIcon";
 import { resetForm } from "../../../../helpers/resetForm";
@@ -7,15 +7,17 @@ import { REPORT_COLUMNS, ROLES, ROLES_NAME } from "../../../../utils/enums";
 import { FilePdfOutlined, FileExcelOutlined } from '@ant-design/icons';
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { ReportPdf } from "../pdf";
-import * as XLSX from 'xlsx';
-import { saveAs } from 'file-saver';
-import './style.scss'
-import { getDataExcel } from "../../../../helpers/getDataExcel";
 import { getUsers } from "../../../../helpers/getUsers";
+import { handleDownloadExcel } from "../../../../helpers/handleDownloadExcel";
+import "./style.scss";
 
 const { RangePicker } = DatePicker;
 
-export const ReportForm = () => {
+export const ReportForm = ({
+    openDrawer,
+    setOpenDrawer
+}) => {
+
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState(false);
@@ -65,90 +67,81 @@ export const ReportForm = () => {
     };
 
     const handleReport = async () => {
+        setOpenDrawer(false);
         setData(false)
         setLoading(true);
         await getReports(formReport, setData, setLoading)
     };
 
-    const handleDownloadExcel = () => {
-        const dataHeaders = getDataExcel(data)
-        const worksheet = XLSX.utils.json_to_sheet(dataHeaders);
-        const workbook = XLSX.utils.book_new();
-
-        // Definir el ancho de las columnas
-        const columnWidths = [{ wch: 15 }, { wch: 15 }, { wch: 15 }, { wch: 30 }, { wch: 15 }, { wch: 15 }, { wch: 15 }];
-        worksheet['!cols'] = columnWidths;
-
-
-        XLSX.utils.book_append_sheet(workbook, worksheet, `${formReport.months[0]}-${formReport.months[1]}`);
-        const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' });
-        const dataInfo = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-        saveAs(dataInfo, `Reporte-${ROLES_NAME[formReport.role]}-(${formReport.months[0]}-${formReport.months[1]}).xlsx`);
-    }
-
     return (
         <div>
-            <Form
-                form={form}
-                labelCol={{ span: 4 }}
-                wrapperCol={{ span: 14 }}
-                layout="horizontal"
-                style={{ maxWidth: 600 }}
-                onFinish={handleReport}
-                onFinishFailed={() => {
-                    const type = "warning";
-                    const message = "¡No se pudo completar el registro!";
-                    const description = "Algunos campos obligatorios no están diligenciados";
-                    openNotificationWithIcon(type, message, description);
-                }}
+            <Drawer
+                title="Filtrar reporte"
+                width={300}
+                onClose={() => setOpenDrawer(false)}
+                open={openDrawer}
+                bodyStyle={{ paddingBottom: 80 }}
             >
-                <Form.Item
-                    label="Rol"
-                    name="role"
-                    className="d-flex flex-column"
-                    rules={[{ required: true, message: "Este campo es obligatorio" }]}
+                <Form
+                    form={form}
+                    layout="horizontal"
+                    style={{ maxWidth: 600 }}
+                    onFinish={handleReport}
+                    onFinishFailed={() => {
+                        const type = "warning";
+                        const message = "¡No se pudo completar el registro!";
+                        const description = "Algunos campos obligatorios no están diligenciados";
+                        openNotificationWithIcon(type, message, description);
+                    }}
                 >
-                    <Radio.Group onChange={handleChangeRole}>
-                        <Radio value="CUSTOMER"> Cliente </Radio>
-                        <Radio value="MESSENGER"> Mensajero </Radio>
-                    </Radio.Group>
-                </Form.Item>
+                    <Form.Item
+                        label="Rol"
+                        name="role"
+                        className="d-flex flex-column"
+                        rules={[{ required: true, message: "Este campo es obligatorio" }]}
+                    >
+                        <Radio.Group onChange={handleChangeRole}>
+                            <Radio value="CUSTOMER"> Cliente </Radio>
+                            <Radio value="MESSENGER"> Mensajero </Radio>
+                        </Radio.Group>
+                    </Form.Item>
 
-                <Form.Item
-                    label="Usuario"
-                    name="user"
-                    className="d-flex flex-column"
-                    rules={[{ required: true, message: "Este campo es obligatorio" }]}
-                >
+                    <Form.Item
+                        label="Usuario"
+                        name="user"
+                        className="d-flex flex-column"
+                        rules={[{ required: true, message: "Este campo es obligatorio" }]}
+                    >
 
-                    <Select
-                        style={{ width: "80%" }}
-                        loading={loadingOptionsUser ? true : false}
-                        placeholder="Selecciona al cliente/mensajero"
-                        onChange={handleChangeUser}
-                        optionLabelProp="label"
-                        options={!!optionsUser ? optionsUser : []}
-                    />
+                        <Select
+                            style={{ width: "80%" }}
+                            loading={loadingOptionsUser ? true : false}
+                            placeholder="Selecciona al cliente/mensajero"
+                            onChange={handleChangeUser}
+                            optionLabelProp="label"
+                            options={!!optionsUser ? optionsUser : []}
+                        />
 
-                </Form.Item>
+                    </Form.Item>
 
-                <Form.Item
-                    label="Rango de meses"
-                    name="months"
-                    className="d-flex flex-column"
-                    rules={[{ required: true, message: "Este campo es obligatorio" }]}>
-                    <RangePicker
-                        style={{ width: "80%" }}
-                        picker="month"
-                        placeholder={['Mes inicial', 'Mes final']}
-                        onChange={handleChangeRange} />
-                </Form.Item>
-                <Button
-                    type="primary"
-                    htmlType="submit">
-                    Filtrar
-                </Button>
-            </Form>
+                    <Form.Item
+                        label="Rango"
+                        name="months"
+                        className="d-flex flex-column"
+                        rules={[{ required: true, message: "Este campo es obligatorio" }]}>
+                        <RangePicker
+                            style={{ width: "80%" }}
+                            picker="month"
+                            placeholder={['Mes inicial', 'Mes final']}
+                            onChange={handleChangeRange} />
+                    </Form.Item>
+                    <Button
+                        type="primary"
+                        htmlType="submit">
+                        Filtrar
+                    </Button>
+                </Form>
+            </Drawer>
 
             <div>
                 {!data && loading
@@ -162,7 +155,7 @@ export const ReportForm = () => {
                         (
                             <Empty className="m-3" />
                         )
-                        : !!data ?
+                        : !!data && !openDrawer ?
                             (
                                 <div style={{ margin: '20px 0' }}>
                                     <div className="d-flex justify-content-end" style={{ margin: '20px 0' }}>
@@ -175,11 +168,11 @@ export const ReportForm = () => {
                                             </button>
                                         </PDFDownloadLink>
 
-                                        <button className="_button_ excel" onClick={handleDownloadExcel}>
+                                        <button className="_button_ excel" onClick={() => handleDownloadExcel(data, formReport)}>
                                             <FileExcelOutlined style={{ fontSize: '16px', color: 'white' }} />
                                         </button>
                                     </div>
-                                    <Table dataSource={data} columns={REPORT_COLUMNS} pagination={{ pageSize: 10 }} scroll={{ y: 270 }} />
+                                    <Table dataSource={data} columns={REPORT_COLUMNS} pagination={{ pageSize: 10 }} scroll={{ y: '63vh' }} />
                                 </div>
                             )
                             : ""
