@@ -7,7 +7,7 @@ import { getReports } from "../../../../helpers/getReports";
 import { getUsers } from "../../../../helpers/getUsers";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import PropTypes from "prop-types";
-import { ReportPdf } from "../pdf";
+import { ReportPdf } from "../Pdf";
 import { useState } from "react";
 import "./style.scss";
 
