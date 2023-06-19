@@ -54,7 +54,10 @@ const MainRouter = ({ location }) => {
           element={role == ROLES.MESSENGER ? <ErrorView /> : <MessengersView />}
         />
         <Route path="/services" element={<ServicesView />} />
-        <Route path="/available_services" element={role == ROLES.MESSENGER ? <AvailableServicesView /> : <ErrorView />} />
+        <Route
+          path="/available_services"
+          element={role == ROLES.MESSENGER ? <AvailableServicesView /> : <ErrorView />}
+        />
         <Route
           path="/offices"
           element={role == ROLES.MESSENGER ? <ErrorView /> : <OfficesView />}

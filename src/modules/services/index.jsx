@@ -1,4 +1,4 @@
-import { Button, Empty, Input, Spin, message } from "antd";
+import { Button, Empty, Input, Spin } from "antd";
 import { ServiceModal } from "./components/ServiceModal/ServiceModal";
 import { useEffect, useState } from "react";
 import { handleSetState } from "../../helpers/handleSetState";
@@ -10,16 +10,16 @@ import { ROLES } from "../../utils/enums";
 import "../../style.scss";
 
 export const ServicesView = () => {
-  const [addService, setAddService] = useState(false)
-  const [data, setData] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const type = "services"
-  const role = localStorage.getItem('role')
+  const [addService, setAddService] = useState(false);
+  const [data, setData] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const type = "services";
+  const role = localStorage.getItem("role");
 
   useEffect(() => {
-    getServices(type, setData, setLoading, true, false)
-    getUpdates()
-  }, [])
+    getServices(type, setData, setLoading, true, false);
+    getUpdates();
+  }, []);
 
   return (
     <div className="contenedor_main">
@@ -29,25 +29,15 @@ export const ServicesView = () => {
           style={{ margin: "10px 20px" }}
         >
           <h1 className="_title">
-            {
-              role == ROLES.ADMIN
-                ? 'Servicios en general'
-                : 'Mis servicios'
-            }
+            {role == ROLES.ADMIN ? "Servicios en general" : "Mis servicios"}
           </h1>
-          {
-            role == ROLES.CUSTOMER
-              ?
-              (
-                <Button
-                  type="primary"
-                  onClick={() => handleSetState(true, setAddService)}
-                >
-                  Solicitar pedido
-                </Button>
-              )
-              : ""
-          }
+          {role == ROLES.CUSTOMER ? (
+            <Button type="primary" onClick={() => handleSetState(true, setAddService)}>
+              Solicitar pedido
+            </Button>
+          ) : (
+            ""
+          )}
 
           <Input
             placeholder="Buscar..."
@@ -80,22 +70,20 @@ export const ServicesView = () => {
               <span className="info_text text-white">Trayecto</span>
             </div>
           </div>
-          <div className="field" style={{ width: '120px' }}>
+          <div className="field" style={{ width: "120px" }}>
             <div className="d-flex align-items-center justify-content-center">
               <span className="info_text text-white">Estado</span>
             </div>
           </div>
-          {
-            role === ROLES.MESSENGER && type == "available_services" ?
-              (
-                <div className="field">
-                  <div className="d-flex align-items-center justify-content-center">
-                    <span className="info_text text-white">Acciones</span>
-                  </div>
-                </div>
-              )
-              : ""
-          }
+          {role === ROLES.MESSENGER && type == "available_services" ? (
+            <div className="field">
+              <div className="d-flex align-items-center justify-content-center">
+                <span className="info_text text-white">Acciones</span>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
 
         {!data && !loading ? (
@@ -109,16 +97,10 @@ export const ServicesView = () => {
         )}
 
         <div style={{ maxHeight: "77vh", overflowY: "auto" }}>
-          {!!data
+          {data
             ? data.map((service) => {
-              return (
-                <ServiceCard
-                  key={service.id}
-                  data={service}
-                  moduleType={type}
-                />
-              );
-            })
+                return <ServiceCard key={service.id} data={service} moduleType={type} />;
+              })
             : ""}
         </div>
       </div>
@@ -129,7 +111,6 @@ export const ServicesView = () => {
         typeService={type}
         setDataService={setData}
         setLoadingService={setLoading}
-
       />
     </div>
   );

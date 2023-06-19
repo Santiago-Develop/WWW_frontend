@@ -140,7 +140,7 @@ const LoginView = ({ setToken }) => {
         setTimeout(() => {
           handleSetState(false, setModelRegister);
           setRegisteredUser(false);
-          setUser(false)
+          setUser(false);
           openNotificationWithIcon(type, message, description);
           resetForm(formCustomer);
         }, 1000);
@@ -306,8 +306,14 @@ const LoginView = ({ setToken }) => {
                 >
                   <Input
                     type="text"
-                    pattern={newUser.role === ROLES.MESSENGER ? "^[0-9]{6,10}$" : "^[0-9]{8}-[0-9]{1}$"}
-                    title={`Ingresa un número de cédula válido (${newUser.role === ROLES.MESSENGER ? "CC: número de cédula" : "NIT: 8 digítos - 1 dígito"})`}
+                    pattern={
+                      newUser.role === ROLES.MESSENGER ? "^[0-9]{6,10}$" : "^[0-9]{8}-[0-9]{1}$"
+                    }
+                    title={`Ingresa un número de cédula válido (${
+                      newUser.role === ROLES.MESSENGER
+                        ? "CC: número de cédula"
+                        : "NIT: 8 digítos - 1 dígito"
+                    })`}
                     onChange={(event) =>
                       handleInputChange(newUser, setNewUser, null, null, null, event)
                     }
@@ -409,7 +415,7 @@ const LoginView = ({ setToken }) => {
                 >
                   <Select
                     defaultValue={getRole(newUser.role)}
-                    onChange={(value) => newUser.role = value}
+                    onChange={(value) => (newUser.role = value)}
                     options={optionsSelectRole}
                     name="role"
                   />
@@ -428,16 +434,14 @@ const LoginView = ({ setToken }) => {
                   name="roldepartmente"
                   label="Departamento"
                   className="d-flex flex-column"
-
                 >
                   <Select
                     defaultValue={"Valle del Cauca"}
                     onChange={(value) => {
-                      newUser.department = value
-                      const cities = citiesOptionsFull.filter(city => city.value == value)
-                      setCitiesOptions(cities)
-                    }
-                    }
+                      newUser.department = value;
+                      const cities = citiesOptionsFull.filter((city) => city.value == value);
+                      setCitiesOptions(cities);
+                    }}
                     options={departmentsOptions}
                     name="department"
                   />
@@ -450,7 +454,7 @@ const LoginView = ({ setToken }) => {
                   rules={[{ required: true, message: "Este campo es obligatorio" }]}
                 >
                   <Select
-                    onChange={(value) => newUser.city = value}
+                    onChange={(value) => (newUser.city = value)}
                     options={citiesOptions}
                     name="city"
                   />

@@ -9,10 +9,19 @@ import { headers } from "../../../../utils/headers";
 import PropTypes from "prop-types";
 import { getOffices } from "../../../../helpers/getOffices";
 
-export const OfficeModal = ({ title, edit, form, addOffice, setAddOffice, typeOffice, setDataOffice, setLoadingOffice }) => {
+export const OfficeModal = ({
+  title,
+  edit,
+  form,
+  addOffice,
+  setAddOffice,
+  typeOffice,
+  setDataOffice,
+  setLoadingOffice,
+}) => {
   const API_URL = import.meta.env.VITE_API_URL;
   const [loading, setLoading] = useState(false);
-  const id = parseInt(localStorage.getItem("id"))
+  const id = parseInt(localStorage.getItem("id"));
   const [newOffice, setNewOffice] = useState({
     name: "",
     address: "",
@@ -33,7 +42,7 @@ export const OfficeModal = ({ title, edit, form, addOffice, setAddOffice, typeOf
       if (edit) {
         const id_ = localStorage.getItem("currentOffice");
         const response = await fetch(API_URL + "api/office/" + id_ + "/", requestOptions);
-        const { data } = await response.json()
+        const { data } = await response.json();
 
         const type = "success";
         const message = "Actualización exitosa!";
@@ -48,9 +57,8 @@ export const OfficeModal = ({ title, edit, form, addOffice, setAddOffice, typeOf
         }, 1000);
 
         setTimeout(() => {
-          window.location.reload()
+          window.location.reload();
         }, 2000);
-
       } else {
         const res = await fetch(API_URL + "api/office", requestOptions);
 
@@ -74,7 +82,7 @@ export const OfficeModal = ({ title, edit, form, addOffice, setAddOffice, typeOf
           }, 1000);
 
           setTimeout(() => {
-            window.location.reload()
+            window.location.reload();
           }, 2000);
         }
       }

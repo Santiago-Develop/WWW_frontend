@@ -102,7 +102,7 @@ export const UserModal = ({
       headers: headers,
       body: JSON.stringify(newUser),
     };
-    
+
     try {
       const response = await fetch(`${API_URL}api/users/${id}`, requestOptions);
       if (response.status === 500) {

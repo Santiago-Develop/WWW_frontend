@@ -1,6 +1,5 @@
 import { Button } from "antd";
 import { ReportForm } from "./components/Form";
-import { PlusOutlined } from '@ant-design/icons';
 import { useState } from "react";
 
 export const ReportView = () => {
@@ -16,21 +15,14 @@ export const ReportView = () => {
           <h1 className="_title" style={{ marginBottom: "0 important" }}>
             Reportes de pedidos
           </h1>
-          <Button
-            type="primary"
-            onClick={() => setOpenDrawer(true)}
-          >
+          <Button type="primary" onClick={() => setOpenDrawer(true)}>
             Nuevo reporte
           </Button>
         </div>
 
         <div className="">
-          <ReportForm
-            openDrawer={openDrawer}
-            setOpenDrawer={setOpenDrawer}
-          />
+          <ReportForm openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
         </div>
-
       </div>
     </div>
   );

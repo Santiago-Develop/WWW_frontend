@@ -68,7 +68,6 @@ const CustomersView = () => {
               <span className="info_text text-white">Ubicación</span>
             </div>
           </div>
-
         </div>
 
         {!data && !loading ? (
@@ -82,7 +81,7 @@ const CustomersView = () => {
         )}
 
         <div style={{ maxHeight: "77vh", overflowY: "auto" }}>
-          {!!data
+          {data
             ? data.map(
                 ({
                   id,
