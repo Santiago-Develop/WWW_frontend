@@ -145,20 +145,21 @@ export const ReportForm = ({
                 </Form>
             </Drawer>
 
-            <div style={{ maxHeight: "77vh", overflowY: "auto", padding: '20px' }}>
-                {!data && loading
-                    ? (
-                        <Spin size="large" className="m-4" sty>
-                            <div className="content" style={{ height: "50px" }} />
-                        </Spin>
+            {!data && loading
+                ? (
+                    <Spin size="large" className="m-4" sty>
+                        <div className="content" style={{ height: "50px" }} />
+                    </Spin>
+                )
+                : !!data && data.length < 1
+                    ?
+                    (
+                        <Empty className="m-3" />
                     )
-                    : !!data && data.length < 1
-                        ?
+                    : !!data && !openDrawer ?
                         (
-                            <Empty className="m-3" />
-                        )
-                        : !!data && !openDrawer ?
-                            (
+                            <div style={{ maxHeight: "77vh", overflowY: "auto", padding: '20px' }}>
+
                                 <div style={{ margin: '20px 0' }}>
                                     <div className="d-flex justify-content-end" style={{ margin: '20px 0' }}>
                                         <PDFDownloadLink
@@ -176,11 +177,11 @@ export const ReportForm = ({
                                     </div>
                                     <Table dataSource={data} columns={REPORT_COLUMNS} />
                                 </div>
-                            )
-                            : ""
-                }
+                            </div>
+                        )
+                        : ""
+            }
 
-            </div>
         </div>
     )
 }
