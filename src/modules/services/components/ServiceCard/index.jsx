@@ -1,14 +1,9 @@
 import React, { useState } from "react";
 import { ICONS, ROLES, STATES, TRANSPORTS } from "../../../../utils/enums";
 import { Button, Popconfirm } from "antd";
-import {
-  SmileOutlined,
-  ClockCircleOutlined,
-  CheckCircleOutlined,
-  NotificationOutlined,
-} from "@ant-design/icons";
 import { ServiceInfoModal } from "../ServiceInfoModal";
 import { handleSetState } from "../../../../helpers/handleSetState";
+import PropTypes from "prop-types";
 import "./style.scss";
 
 export const ServiceCard = ({ data, moduleType, confirm = null, cancel = null }) => {
@@ -86,4 +81,11 @@ export const ServiceCard = ({ data, moduleType, confirm = null, cancel = null })
       <ServiceInfoModal data={data} modalInfo={modalInfo} setModalInfo={setModalInfo} />
     </div>
   );
+};
+
+ServiceCard.propTypes = {
+  data: PropTypes.array.isRequired,
+  moduleType: PropTypes.string.isRequired,
+  confirm: PropTypes.func.isRequired,
+  cancel: PropTypes.func.isRequired,
 };

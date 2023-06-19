@@ -1,15 +1,16 @@
-import { useState } from "react";
-import { Button, Form, Input, Modal, Select, Spin, Upload, message } from "antd";
+import { openNotificationWithIcon } from "../../../../helpers/openNotificationWithIcon";
+import { normFile, setUrlImgBase64 } from "../../../../helpers/handleUpload";
+import { handleInputChange } from "../../../../helpers/handleInputChange";
+import { Button, Form, Modal, Select, Spin, Upload, message } from "antd";
 import { handleSetState } from "../../../../helpers/handleSetState";
 import { ROLES, STATES, TRANSPORTS } from "../../../../utils/enums";
-import { TimelineUpdate } from "../TimelineUpdate";
-import { handleInputChange } from "../../../../helpers/handleInputChange";
-import { normFile, setUrlImgBase64 } from "../../../../helpers/handleUpload";
 import { UploadOutlined, LoadingOutlined } from "@ant-design/icons";
-import { useForm } from "antd/es/form/Form";
-import { openNotificationWithIcon } from "../../../../helpers/openNotificationWithIcon";
 import { createUpdate } from "../../../../helpers/createUpdate";
+import { TimelineUpdate } from "../TimelineUpdate";
 import TextArea from "antd/es/input/TextArea";
+import { useForm } from "antd/es/form/Form";
+import PropTypes from "prop-types";
+import { useState } from "react";
 import "./style.scss";
 
 export const ServiceInfoModal = ({ data, modalInfo, setModalInfo }) => {
@@ -215,4 +216,10 @@ export const ServiceInfoModal = ({ data, modalInfo, setModalInfo }) => {
       </div>
     </Modal>
   );
+};
+
+ServiceInfoModal.propTypes = {
+  data: PropTypes.array.isRequired,
+  modalInfo: PropTypes.bool.isRequired,
+  setModalInfo: PropTypes.func.isRequired,
 };
