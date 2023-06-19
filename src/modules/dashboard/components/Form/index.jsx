@@ -130,6 +130,7 @@ export const ReportForm = ({
                         className="d-flex flex-column"
                         rules={[{ required: true, message: "Este campo es obligatorio" }]}>
                         <RangePicker
+                            placement="bottomLeft"
                             style={{ width: "80%" }}
                             picker="month"
                             placeholder={['Mes inicial', 'Mes final']}
