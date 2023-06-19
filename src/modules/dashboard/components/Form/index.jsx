@@ -7,6 +7,7 @@ import { REPORT_COLUMNS, ROLES, ROLES_NAME } from "../../../../utils/enums";
 import { FilePdfOutlined, FileExcelOutlined } from '@ant-design/icons';
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { ReportPdf } from "../pdf";
+import './style.scss'
 
 const { RangePicker } = DatePicker;
 
@@ -16,7 +17,8 @@ export const ReportForm = () => {
     const [data, setData] = useState(false);
     const [formReport, setFormReport] = useState({
         role: null,
-        months: null
+        months: null,
+        user: 2
     })
 
     const handleChangeRange = (date, dateString) => {
@@ -36,25 +38,10 @@ export const ReportForm = () => {
     const handleReport = async () => {
         console.log("🚀 ~ file: index.jsx:12 ~ ReportForm ~ formReport:", formReport)
         setLoading(true);
-        await getReports(data, setData, setLoading)
+        await getReports(formReport, setData, setLoading)
         console.log("🚀 ~ file: index.jsx:32 ~ handleReport ~ data:", data)
         // resetForm(form)
     };
-
-    const dataSource = [
-        {
-            code: '1',
-            amount: 'Mike',
-            transport: 32,
-            journey: '10 Downing Street',
-        },
-        {
-            code: '2',
-            amount: 'John',
-            transport: 42,
-            journey: '10 Downing Street',
-        },
-    ];
 
     return (
         <div>
@@ -97,9 +84,7 @@ export const ReportForm = () => {
                 </Button>
             </Form>
 
-
-
-            <div style={{ maxHeight: "77vh", overflowY: "auto" }}>
+            <div>
                 {!data && loading
                     ? (
                         <Spin size="large" className="m-4" sty>
@@ -116,19 +101,19 @@ export const ReportForm = () => {
                                 <div style={{ margin: '20px 0' }}>
                                     <div className="d-flex justify-content-end" style={{ margin: '20px 0' }}>
                                         <PDFDownloadLink
-                                            document={<ReportPdf />}
+                                            document={<ReportPdf data={data} headers={formReport} />}
                                             fileName={`Reporte-${ROLES_NAME[formReport.role]}-(${formReport.months[0]}-${formReport.months[1]}).pdf`}
                                         >
-                                            <Button type="primary" style={{ marginRight: '20px' }}>
+                                            <button className="_button_ pdf" style={{ marginRight: '20px' }}>
                                                 <FilePdfOutlined style={{ fontSize: '16px', color: 'white' }} />
-                                            </Button>
+                                            </button>
                                         </PDFDownloadLink>
 
-                                        <Button type="primary" >
+                                        <button className="_button_ excel">
                                             <FileExcelOutlined style={{ fontSize: '16px', color: 'white' }} />
-                                        </Button>
+                                        </button>
                                     </div>
-                                    <Table dataSource={dataSource} columns={REPORT_COLUMNS} />
+                                    <Table dataSource={data} columns={REPORT_COLUMNS} pagination={{ pageSize: 10 }} scroll={{ y: 270 }}/>
                                 </div>
                             )
                             : ""
