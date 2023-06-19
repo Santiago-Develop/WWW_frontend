@@ -1,0 +1,14 @@
+.serviceCard {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  border: 1px solid gray;
+  border-radius: 15px;
+  padding: 10px 0;
+  margin: 20px;
+  background: white;
+}
+
+.serviceCard .info_text {
+    font-weight: 500;
+}

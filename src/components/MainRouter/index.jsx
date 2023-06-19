@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ROLES } from "../../utils/enums";
 import { UserProfile } from "../../modules/profile/index";
-import { DashboardView } from "../../modules/dashboard";
+import { ReportView } from "../../modules/dashboard";
 import { ServicesView } from "../../modules/services";
 import PropTypes from "prop-types";
 import ErrorView from "../../security/views/error";
@@ -11,6 +11,7 @@ import Sidebar from "../../components/Sidebar";
 import CustomersView from "../../modules/customers";
 import MessengersView from "../../modules/messengers";
 import OfficesView from "../../modules/offices";
+import { AvailableServicesView } from "../../modules/services/available";
 
 const MainRouter = ({ location }) => {
   /* General states for receiving the token */
@@ -47,12 +48,16 @@ const MainRouter = ({ location }) => {
 
       {/* Main routes conditioned according to the role of the user */}
       <Routes>
-        <Route path="/main" element={role !== ROLES.ADMIN ? <ErrorView /> : <DashboardView />} />
+        <Route path="/main" element={role !== ROLES.ADMIN ? <ErrorView /> : <ReportView />} />
         <Route
           path="/staff"
           element={role == ROLES.MESSENGER ? <ErrorView /> : <MessengersView />}
         />
         <Route path="/services" element={<ServicesView />} />
+        <Route
+          path="/available_services"
+          element={role == ROLES.MESSENGER ? <AvailableServicesView /> : <ErrorView />}
+        />
         <Route
           path="/offices"
           element={role == ROLES.MESSENGER ? <ErrorView /> : <OfficesView />}
