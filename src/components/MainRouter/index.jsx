@@ -41,9 +41,10 @@ const MainRouter = ({ location }) => {
     return <Navigate to={`/offices`} />;
   }
 
-
-  console.log(location.pathname !== "/")
-
+  if (location.pathname) {
+    console.log("🚀 ~ file: index.jsx:45 ~ MainRouter ~ location.pathname:", location.pathname)
+    return <Navigate to={`${location.pathname}`} />;
+  }
 
   return (
     <>
