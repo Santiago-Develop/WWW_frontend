@@ -18,7 +18,7 @@ export const onSearch = (event, setData, type = "customers") => {
         user.department.toLowerCase().includes(value.toLowerCase()) ||
         user.city.toLowerCase().includes(value.toLowerCase()),
     );
-  } else if (type == "services") {
+  } else if (type == "services" || type == "available_services") {
     result = data.filter(
       (service) =>
         service?.code?.toLowerCase().includes(value.toLowerCase()) ||

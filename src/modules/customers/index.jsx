@@ -65,17 +65,7 @@ const CustomersView = () => {
           </div>
           <div className="field">
             <div className="d-flex align-items-center justify-content-center">
-              <span className="info_text text-white">País</span>
-            </div>
-          </div>
-          <div className="field">
-            <div className="d-flex align-items-center justify-content-center">
-              <span className="info_text text-white">Departamento</span>
-            </div>
-          </div>
-          <div className="field">
-            <div className="d-flex align-items-center justify-content-center">
-              <span className="info_text text-white">Ciudad</span>
+              <span className="info_text text-white">Ubicación</span>
             </div>
           </div>
         </div>
@@ -91,7 +81,7 @@ const CustomersView = () => {
         )}
 
         <div style={{ maxHeight: "77vh", overflowY: "auto" }}>
-          {!!data
+          {data
             ? data.map(
                 ({
                   id,

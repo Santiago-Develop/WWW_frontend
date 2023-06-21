@@ -8,7 +8,15 @@ import PropTypes from "prop-types";
 import { getOffices } from "../../../../helpers/getOffices";
 
 /* Component used to display office information */
-export const OfficeCard = ({ id, name, address, phone, typeOffice, setDataOffice, setLoadingOffice }) => {
+export const OfficeCard = ({
+  id,
+  name,
+  address,
+  phone,
+  typeOffice,
+  setDataOffice,
+  setLoadingOffice,
+}) => {
   const [formAddOffice] = Form.useForm();
   const [updateOffice, setUpdateOffice] = useState(false);
 
@@ -30,7 +38,6 @@ export const OfficeCard = ({ id, name, address, phone, typeOffice, setDataOffice
         const description = `La sucursal ${name} ha sido eliminada`;
         openNotificationWithIcon(_type, message, description);
         await getOffices(typeOffice, setDataOffice, setLoadingOffice);
-
       }
     } catch (error) {
       const type = "warning";
@@ -102,6 +109,9 @@ OfficeCard.propTypes = {
   address: PropTypes.string.isRequired,
   phone: PropTypes.string.isRequired,
   getOffices: PropTypes.func.isRequired,
+  typeOffice: PropTypes.bool.isRequired,
+  setDataOffice: PropTypes.func.isRequired,
+  setLoadingOffice: PropTypes.func.isRequired,
 };
 
 export default OfficeCard;

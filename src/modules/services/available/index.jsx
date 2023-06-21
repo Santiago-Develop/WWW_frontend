@@ -1,25 +1,35 @@
-import { Button, Empty, Input, Spin } from "antd";
-import { ServiceModal } from "./components/ServiceModal/ServiceModal";
+import { Empty, Input, Spin, message } from "antd";
 import { useEffect, useState } from "react";
-import { handleSetState } from "../../helpers/handleSetState";
-import { getServices } from "../../helpers/getServices";
-import { ServiceCard } from "./components/ServiceCard";
-import { onSearch } from "../../helpers/onSearch";
-import { getUpdates } from "../../helpers/getUpdates";
-import { ROLES } from "../../utils/enums";
-import "../../style.scss";
+import { ServiceModal } from "../components/ServiceModal/ServiceModal";
+import { ROLES } from "../../../utils/enums";
+import { getUpdates } from "../../../helpers/getUpdates";
+import { onSearch } from "../../../helpers/onSearch";
+import { getServices } from "../../../helpers/getServices";
+import { ServiceCard } from "../components/ServiceCard";
+import { createUpdate } from "../../../helpers/createUpdate";
+import "../../../style.scss";
 
-export const ServicesView = () => {
+export const AvailableServicesView = () => {
   const [addService, setAddService] = useState(false);
   const [data, setData] = useState(false);
   const [loading, setLoading] = useState(false);
-  const type = "services";
+  const type = "available_services";
   const role = localStorage.getItem("role");
 
   useEffect(() => {
-    getServices(type, setData, setLoading, true, false);
+    getServices(type, setData, setLoading, true, true, true);
     getUpdates();
   }, []);
+
+  const confirm = async (data) => {
+    createUpdate(data, true);
+    message.success("¡Tomaste el pedido, muchas suerte viajero!");
+    await getServices(type, setData, setLoading, true, true, true);
+  };
+
+  const cancel = () => {
+    message.error("No tomaste el pedido");
+  };
 
   return (
     <div className="contenedor_main">
@@ -28,16 +38,7 @@ export const ServicesView = () => {
           className="d-flex justify-content-between align-items-center mb-3"
           style={{ margin: "10px 20px" }}
         >
-          <h1 className="_title">
-            {role == ROLES.ADMIN ? "Servicios en general" : "Mis servicios"}
-          </h1>
-          {role == ROLES.CUSTOMER ? (
-            <Button type="primary" onClick={() => handleSetState(true, setAddService)}>
-              Solicitar pedido
-            </Button>
-          ) : (
-            ""
-          )}
+          <h1 className="_title">Servicios disponibles</h1>
 
           <Input
             placeholder="Buscar..."
@@ -70,12 +71,7 @@ export const ServicesView = () => {
               <span className="info_text text-white">Trayecto</span>
             </div>
           </div>
-          <div className="field" style={{ width: "120px" }}>
-            <div className="d-flex align-items-center justify-content-center">
-              <span className="info_text text-white">Estado</span>
-            </div>
-          </div>
-          {role === ROLES.MESSENGER && type == "available_services" ? (
+          {role === ROLES.MESSENGER ? (
             <div className="field">
               <div className="d-flex align-items-center justify-content-center">
                 <span className="info_text text-white">Acciones</span>
@@ -99,7 +95,15 @@ export const ServicesView = () => {
         <div style={{ maxHeight: "77vh", overflowY: "auto" }}>
           {data
             ? data.map((service) => {
-                return <ServiceCard key={service.id} data={service} moduleType={type} />;
+                return (
+                  <ServiceCard
+                    key={service.id}
+                    data={service}
+                    moduleType={type}
+                    confirm={confirm}
+                    cancel={cancel}
+                  />
+                );
               })
             : ""}
         </div>

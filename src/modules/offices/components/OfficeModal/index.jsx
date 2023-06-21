@@ -9,14 +9,24 @@ import { headers } from "../../../../utils/headers";
 import PropTypes from "prop-types";
 import { getOffices } from "../../../../helpers/getOffices";
 
-export const OfficeModal = ({ title, edit, form, addOffice, setAddOffice, typeOffice, setDataOffice, setLoadingOffice }) => {
+export const OfficeModal = ({
+  title,
+  edit,
+  form,
+  addOffice,
+  setAddOffice,
+  typeOffice,
+  setDataOffice,
+  setLoadingOffice,
+}) => {
   const API_URL = import.meta.env.VITE_API_URL;
   const [loading, setLoading] = useState(false);
+  const id = parseInt(localStorage.getItem("id"));
   const [newOffice, setNewOffice] = useState({
     name: "",
     address: "",
     phone: "",
-    customer: parseInt(localStorage.getItem("id")),
+    customer: id,
   });
 
   const handleAddOffice = async () => {
@@ -32,19 +42,23 @@ export const OfficeModal = ({ title, edit, form, addOffice, setAddOffice, typeOf
       if (edit) {
         const id_ = localStorage.getItem("currentOffice");
         const response = await fetch(API_URL + "api/office/" + id_ + "/", requestOptions);
-        const { data } = await response.json()
+        const { data } = await response.json();
 
         const type = "success";
         const message = "Actualización exitosa!";
         const description = `La surcursal: ${data.name} ha sido modificada`;
-        await getOffices(typeOffice, setDataOffice, setLoadingOffice);
 
-        setTimeout(() => {
+        setTimeout(async () => {
+          await getOffices(typeOffice, setDataOffice, setLoadingOffice);
           openNotificationWithIcon(type, message, description);
           setLoading(false);
           setAddOffice(false);
           resetForm(form);
         }, 1000);
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       } else {
         const res = await fetch(API_URL + "api/office", requestOptions);
 
@@ -58,15 +72,18 @@ export const OfficeModal = ({ title, edit, form, addOffice, setAddOffice, typeOf
           const type = "success";
           const message = "Creación exitosa!";
           const description = `Tienes una nueva surcursal: ${newOffice.name}`;
-          await getOffices(typeOffice, setDataOffice, setLoadingOffice);
 
-          setTimeout(() => {
+          setTimeout(async () => {
+            await getOffices(typeOffice, setDataOffice, setLoadingOffice);
             openNotificationWithIcon(type, message, description);
             setLoading(false);
             setAddOffice(false);
             resetForm(form);
-            getOffices();
           }, 1000);
+
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
         }
       }
     } catch (error) {

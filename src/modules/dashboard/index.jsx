@@ -1,6 +1,10 @@
 import { Button } from "antd";
+import { ReportForm } from "./components/Form";
+import { useState } from "react";
 
-export const DashboardView = () => {
+export const ReportView = () => {
+  const [openDrawer, setOpenDrawer] = useState(false);
+
   return (
     <div className="contenedor_main">
       <div className="container">
@@ -9,9 +13,15 @@ export const DashboardView = () => {
           style={{ margin: "10px 20px" }}
         >
           <h1 className="_title" style={{ marginBottom: "0 important" }}>
-            Dashboard
+            Reportes de pedidos
           </h1>
-          <Button type="primary">Reporte</Button>
+          <Button type="primary" onClick={() => setOpenDrawer(true)}>
+            Nuevo reporte
+          </Button>
+        </div>
+
+        <div className="">
+          <ReportForm openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
         </div>
       </div>
     </div>
