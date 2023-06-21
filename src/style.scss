@@ -46,7 +46,8 @@ span.ant-upload-list-item-name {
   color: white;
 }
 
-:where(.css-dev-only-do-not-override-w8mnev).ant-spin-nested-loading .ant-spin-container::after {
+:where(.css-dev-only-do-not-override-w8mnev).ant-spin-nested-loading .ant-spin-container::after,
+:where(.css-w8mnev).ant-spin-nested-loading .ant-spin-container::after {
   background: transparent !important;
 }
 
