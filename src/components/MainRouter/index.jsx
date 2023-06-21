@@ -41,11 +41,6 @@ const MainRouter = ({ location }) => {
     return <Navigate to={`/offices`} />;
   }
 
-  if (location.pathname) {
-    console.log("🚀 ~ file: index.jsx:45 ~ MainRouter ~ location.pathname:", location.pathname)
-    return <Navigate to={`${location.pathname}`} />;
-  }
-
   return (
     <>
       {/* SideBar, which allows us to navigate between the modules */}
