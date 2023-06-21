@@ -1,0 +1,5 @@
+{
+    "rewrites": [
+      { "source": "/customers", "destination": "/security/error/index.jsx" }
+    ]
+  }
