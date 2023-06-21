@@ -41,6 +41,10 @@ const MainRouter = ({ location }) => {
     return <Navigate to={`/offices`} />;
   }
 
+
+  console.log(location.pathname !== "/")
+
+
   return (
     <>
       {/* SideBar, which allows us to navigate between the modules */}
