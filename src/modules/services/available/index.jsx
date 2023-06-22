@@ -8,6 +8,7 @@ import { getServices } from "../../../helpers/getServices";
 import { ServiceCard } from "../components/ServiceCard";
 import { createUpdate } from "../../../helpers/createUpdate";
 import "../../../style.scss";
+import { getAvailableServices } from "../../../helpers/getAvailableServices";
 
 export const AvailableServicesView = () => {
   const [addService, setAddService] = useState(false);
@@ -17,14 +18,14 @@ export const AvailableServicesView = () => {
   const role = localStorage.getItem("role");
 
   useEffect(() => {
-    getServices(type, setData, setLoading, true, true, true);
+    getAvailableServices(type, setData, setLoading, true);
     getUpdates();
   }, []);
 
   const confirm = async (data) => {
     createUpdate(data, true);
     message.success("¡Tomaste el pedido, muchas suerte viajero!");
-    await getServices(type, setData, setLoading, true, true, true);
+    await getAvailableServices(type, setData, setLoading, true);
   };
 
   const cancel = () => {

@@ -15,12 +15,10 @@ export const getAvailableServices = async (
   };
 
   const id = parseInt(localStorage.getItem("id"));
-  const role = localStorage.getItem("role");
 
   try {
-    const res = await fetch(API_URL + "api/available_services/", requestOptions);
+    const res = await fetch(API_URL + "api/available_services/" + id + "/", requestOptions);
     let data = await res.json();
-    // console.log("🚀 ~ file: getServices.js:20 ~ getServices ~ data:", data);
 
     if (isSearch) {
       setData(data);

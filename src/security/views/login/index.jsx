@@ -415,6 +415,7 @@ const LoginView = ({ setToken }) => {
                   <Select
                     defaultValue={getRole(newUser.role)}
                     onChange={(value) => {
+                      
                       setNewUser({
                         ...newUser,
                         [role]: value
