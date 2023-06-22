@@ -15,6 +15,8 @@ export const getAvailableServices = async (type, setData, setLoading, isSearch =
     const res = await fetch(API_URL + "api/available_services/" + id + "/", requestOptions);
     let { data } = await res.json();
 
+    data = data.filter((service) => service.updates[service.updates.length - 1].state == 1);
+
     if (isSearch) {
       setData(data);
       setLoading(true);
