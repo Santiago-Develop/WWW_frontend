@@ -26,6 +26,7 @@ export const UserCard = ({
   const [customers, setCustomers] = useState(false);
   const [generalCustomers, setGeneralCustomers] = useState(false);
   const API_URL = import.meta.env.VITE_API_URL;
+  const MAX_LENGTH = 18
 
   const handleChange = async (customers = []) => {
     const body = {
@@ -55,16 +56,22 @@ export const UserCard = ({
     getCustomers(id, setCustomers);
   }, []);
 
+
+  var textoOriginal = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+  var longitudMaxima = 20;
+  var textoLimitado = textoOriginal.length > longitudMaxima ? textoOriginal.substring(0, longitudMaxima) + "..." : textoOriginal;
+  console.log(textoLimitado); // Resultado: "Lorem ipsum dolor..."
+
   return (
     <>
       <div className="userCard">
         <div className="d-flex align-items-center field">
           <img src={"data:image/png;base64," + urlImg} alt="avatar" className="userImg" />
-          <span className="info_text _name">{username}</span>
+          <span className="info_text _name">{username.length > MAX_LENGTH ? username.substring(0, MAX_LENGTH) + "..." : username}</span>
         </div>
         <div className="field">
           <div className="d-flex align-items-center justify-content-center">
-            <span className="info_text text-decoration-underline">{email}</span>
+            <span className="info_text text-decoration-underline">{email.length > MAX_LENGTH ? email.substring(0, MAX_LENGTH) + "..." : email}</span>
           </div>
         </div>
         <div className="field">
@@ -93,22 +100,22 @@ export const UserCard = ({
             >
               {!!generalCustomers && generalCustomers.length > 0
                 ? generalCustomers.map((generalCustomer) => {
-                    return (
-                      <>
-                        <Option
-                          value={generalCustomer?.user_id}
-                          label={generalCustomer?.username}
-                          chec
-                        >
-                          <Space>
-                            <span role="img" aria-label={generalCustomer?.username}>
-                              {generalCustomer?.username}
-                            </span>
-                          </Space>
-                        </Option>
-                      </>
-                    );
-                  })
+                  return (
+                    <>
+                      <Option
+                        value={generalCustomer?.user_id}
+                        label={generalCustomer?.username}
+                        chec
+                      >
+                        <Space>
+                          <span role="img" aria-label={generalCustomer?.username}>
+                            {generalCustomer?.username}
+                          </span>
+                        </Space>
+                      </Option>
+                    </>
+                  );
+                })
                 : ""}
             </Select>
           </div>
