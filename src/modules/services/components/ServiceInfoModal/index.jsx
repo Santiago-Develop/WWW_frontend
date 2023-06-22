@@ -49,12 +49,14 @@ export const ServiceInfoModal = ({ data, modalInfo, setModalInfo }) => {
       width={data.messenger.id === id && data.messenger.role === ROLES.MESSENGER ? 800 : 600}
       footer={[]}
     >
+      <div className="d-flex justify-content-center flex-column">
+        <div>
+          <span className="text">Descripción: </span>
+          <span>{data.description}</span>
+        </div>
+      </div>
       <div className="d-flex justify-content-evenly" style={{ width: '100%' }}>
-        <div className="d-flex justify-content-center flex-column" style={{ width: '60%' }}>
-          <div className="infoService">
-            <span className="text">Descripción: </span>
-            <span>{data.description}</span>
-          </div>
+        <div className="d-flex justify-content-center flex-column" style={{ width: '50%' }}>
           <div className="infoService">
             <span className="text">Cantidad: </span>
             <span>{data.amount}</span>
@@ -69,7 +71,7 @@ export const ServiceInfoModal = ({ data, modalInfo, setModalInfo }) => {
           </div>
         </div>
 
-        <div className="d-flex justify-content-center flex-column" style={{ width: '40%' }}>
+        <div className="d-flex justify-content-center flex-column" style={{ width: '50%' }}>
           <div className="infoService">
             <span className="text">Origen: </span>
             <span>{data.source_office}</span>
