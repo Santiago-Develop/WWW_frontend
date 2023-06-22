@@ -183,7 +183,7 @@ export const ServiceInfoModal = ({ data, modalInfo, setModalInfo }) => {
                 style={{ width: 120 }}
                 onChange={handleStateChange}
                 options={options.map((option) => {
-                  if (option.value <= data.updates[data.updates.length - 1].state) {
+                  if (option.value <= data.updates[data.updates.length - 1].state || option.value - data.updates[data.updates.length - 1].state == 2) {
                     option.disabled = true;
                   } else {
                     option.disabled = false;
