@@ -49,8 +49,8 @@ export const ServiceInfoModal = ({ data, modalInfo, setModalInfo }) => {
       width={data.messenger.id === id && data.messenger.role === ROLES.MESSENGER ? 800 : 600}
       footer={[]}
     >
-      <div className="d-flex justify-content-evenly">
-        <div className="d-flex justify-content-center flex-column">
+      <div className="d-flex justify-content-evenly" style={{ width: '100%' }}>
+        <div className="d-flex justify-content-center flex-column" style={{ width: '60%' }}>
           <div className="infoService">
             <span className="text">Descripción: </span>
             <span>{data.description}</span>
@@ -69,7 +69,7 @@ export const ServiceInfoModal = ({ data, modalInfo, setModalInfo }) => {
           </div>
         </div>
 
-        <div className="d-flex justify-content-center flex-column">
+        <div className="d-flex justify-content-center flex-column" style={{ width: '40%' }}>
           <div className="infoService">
             <span className="text">Origen: </span>
             <span>{data.source_office}</span>
@@ -86,15 +86,14 @@ export const ServiceInfoModal = ({ data, modalInfo, setModalInfo }) => {
       </div>
       <div className="infoService d-flex justify-content-center">
         <span
-          className={`state ${
-            STATES[data.updates[data.updates.length - 1].state] === "Requerido"
-              ? "required"
-              : STATES[data.updates[data.updates.length - 1].state] === "Asignado"
+          className={`state ${STATES[data.updates[data.updates.length - 1].state] === "Requerido"
+            ? "required"
+            : STATES[data.updates[data.updates.length - 1].state] === "Asignado"
               ? "assigned"
               : STATES[data.updates[data.updates.length - 1].state] === "Recogido"
-              ? "picked_up"
-              : "delivered"
-          }`}
+                ? "picked_up"
+                : "delivered"
+            }`}
           style={{ fontWeight: "500", width: "120px" }}
         >
           {STATES[data.updates[data.updates.length - 1].state]}
@@ -106,8 +105,8 @@ export const ServiceInfoModal = ({ data, modalInfo, setModalInfo }) => {
       </div>
 
       {data.messenger.id === id &&
-      data.messenger.role === ROLES.MESSENGER &&
-      data.updates[data.updates.length - 1].state !== 4 ? (
+        data.messenger.role === ROLES.MESSENGER &&
+        data.updates[data.updates.length - 1].state !== 4 ? (
         <Form
           form={form}
           name="crearCliente"
