@@ -310,8 +310,8 @@ const LoginView = ({ setToken }) => {
                       newUser.role === ROLES.MESSENGER ? "^[0-9]{6,10}$" : "^[0-9]{8}-[0-9]{1}$"
                     }
                     title={`Ingresa un número de cédula válido (${newUser.role === ROLES.MESSENGER
-                        ? "CC: número de cédula"
-                        : "NIT: 8 digítos - 1 dígito"
+                      ? "CC: número de cédula"
+                      : "NIT: 8 digítos - 1 dígito"
                       })`}
                     onChange={(event) =>
                       handleInputChange(newUser, setNewUser, null, null, null, event)
@@ -414,7 +414,12 @@ const LoginView = ({ setToken }) => {
                 >
                   <Select
                     defaultValue={getRole(newUser.role)}
-                    onChange={(value) => newUser.role = value}
+                    onChange={(value) => {
+                      setNewUser({
+                        ...newUser,
+                        [role]: value
+                      })
+                    }}
                     options={optionsSelectRole}
                     name="role"
                   />
