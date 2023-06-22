@@ -24,7 +24,7 @@ export const AvailableServicesView = () => {
 
   const confirm = async (data) => {
     createUpdate(data, true);
-    message.success("¡Tomaste el pedido, muchas suerte viajero!");
+    message.success("¡Tomaste el pedido, mucha suerte viajero!");
     await getAvailableServices(type, setData, setLoading, true);
   };
 
