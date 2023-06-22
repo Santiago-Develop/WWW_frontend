@@ -4,12 +4,7 @@ import { setLocalStorage } from "./setLocalStorage";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-export const getAvailableServices = async (
-  type,
-  setData,
-  setLoading,
-  isSearch = null,
-) => {
+export const getAvailableServices = async (type, setData, setLoading, isSearch = null) => {
   const requestOptions = {
     method: "GET",
   };
@@ -18,7 +13,7 @@ export const getAvailableServices = async (
 
   try {
     const res = await fetch(API_URL + "api/available_services/" + id + "/", requestOptions);
-    let data = await res.json();
+    let { data } = await res.json();
 
     if (isSearch) {
       setData(data);
