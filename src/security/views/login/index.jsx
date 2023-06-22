@@ -116,9 +116,9 @@ const LoginView = ({ setToken }) => {
 
   const handleRegisterSubmit = async () => {
     if (newUser.role === ROLES.CUSTOMER) {
-      newUser.documentType = "CC";
-    } else {
       newUser.documentType = "NIT";
+    } else {
+      newUser.documentType = "CC";
     }
 
     let type = "";
@@ -156,6 +156,13 @@ const LoginView = ({ setToken }) => {
       description = "Inténtalo de nuevo";
       openNotificationWithIcon(type, message, description);
     }
+  };
+
+  const handleRoleChange = (value) => {
+    setNewUser({
+      ...newUser,
+      role: value
+    })
   };
 
   return (
@@ -409,18 +416,12 @@ const LoginView = ({ setToken }) => {
                 <Form.Item
                   name="role"
                   label="Tipo de usuario"
-                  // rules={[{ required: true, message: 'Este campo es obligatorio' }]}
+                  rules={[{ required: true, message: 'Este campo es obligatorio' }]}
                   className="d-flex flex-column"
                 >
                   <Select
                     defaultValue={getRole(newUser.role)}
-                    onChange={(value) => {
-                      
-                      setNewUser({
-                        ...newUser,
-                        [role]: value
-                      })
-                    }}
+                    onChange={handleRoleChange}
                     options={optionsSelectRole}
                     name="role"
                   />
