@@ -434,6 +434,7 @@ const LoginView = ({ setToken }) => {
                   name="roldepartmente"
                   label="Departamento"
                   className="d-flex flex-column"
+                  rules={[{ required: true, message: "Este campo es obligatorio" }]}
                 >
                   <Select
                     onChange={(value) => {
@@ -441,7 +442,6 @@ const LoginView = ({ setToken }) => {
                       const cities = citiesOptionsFull.filter((city) => city.value == value);
                       setCitiesOptions(cities);
                     }}
-                    rules={[{ required: true, message: "Este campo es obligatorio" }]}
                     options={departmentsOptions}
                     name="department"
                   />
