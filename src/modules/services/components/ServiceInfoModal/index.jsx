@@ -50,7 +50,7 @@ export const ServiceInfoModal = ({ data, modalInfo, setModalInfo }) => {
       footer={[]}
     >
       <div className="d-flex justify-content-center flex-column">
-        <div>
+        <div className="infoService" style={{ padding: '0 !important' }}>
           <span className="text">Descripción: </span>
           <span>{data.description}</span>
         </div>
