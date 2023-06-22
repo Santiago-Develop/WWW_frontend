@@ -44,7 +44,7 @@ const LoginView = ({ setToken }) => {
     role: ROLES.CUSTOMER,
     documentType: "",
     country: 1,
-    department: 30,
+    department: null,
     city: null,
     password: "",
     password_confirm: "",
@@ -436,12 +436,12 @@ const LoginView = ({ setToken }) => {
                   className="d-flex flex-column"
                 >
                   <Select
-                    defaultValue={"Valle del Cauca"}
                     onChange={(value) => {
                       newUser.department = value;
                       const cities = citiesOptionsFull.filter((city) => city.value == value);
                       setCitiesOptions(cities);
                     }}
+                    rules={[{ required: true, message: "Este campo es obligatorio" }]}
                     options={departmentsOptions}
                     name="department"
                   />

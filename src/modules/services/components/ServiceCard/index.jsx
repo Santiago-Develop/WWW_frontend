@@ -3,6 +3,12 @@ import { ICONS, ROLES, STATES, TRANSPORTS } from "../../../../utils/enums";
 import { Button, Popconfirm } from "antd";
 import { ServiceInfoModal } from "../ServiceInfoModal";
 import { handleSetState } from "../../../../helpers/handleSetState";
+import {
+  SmileOutlined,
+  ClockCircleOutlined,
+  CheckCircleOutlined,
+  NotificationOutlined,
+} from "@ant-design/icons";
 import PropTypes from "prop-types";
 import "./style.scss";
 
