@@ -152,7 +152,7 @@ export const ServiceModal = ({
                   onChange={(event) =>
                     handleInputChange(newService, setNewService, null, null, null, event)
                   }
-                  min={0}
+                  min={1}
                   name="amount"
                 />
               </Form.Item>
