@@ -41,6 +41,10 @@ const MainRouter = ({ location }) => {
     return <Navigate to={`/offices`} />;
   }
 
+  if (location.pathname == '/staff') {
+    return <Navigate to={`/staff`} />;
+  }
+
   return (
     <>
       {/* SideBar, which allows us to navigate between the modules */}
@@ -52,10 +56,6 @@ const MainRouter = ({ location }) => {
         <Route
           path="/staff"
           element={role == ROLES.MESSENGER ? <ErrorView /> : <MessengersView />}
-          render={({ location }) => (
-            <Redirect to="/staff" />
-          )
-          }
         />
         <Route path="/services" element={<ServicesView />} />
         <Route
