@@ -41,10 +41,6 @@ const MainRouter = ({ location }) => {
     return <Navigate to={`/offices`} />;
   }
 
-  if (location.pathname == '/staff') {
-    return <Navigate to={`/staff`} />;
-  }
-
   return (
     <>
       {/* SideBar, which allows us to navigate between the modules */}

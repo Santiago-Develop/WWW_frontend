@@ -1,5 +1,13 @@
 {
-    "rewrites": [
-      { "source": "/customers", "destination": "/security/views/error/index.jsx" }
-    ]
-  }
+  "rewrites": [
+    { "source": "/main", "destination": "/index.html" },
+    { "source": "/staff", "destination": "/index.html" },
+    { "source": "/services", "destination": "/index.html" },
+    { "source": "/available_services", "destination": "/index.html" },
+    { "source": "/offices", "destination": "/index.html" },
+    { "source": "/staff/:id", "destination": "/index.html" },
+    { "source": "/customers", "destination": "/index.html" },
+    { "source": "/profile", "destination": "/index.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
