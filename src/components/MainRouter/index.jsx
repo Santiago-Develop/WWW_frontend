@@ -52,6 +52,10 @@ const MainRouter = ({ location }) => {
         <Route
           path="/staff"
           element={role == ROLES.MESSENGER ? <ErrorView /> : <MessengersView />}
+          render={({ location }) => (
+            <Redirect to="/staff" />
+          )
+          }
         />
         <Route path="/services" element={<ServicesView />} />
         <Route
